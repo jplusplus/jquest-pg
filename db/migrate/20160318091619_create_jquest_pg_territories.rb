@@ -7,4 +7,6 @@ class CreateJquestPgTerritories < ActiveRecord::Migration
       t.timestamps
     end
   end
+
+  add_index :users, :uid
 end
