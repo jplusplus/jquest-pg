@@ -1,6 +1,6 @@
 module JquestPg
   class Territory < ActiveRecord::Base
-    def to_s
+    def display_name
       name
     end
   end

@@ -1,7 +1,6 @@
 if defined?(ActiveAdmin)
-  ActiveAdmin.register JquestPg::Territory do
-    permit_params :name, :country
-    # menu label: 'Territory', parent: 'Political Gaps'
+  ActiveAdmin.register JquestPg::Territory, :as => 'pg_territory' do
+    menu label: 'Territory', parent: 'Political Gaps'
 
     index do
       selectable_column
@@ -14,9 +13,7 @@ if defined?(ActiveAdmin)
     filter :name
     filter :country
 
-    show :title => proc{|territory| territory.name }
-
-    form do |f|
+    form :as => :pg_territory do |f|
       f.inputs "Details" do
         f.input :name
         f.input :country, :priority_countries => []
@@ -24,5 +21,11 @@ if defined?(ActiveAdmin)
       f.actions
     end
 
+    controller do
+      def permitted_params
+        params.permit *active_admin_namespace.permitted_params,
+                      :pg_territory => [ :name, :country ]
+      end
+    end
   end
 end
