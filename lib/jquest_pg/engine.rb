@@ -4,7 +4,7 @@ module JquestPg
 
     initializer :active_admin do
       if defined?(ActiveAdmin)
-        dir = File.expand_path '../../../app/admin', __FILE__
+        dir = File.expand_path '../admin', __FILE__
         ActiveAdmin.application.load_paths << dir
       end
     end

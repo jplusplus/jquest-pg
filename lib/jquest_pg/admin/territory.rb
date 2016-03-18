@@ -1,7 +1,7 @@
 if defined?(ActiveAdmin)
   ActiveAdmin.register JquestPg::Territory, :as => 'pg_territory' do
     menu label: 'Territory', parent: 'Political Gaps'
-    active_admin_import
+    active_admin_import validate: false
 
     index do
       selectable_column
