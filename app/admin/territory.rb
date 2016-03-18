@@ -1,6 +1,7 @@
 if defined?(ActiveAdmin)
-  ActiveAdmin.register JquestPg::Territory, :as => 'Territory', :namespace => 'pg' do
+  ActiveAdmin.register JquestPg::Territory do
     permit_params :name, :country
+    # menu label: 'Territory', parent: 'Political Gaps'
 
     index do
       selectable_column
