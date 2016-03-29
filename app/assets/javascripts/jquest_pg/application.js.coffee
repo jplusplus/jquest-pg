@@ -11,4 +11,9 @@
 # about supported directives.
 #
 #= require_tree .
-angular.app 'jquest.pg', []
+angular.module 'jquest'
+  .config ($stateProvider) ->
+    $stateProvider
+      .state 'main.pg',
+        template: '<div class="container">okk</div>'
+        url: '/'
