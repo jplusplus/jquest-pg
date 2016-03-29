@@ -12,8 +12,18 @@
 #
 #= require_tree .
 angular.module 'jquest'
-  .config ($stateProvider) ->
+  .run (Menu)->
+      Menu.addItem name: "Watch intro again", state: 'main.pg.intro'
+      Menu.addItem name: "My tasks", state: 'main.pg.tasks'
+      Menu.addItem name: "Tutorials", state: 'main.pg.tutorials'
+      Menu.addItem name: "Leaderboard", state: 'main.pg.leaderboard'
+      Menu.addItem name: "Collected data", state: 'main.pg.data'
+      Menu.addItem name: "About", state: 'main.pg.about'
+  .config ($stateProvider)->
     $stateProvider
       .state 'main.pg',
-        template: '<div class="container">okk</div>'
+        template: '<div class="container" ui-view>ok</div>'
         url: '/'
+      .state 'main.pg.intro',
+        template: '<div class="container">intro</div>'
+        url: 'intro'
