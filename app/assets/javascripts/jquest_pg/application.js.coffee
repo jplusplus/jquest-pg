@@ -19,11 +19,13 @@ angular.module 'jquest'
       Menu.addItem name: "Leaderboard", state: 'main.pg.leaderboard'
       Menu.addItem name: "Collected data", state: 'main.pg.data'
       Menu.addItem name: "About", state: 'main.pg.about'
+  .run ($rootScope, $state)->
+    $rootScope.$on '$stateChangeSuccess', (ev, state)->
+      $state.go 'main.pg' if state.name is 'main'
   .config ($stateProvider)->
     $stateProvider
       .state 'main.pg',
         template: '<div class="container" ui-view>ok</div>'
-        url: '/'
       .state 'main.pg.intro',
         template: '<div class="container">intro</div>'
         url: 'intro'
