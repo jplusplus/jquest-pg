@@ -1,9 +1,6 @@
 #= require_tree .
 angular.module 'jquest'
   .run (Menu)->
-      # Global menu option
-      Menu.setTitle 'Political Gaps'
-      Menu.setPrimaryColor '#81A9CC'
       # Menus items
       Menu.addItem name: "Watch intro again", state: 'main.pg.intro', category: 'Tutorials'
       Menu.addItem name: "How-to", state: 'main.pg.tutorials', category: 'Tutorials'
