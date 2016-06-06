@@ -20,7 +20,7 @@ if defined?(ActiveAdmin)
         end
       }
     )
-    index do
+    index title: 'Mandatures' do
       selectable_column
       id_column
       column :person

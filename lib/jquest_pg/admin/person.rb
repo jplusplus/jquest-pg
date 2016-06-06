@@ -1,9 +1,9 @@
 if defined?(ActiveAdmin)
   ActiveAdmin.register JquestPg::Person, :as => 'pg_person' do
-    menu label: 'Persons', parent: 'Political Gaps'
+    menu label: 'People', parent: 'Political Gaps'
     active_admin_import validate: false
 
-    index do
+    index title: 'People' do
       selectable_column
       id_column
       column :fullname

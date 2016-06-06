@@ -3,7 +3,7 @@ if defined?(ActiveAdmin)
     menu label: 'Legislatures', parent: 'Political Gaps'
     active_admin_import validate: false
 
-    index do
+    index title: 'Legislatures' do
       selectable_column
       id_column
       column :name
