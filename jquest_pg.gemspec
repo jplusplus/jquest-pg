@@ -22,5 +22,8 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 4.2.6"
+  # Allow references with a different name (usefull with engine-prefixed tables)
+  # See https://github.com/SchemaPlus/schema_plus_foreign_keys#migrations
+  s.add_dependency "schema_plus_foreign_keys"
   s.add_development_dependency "sqlite3"
 end
