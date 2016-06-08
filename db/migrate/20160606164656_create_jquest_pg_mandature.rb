@@ -2,7 +2,7 @@ class CreateJquestPgMandature < ActiveRecord::Migration
   def change
     create_table :jquest_pg_mandatures do |t|
       t.references :legislature, index: true, foreign_key: true, references: :jquest_pg_legislatures
-      t.references :person, index: true, foreign_key: true, references: :jquest_pg_persons
+      t.references :person, index: true, foreign_key: true, references: :jquest_pg_people
       t.string :political_leaning
       t.string :role
       t.string :group
