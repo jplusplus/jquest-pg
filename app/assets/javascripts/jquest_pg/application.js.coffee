@@ -17,7 +17,7 @@ angular.module 'jquest'
     'ngInject'
     $stateProvider
       .state 'main.pg',
-        template: '<div class="container" ui-view>ok</div>'
+        templateUrl: 'main/season/season.html'
       .state 'main.pg.intro',
-        template: '<div class="container">intro</div>'
+        templateUrl: 'main/season/season.html'
         url: 'intro'
