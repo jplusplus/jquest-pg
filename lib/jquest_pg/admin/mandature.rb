@@ -13,7 +13,6 @@ if defined?(ActiveAdmin)
         pid = importer.values_at 'person_id'
         lid = importer.values_at 'legislature_id'
         if pid and lid
-          puts pid, lid
           # Use the two ids as a couple
           mandature = JquestPg::Mandature.where(person: pid, legislature: lid).first
           mandature.destroy if mandature
