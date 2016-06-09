@@ -18,6 +18,3 @@ angular.module 'jquest'
     $stateProvider
       .state 'main.pg',
         templateUrl: 'main/season/season.html'
-      .state 'main.pg.intro',
-        templateUrl: 'main/season/season.html'
-        url: 'intro'
