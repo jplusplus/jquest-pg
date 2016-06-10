@@ -31,8 +31,6 @@ if defined?(ActiveAdmin)
       actions
     end
 
-
-
     controller do
       def permitted_params
         params.permit *active_admin_namespace.permitted_params,
