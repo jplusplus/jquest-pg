@@ -3,9 +3,9 @@
        class="pg__intro__slide pg__intro__slide--{{ slide.type }}"
        ng-show="intro.filterSlide(slide, $index)">
     <fieldset ng-switch="slide.type" ng-disabled="slide.choice">
-      <div ng-switch-when="text">
+      <div ng-switch-when="text" ng-click="intro.next()">
         <h2 class="pg__intro__slide__body" ng-bind-html="slide.body"></h2>
-        <p class="lead" ng-if="!$last">Press <kbd>space</kbd> to continue.</p>
+        <p class="lead" ng-if="!$last">Press <kbd>space</kbd> or touch to continue.</p>
         <p ng-if="$last">
           <button ng-click="intro.end()" class="btn btn-primary btn-lg">
             Start the season

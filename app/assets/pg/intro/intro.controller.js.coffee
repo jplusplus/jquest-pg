@@ -18,7 +18,7 @@ angular.module 'jquest'
           callback: => do @prev
       # Ends intro
       end: =>
-        seasons.current().one('intro').put().then ->
+        seasons.current().one('intro').put().finally ->
           # Reload seasons list (to get new activities)
           seasons.reload().then =>
             # Redirect to homepage of this season
