@@ -25,9 +25,14 @@ angular.module 'jquest'
             $state.go 'main.season'
       # Next slide!
       next: =>
-        @_indexSlide = Math.min @_indexSlide + 1, @slides.length - 1
-        # Reset choice
-        @slides[@_indexSlide].choice = null
+        if @_indexSlide + 1 >= @slides.length
+          # End the introduction!
+          do @end
+        # Not finished yet
+        else
+          @_indexSlide = Math.min @_indexSlide + 1, @slides.length - 1
+          # Reset choice
+          @slides[@_indexSlide].choice = null
       # Previous slide!
       prev: =>
         @_indexSlide = Math.max @_indexSlide - 1, 0

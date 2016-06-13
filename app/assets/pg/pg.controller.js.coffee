@@ -8,4 +8,4 @@ angular.module 'jquest'
           # Look for the 'INTRO'
           unless _.find(activities, taxonomy: 'INTRO')
             # Redirect to the tutorial for this season
-            $state.transitionTo 'main.season.pg.intro'
+            $state.go 'main.season.pg.intro'
