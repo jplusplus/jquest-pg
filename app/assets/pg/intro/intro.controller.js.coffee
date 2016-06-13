@@ -1,5 +1,5 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgIntroCtrl', (INTRO, hotkeys, $timeout)->
+  .controller 'MainSeasonPgIntroCtrl', (INTRO, hotkeys, $timeout, $state, $scope, seasons)->
     'ngInject'
     new class MainSeasonPgIntroCtrl
       _indexSlide: 0
@@ -16,6 +16,13 @@ angular.module 'jquest'
           combo: ['left']
           description: "Go to the previous slide."
           callback: => do @prev
+      # Ends intro
+      end: =>
+        seasons.current().one('intro').put().then ->
+          # Reload seasons list (to get new activities)
+          seasons.reload().then =>
+            # Redirect to homepage of this season
+            $state.go 'main.season'
       # Next slide!
       next: =>
         @_indexSlide = Math.min @_indexSlide + 1, @slides.length - 1
