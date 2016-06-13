@@ -1,0 +1,32 @@
+<div class="pg__intro">
+  <div ng-repeat="slide in intro.slides track by $index"
+       class="pg__intro__slide pg__intro__slide--{{ slide.type }}"
+       ng-show="intro.filterSlide(slide, $index)">
+    <fieldset ng-switch="slide.type" ng-disabled="slide.choice">
+      <div ng-switch-when="text">
+        <h2 class="pg__intro__slide__body" ng-bind-html="slide.body"></h2>
+        <p class="lead" ng-if="!$last">Press <kbd>space</kbd> to continue.</p>
+        <p ng-if="$last">
+          <button ng-click="intro.end()" class="btn btn-primary btn-lg">
+            Start the season
+          </button>
+        </p>
+      </div>
+      <div ng-switch-when="question">
+        <div class="pg__intro__slide__stack">
+          <img class="pg__intro__slide__stack__image pg__intro__slide__stack__image--{{ slide.choice }} img-thumbnail"
+          ng-src="{{ slide.image }}" />
+        </div>
+        <h3 class="pg__intro__slide__body" ng-bind-html="slide.body"></h3>
+        <div>
+          <button class="pg__intro__slide__btn btn btn-danger btn-lg" ng-click="intro.no(slide)">
+            No
+          </button>
+          <button class="pg__intro__slide__btn btn btn-success btn-lg" ng-click="intro.yes(slide)">
+            Yes
+          </button>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>

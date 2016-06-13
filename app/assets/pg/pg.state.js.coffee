@@ -3,5 +3,6 @@ angular.module 'jquest'
     'ngInject'
     $stateProvider
       .state 'main.season.pg',
-        controller: ->
+        controller: 'MainSeasonPgCtrl'
+        controllerAs: 'pg'
         templateUrl: 'pg.html'
