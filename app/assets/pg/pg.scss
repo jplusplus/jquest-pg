@@ -12,10 +12,32 @@
       }
 
       &__level {
+
+        padding:1em;
+        background: $card-border-color;
+
         &__heading, &__description {
-          background: $card-border-color;
-          padding: .8em 1em;
-          margin: 0
+          margin:0;
+          padding:0;
+        }
+
+        &__heading {
+          margin-bottom:1em * $line-height;
+        }
+
+        &__begin {
+          margin-top:1em * $line-height;
+          background:transparent;
+          color: $link-color;
+          border-color: $link-color;
+          border-width: 2px;
+          @include vendor-prefix(border-radius, 2em);
+          @include box-shadow(none);
+
+          &:disabled {
+            @include vendor-prefix(filter, grayscale(1));
+          }
+
         }
       }
 
