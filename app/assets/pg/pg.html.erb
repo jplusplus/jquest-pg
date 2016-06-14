@@ -1,3 +1,57 @@
 <div class="pg" ui-view>
-  <pre>{{ season.activities | json }}</pre>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-block">
+            <h3 class="card-title">Your missons</h3>
+            <p class="card-text lead">A text explaining the purpose of this screen.</p>
+          </div>
+          <ul class="list-group list-group-flush pg__categories">
+            <li class="list-group-item pg__categories__item">
+              <h4 CLASS="pg__categories__item__heading">Parliaments of France</h4>
+              <div class="row">
+                <div class="col-md-4 pg__categories__item__level" ng-repeat="level in [1,2,3]">
+                  <h5 class="pg__categories__item__level__heading">
+                    <a>Level {{ level }}</a>
+                  </h5>
+                  <p class="pg__categories__item__level__description">
+                    Lorem ipsum dolor sit description
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item pg__categories__item">
+              <h4 CLASS="pg__categories__item__heading">Parliaments of foregin countries</h4>
+              <div class="row">
+                <div class="col-md-4 pg__categories__item__level" ng-repeat="level in [4,5]">
+                  <h5 class="pg__categories__item__level__heading">
+                    <a>Level {{ level }}</a>
+                  </h5>
+                  <p class="pg__categories__item__level__description">
+                    Lorem ipsum dolor sit description
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item pg__categories__item">
+              <h4 CLASS="pg__categories__item__heading">Historical parliaments of France</h4>
+              <div class="row">
+                <div class="col-md-4 pg__categories__item__level" ng-repeat="level in [6]">
+                  <h5 class="pg__categories__item__level__heading">
+                    <a>Level {{ level }}</a>
+                  </h5>
+                  <p class="pg__categories__item__level__description">
+                    Lorem ipsum dolor sit description
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+  </div>
 </div>

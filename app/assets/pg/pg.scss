@@ -1,0 +1,24 @@
+.pg {
+  padding-top:1rem * $line-height;
+
+  &__categories {
+
+    &__item {
+
+      padding-bottom:1rem * $line-height;
+
+      &__heading {
+        padding: .5em 0;
+      }
+
+      &__level {
+        &__heading, &__description {
+          background: $card-border-color;
+          padding: .8em 1em;
+          margin: 0
+        }
+      }
+
+    }
+  }
+}
