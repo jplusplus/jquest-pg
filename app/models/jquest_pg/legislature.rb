@@ -1,6 +1,8 @@
 module JquestPg
   class Legislature < ActiveRecord::Base
 
+    has_many :mandatures
+    has_many :persons, through: :mandatures
     before_validation :format_params
 
     def languages
