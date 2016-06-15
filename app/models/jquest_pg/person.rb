@@ -7,23 +7,10 @@ module JquestPg
     end
 
     def self.assign_to!(user)
-      # Gets user progression
-      progression = JquestPg::ApplicationController.new.progression
-      # Gets legislature for her level of progression
-      legislatures = Legislature.where difficulty_level: progression[:level]
-      # Different assignement according the language
-      case progression[:level]
-      # LEVEL 1
-      #   * legislature.end_date after the current year
-      #   * legislature.country is user.home_country
-      #   * legislature.languages includes user.spoken_language
-      when 1
-        legislatures = legislatures.where country: user.home_country
-        # Filter legislate that use the same language than the user
-        legislatures = legislatures.select do |legislature|
-          legislature.languages.split(',').map(&:strip).include? user.spoken_language
-        end
-      end
+      # Get the list of legislatures that can be assigned to the user
+      assignable_legislatures = Legislature.assignable_to user
+      # Number of persons picked from each legislatures depends of the number of legislature
+      persons_per_legislatures = 6 / assignable_legislatures.length      
     end
 
     def self.assigned_to(user)
