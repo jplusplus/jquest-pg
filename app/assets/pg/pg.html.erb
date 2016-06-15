@@ -8,55 +8,25 @@
             <p class="card-text lead">A text explaining the purpose of this screen.</p>
           </div>
           <ul class="list-group list-group-flush pg__categories">
-            <li class="list-group-item pg__categories__item">
-              <h4 class="pg__categories__item__heading">Parliaments of France</h4>
+            <li class="list-group-item pg__categories__item" ng-repeat="category in :: pg.categories">
+              <h4 class="pg__categories__item__heading">{{ pg.category[$index] | translate: main.user.school }}</h4>
               <div class="row">
-                <div class="col-md-4" ng-repeat="level in [1,2,3]">
+                <div class="col-md-4" ng-repeat="level in :: category">
                   <div class="pg__categories__item__level">
                     <h5 class="pg__categories__item__level__heading">
-                      <a>Level {{ level }}</a>
+                      {{ :: level.title || 'Level ' + $index }}
                     </h5>
                     <p class="pg__categories__item__level__description">
-                      Lorem ipsum dolor sit description
+                      {{ :: level.description }}
                     </p>
-                    <button class="btn btn-primary btn-sm btn-block pg__categories__item__level__begin">
-                      Begin
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item pg__categories__item">
-              <h4 class="pg__categories__item__heading">Parliaments of foregin countries</h4>
-              <div class="row">
-                <div class="col-md-4" ng-repeat="level in [4,5]">
-                  <div class="pg__categories__item__level">
-                    <h5 class="pg__categories__item__level__heading">
-                      <a>Level {{ level }}</a>
-                    </h5>
-                    <p class="pg__categories__item__level__description">
-                      Lorem ipsum dolor sit description
-                    </p>
-                    <button class="btn btn-primary btn-sm btn-block pg__categories__item__level__begin">
-                      Begin
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item pg__categories__item">
-              <h4 class="pg__categories__item__heading">Historical parliaments of France</h4>
-              <div class="row">
-                <div class="col-md-4" ng-repeat="level in [6]">
-                  <div class="pg__categories__item__level">
-                    <h5 class="pg__categories__item__level__heading">
-                      <a>Level {{ level }}</a>
-                    </h5>
-                    <p class="pg__categories__item__level__description">
-                      Lorem ipsum dolor sit description
-                    </p>
-                    <button class="btn btn-primary btn-sm btn-block pg__categories__item__level__begin" ng-disabled="true">
-                      Locked
+                    <button class="btn btn-primary btn-sm btn-block pg__categories__item__level__begin" ng-disabled="level.locked">
+                      <span ng-if="!level.locked">
+                        Begin
+                      </span>
+                      <span ng-if="level.locked">
+                        <i class="fa fa-lock"></i>
+                        Locked
+                      </span>
                     </button>
                   </div>
                 </div>

@@ -6,3 +6,7 @@ angular.module 'jquest'
         controller: 'MainSeasonPgCtrl'
         controllerAs: 'pg'
         templateUrl: 'pg.html'
+        resolve:
+          progression: (seasons)->
+            'ngInject'
+            seasons.current().one('progression').get()

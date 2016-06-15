@@ -36,6 +36,7 @@
 
           &:disabled {
             @include vendor-prefix(filter, grayscale(1));
+            opacity: .2;
           }
 
         }

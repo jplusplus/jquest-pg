@@ -11,6 +11,8 @@ if defined?(ActiveAdmin)
       column :name_local
       column :territory
       column :country
+      column :languages
+      column :difficulty_level
       actions
     end
 
@@ -26,7 +28,8 @@ if defined?(ActiveAdmin)
                       :pg_legislature => [ :name, :name_english, :name_local,
                                            :territory, :difficulty_level,
                                            :country, :start_date, :end_date,
-                                           :source, :list, :number_of_members ]
+                                           :source, :list, :number_of_members,
+                                           :languages ]
       end
     end
   end
