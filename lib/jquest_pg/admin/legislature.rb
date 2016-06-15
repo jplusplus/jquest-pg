@@ -7,12 +7,12 @@ if defined?(ActiveAdmin)
       selectable_column
       id_column
       column :name
-      column :name_english
-      column :name_local
       column :territory
       column :country
       column :languages
       column :difficulty_level
+      column :start_date
+      column :end_date
       actions
     end
 
