@@ -7,9 +7,11 @@ angular.module 'jquest'
         controllerAs: 'pg'
         templateUrl: 'pg.html'
         resolve:
-          assignements: (SeasonRestangular)->
+          assignements: (seasons, SeasonRestangular)->
             'ngInject'
-            SeasonRestangular().one('persons').one('assigned').getList()
+            # Wait for the season to be ready before getting assigments
+            seasons.ready ->
+              SeasonRestangular().one('persons').one('assigned').getList()
           progression: (seasons)->
             'ngInject'
             seasons.current().one('progression').get()

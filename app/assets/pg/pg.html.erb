@@ -14,13 +14,15 @@
                 <div class="col-md-4" ng-repeat="level in :: category">
                   <div class="pg__categories__item__level">
                     <h5 class="pg__categories__item__level__heading">
-                      {{ :: level.title || 'Level ' + $index }}
+                      {{ :: level.title || 'Level ' + ($index + 1) }}
                     </h5>
                     <p class="pg__categories__item__level__description">
                       {{ :: level.description }}
                     </p>
-                    <button class="btn btn-primary btn-sm btn-block pg__categories__item__level__begin" ng-disabled="level.locked">
-                      <span ng-if="!level.locked">
+                    <button ui-sref="main.season.pg.level({ level: ($index + 1) })"
+                            class="btn btn-primary btn-sm btn-block pg__categories__item__level__begin"
+                            ng-disabled="level.locked || level.done">
+                      <span ng-if="!level.locked && !level.done">
                         Begin
                       </span>
                       <span ng-if="level.locked">

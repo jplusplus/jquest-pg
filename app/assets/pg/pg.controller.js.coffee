@@ -4,7 +4,10 @@ angular.module 'jquest'
     new class MainSeasonPgCtrl
       buildLevel: (level, index)->
         angular.extend {
+          # Level is not unlocked yet
           locked: (index + 1) > progression.level
+          # Level is done, congrats!
+          done: (index + 1) < progression.level
         }, level
       category:  CATEGORIES
       constructor: ->
