@@ -134,6 +134,8 @@ module JquestPg
           languages.include? 'en' or languages.include? user.spoken_language
         end
       end
+      # Returns all assignable legislatures
+      legislatures
     end
   end
 end

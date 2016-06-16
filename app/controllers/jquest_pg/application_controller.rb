@@ -11,7 +11,7 @@ module JquestPg
       # Get the higher round current level: we are now to the next level
       round = activities.where(taxonomy: 'LEVEL:#{level}:ROUND:FINISH').maximum(:value).to_i + 1
       # Return a simple hash
-      { level: level, round: round }
+      {level: level, round: round}
     end
   end
 end
