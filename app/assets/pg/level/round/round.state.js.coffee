@@ -3,7 +3,7 @@ angular.module 'jquest'
     'ngInject'
     $stateProvider
       .state 'main.season.pg.level.round',
-        # controller: 'MainSeasonPgLevelRoundCtrl'
-        # controllerAs: 'round'
+        controller: 'MainSeasonPgLevelRoundCtrl'
+        controllerAs: 'round'
         templateUrl: 'level/round/round.html'
         url: "/round/:round"
