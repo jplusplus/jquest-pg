@@ -55,7 +55,7 @@ module JquestPg
       progression = JquestPg::ApplicationController.new.progression(user)
       # Gets legislature for her level of progression
       legislatures = all
-      # Different assignement according the language
+      # Different assignements according the level
       case progression[:level]
       # LEVEL 1, 2, 3
       #   * legislature.difficulty_level is current level
