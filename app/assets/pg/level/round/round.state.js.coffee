@@ -6,3 +6,6 @@ angular.module 'jquest'
         controller: 'MainSeasonPgLevelRoundCtrl'
         controllerAs: 'round'
         templateUrl: 'level/round/round.html'
+        params:
+          level: null
+          round: null
