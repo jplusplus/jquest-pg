@@ -1,5 +1,5 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgLevelRoundCtrl', (assignements, seasons, $state, $stateParams)->
+  .controller 'MainSeasonPgLevelRoundCtrl', (assignements, seasons, $state)->
     'ngInject'
     new class MainSeasonPgLevelRoundCtrl
       title: "Round #{seasons.current().progression.round}"
@@ -8,7 +8,7 @@ angular.module 'jquest'
         seasons.current().progression.assignment?.resource_id is a.id
       # Redirect to a child state according to the current round
       constructor: ->
-        switch parseInt($stateParams.round)
+        switch seasons.current().progression.round
           when 1 then $state.go 'main.season.pg.level.round.gender'
-          when 2 then $state.go 'main.season.pg.level.round.detail'
+          when 2 then $state.go 'main.season.pg.level.round.details'
           when 3 then $state.go 'main.season.pg.level.round.diversity'

@@ -6,7 +6,7 @@ angular.module 'jquest'
         controller: 'MainSeasonPgLevelCtrl'
         controllerAs: 'level'
         templateUrl: 'level/level.html'
-        url: "level/:level"
+        url: "play"
         resolve:
           assignements: (seasons, SeasonRestangular)->
             'ngInject'

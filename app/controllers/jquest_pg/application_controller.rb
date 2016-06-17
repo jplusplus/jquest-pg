@@ -7,11 +7,11 @@ module JquestPg
     def progression(user, season=user.member_of)
       activities = user.activities.where season: season
       # Get the higher level the user finished: we are now to the next level
-      level = activities.where(taxonomy: "LEVEL:FINISH").maximum(:value).to_i + 1
+      level = activities.where(taxonomy: "level:finish").maximum(:value).to_i + 1
       # Get the higher round current level: we are now to the next level
-      round = activities.where(taxonomy: "LEVEL:#{level}:ROUND:FINISHED").maximum(:value).to_i + 1
+      round = activities.where(taxonomy: "level:#{level}:round:finished").maximum(:value).to_i + 1
       # Find the user finished assignements
-      fids = activities.where(taxonomy: "LEVEL:#{level}:ROUND:#{round}:TASK:FINISHED").map(&:value)
+      fids = activities.where(taxonomy: "level:#{level}:round:#{round}:task:finished").map(&:value)
       # Return a simple hash
       {
         level: level,
