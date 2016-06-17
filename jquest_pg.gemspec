@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
   s.metadata    = {
     'season' => 'Political Gaps',
-    'root_path' => 'pg'
+    'root_path' => 'political-gaps'
   }
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
