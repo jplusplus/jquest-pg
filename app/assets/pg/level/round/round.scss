@@ -1,0 +1,19 @@
+.pg__level__round   {
+
+  &__heading {
+
+    border-bottom:0;
+    @include box-shadow(0 -3px 0 0  $brand-primary inset, 0 2px 2px 0 rgba(black, .1) );
+
+    &__level {
+      color:$brand-primary;
+      font-weight: bolder;
+      text-transform: uppercase;
+    }
+
+    &__round {
+      font-weight: lighter;
+    }
+  }  
+
+}

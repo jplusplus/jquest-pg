@@ -9,32 +9,37 @@ angular.module 'jquest'
     [
       {
         title: 'Level 1'
-        description: 'Lorem ipsum dolor sit description'
+        description: 'National parliament of your home country'
         category: 0
       }
       {
         title: 'Level 2'
-        description: 'Lorem ipsum dolor sit description'
+        description: 'Regional parliament of your home country'
         category: 0
       }
       {
         title: 'Level 3'
-        description: 'Lorem ipsum dolor sit description'
+        description: 'Local parliament of your home country'
         category: 0
       }
       {
         title: 'Level 4'
-        description: 'Lorem ipsum dolor sit description'
+        description: 'Foreign parliament'
         category: 1
       }
       {
         title: 'Level 5'
-        description: 'Lorem ipsum dolor sit description'
+        description: 'Older parliament of home country'
         category: 1
       }
       {
         title: 'Level 6'
-        description: 'Lorem ipsum dolor sit description'
+        description: 'Very foreign parliament'
+        category: 1
+      }
+      {
+        title: 'Level 7'
+        description: 'Historical parliament'
         category: 2
       }
     ]

@@ -1,3 +1,30 @@
 <div class="pg__level__round__gender">
-
+  <div class="card card-block">
+    <fieldset ng-repeat="person in level.assignements track by person.id"
+         class="pg__level__round__gender__person"
+         ng-show="round.isCurrentAssingnment(person)">
+      <div class="pg__level__round__gender__person__stack">
+        <div class="pg__level__round__gender__person__stack__image img-thumbnail">
+          <img ng-src="http://placehold.it/200x250/fff/756a75" />
+          <div class="pg__level__round__gender__person__stack__image__legend">
+            <div class="pg__level__round__gender__person__stack__image__legend__fullname">{{ person.fullname }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="pg__level__round__gender__person__choices">
+        <button class="pg__level__round__gender__person__choices__btn pg__level__round__gender__person__choices__btn--male btn btn-lg"
+                ng-click="gender.male(person)">
+          Male
+        </button>
+        <button class="pg__level__round__gender__person__choices__btn pg__level__round__gender__person__choices__btn--other btn btn-sm"
+                ng-click="gender.other(person)">
+          Other
+        </button>
+        <button class="pg__level__round__gender__person__choices__btn  pg__level__round__gender__person__choices__btn--female btn btn-lg"
+                ng-click="gender.female(person)">
+          Female
+        </button>
+      </div>
+    </fieldset>
+  </div>
 </div>

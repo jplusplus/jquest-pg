@@ -3,6 +3,7 @@ module JquestPg
     module V1
       class Persons < Grape::API
         resource :persons do
+
           desc "Return list of persons"
           get do
             Person.page(params[:page])
@@ -21,6 +22,38 @@ module JquestPg
             # And returns persons list
             persons
           end
+
+          params do
+            requires :id, type: Integer, desc: 'person id'
+          end
+          route_param :id do
+
+            desc "Get a person"
+            get do
+              Person.find params[:id]
+            end
+
+            desc "Genderize a person"
+            params do
+              requires :gender, type: String, desc: 'new gender'
+            end
+            post :genderize do
+              person = Person.find(params[:id])
+              # The person must be assigned to that user's progression
+              if progression[:assignment].resource == person
+                # Change the gender
+                person.gender = params[:gender]
+                # Ensure a version is created even if the value is the same
+                person.touch_with_version unless person.gender_changed?
+                person.save!
+                # Return a person
+                person
+              else
+                error!({ error: 'Unauthorized.' }, 403)
+              end
+            end
+          end
+
         end
       end
     end

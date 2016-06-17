@@ -7,3 +7,8 @@ angular.module 'jquest'
         controllerAs: 'level'
         templateUrl: 'level/level.html'
         url: "level/:level"
+        resolve:
+          assignements: (seasons, SeasonRestangular)->
+            'ngInject'
+            # Wait for the season to be ready before getting assigments
+            SeasonRestangular().one('persons').one('assigned').getList()
