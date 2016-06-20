@@ -22,6 +22,13 @@ if defined?(ActiveAdmin)
     filter :territory
     filter :country
 
+
+    form :as => :pg_legislature do |f|
+      f.semantic_errors
+      f.inputs
+      f.actions
+    end
+
     controller do
       def permitted_params
         params.permit *active_admin_namespace.permitted_params,
