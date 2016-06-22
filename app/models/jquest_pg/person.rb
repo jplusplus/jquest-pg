@@ -2,6 +2,7 @@ module JquestPg
   class Person < ActiveRecord::Base
     has_paper_trail
     has_many :mandatures
+    has_many :assignments, foreign_key: :resource_id
     after_update :track_activities
 
     def display_name
@@ -56,13 +57,17 @@ module JquestPg
       @gender_touched.present? and @gender_touched
     end
 
-    def self.assign_to!(user, season=nil)
+    def self.some_are_assigned_to?(user, season=user.member_of)
+      self.assigned_to(user, season, true).length > 0
+    end
+
+    def self.assign_to!(user, season=user.member_of)
       # A array of assigned person
       assigned_persons = []
       # Get the list of legislatures that can be assigned to the user
       assignable_legislatures = Legislature.assignable_to user
       # Number of persons picked from each legislatures depends of the number of legislature
-      per_legislatures = [(6 / assignable_legislatures.length).ceil, 1].max
+      per_legislatures = (6 / [assignable_legislatures.length, 1].max).ceil
       # For each legislature...
       assignable_legislatures.each do |legislature|
         # Pick enough persons!
@@ -93,9 +98,17 @@ module JquestPg
       assigned_persons
     end
 
-    def self.assigned_to(user)
+    def self.assigned_to(user, season=user.member_of, force=true)
       ids = user.assignments.where(resource_type: Person).map(&:resource_id)
-      where(id: ids)
+      # Collect persons assigned to that user
+      persons = where(id: ids)
+      # The user may not have assigned person yet
+      if force and persons.length == 0
+        # Assign person to the user
+        persons = Person.assign_to! user, season
+      end
+      # And returns persons list
+      persons
     end
   end
 end
