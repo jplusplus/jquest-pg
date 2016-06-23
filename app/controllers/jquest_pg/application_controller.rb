@@ -16,6 +16,7 @@ module JquestPg
       {
         level: level,
         round: round,
+        points: user.season_points(season),
         assignment: user.assignments.where.not(id: fids).first
       }
     end

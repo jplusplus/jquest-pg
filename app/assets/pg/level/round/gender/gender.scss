@@ -7,7 +7,7 @@
 
     &__stack {
 
-      margin-bottom: 2rem * $line-height;
+      margin-bottom: 1rem * $line-height;
       max-width: 100%;
       display: inline-block;
       position: relative;
@@ -76,6 +76,7 @@
 
     &__choices {
       white-space: nowrap;
+      padding-bottom: 2rem;
 
       &__btn {
         line-height: 5em;
@@ -88,7 +89,7 @@
 
         &--other {
           margin:0 -1rem;
-          @include vendor-prefix(transform, translateY(-3rem) );
+          @include vendor-prefix(transform, translateY(3rem) );
           background:#F4CEA5;
         }
 
