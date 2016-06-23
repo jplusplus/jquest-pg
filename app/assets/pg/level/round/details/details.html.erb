@@ -1,23 +1,84 @@
 <div class="pg__level__round__details">
-  <div class="card card-block">
+  <div class="card">
     <fieldset ng-repeat="mandature in level.assignements track by mandature.id"
          class="pg__level__round__details__person"
          ng-show="round.isCurrentAssingnment(mandature)">
-      <div class="row">
-        <div class="col-xs-3 col-xs-push-9">
-          <img src="http://placehold.it/200x300/ccc9c4/fff" alt="" class="img-thumbnail img-fuild" />
-        </div>
-        <div class="col-xs-9 col-xs-pull-3">
-          <h4>Find detail information about {{ mandature.person.fullname }}</h4>
-          <p>At least one is required before you can move on.</p>
-          <div class="row">
-            <div class="col-xs-3">
+      <div class="pg__level__round__details__heading card-block">
+        <h4 class="card-title">Find detail information</h4>
+        <p class="card-text">At least one is required before you can move on.</p>
+      </div>
+      <div class="row card-block">
+        <div class="col-xs-4 col-xs-push-8">
+          <span class="img-thumbnail pg__level__round__details__person__image">
+            <div class="pg__level__round__details__person__image__legend">
+              <div class="pg__level__round__details__person__image__legend__fullname">{{ mandature.person.fullname }}</div>
+              <div class="pg__level__round__details__person__image__legend__legislature">{{ mandature.legislature.name }}</div>
             </div>
-            <div class="col-xs-9">
-
+            <img src="{{ mandature.person.image || 'http://placehold.it/200x250/ccc9c4/fff' }}" alt="" />
+          </span>
+        </div>
+        <form class="col-xs-8 col-xs-pull-4 pg__level__round__details__person__form">
+          <div class="row form-group">
+            <label class="col-xs-4 form-control-label pg__level__round__details__person__form__label" for="input-birthdate">
+              Date of birth
+            </label>
+            <div class="col-xs-8">
+              <input class="form-control"
+                     type="text"
+                     ng-model="mandature.person.birthdate"
+                     ng-disabled=":: mandature.person.birthdate"
+                     id="input-birthdate" />
             </div>
           </div>
-        </div>
+          <div class="row form-group">
+            <label class="col-xs-4 form-control-label pg__level__round__details__person__form__label" for="input-birthplace">
+              Place of birth
+            </label>
+            <div class="col-xs-8">
+              <input class="form-control"
+                     type="text"
+                     ng-model="mandature.person.birthplace"
+                     ng-disabled=":: mandature.person.birthplace"
+                     id="input-birthplace" />
+            </div>
+          </div>
+          <div class="row form-group">
+            <label class="col-xs-4 form-control-label pg__level__round__details__person__form__label" for="input-education">
+              Education
+            </label>
+            <div class="col-xs-8">
+              <input class="form-control"
+                     type="text"
+                     ng-model="mandature.person.education"
+                     ng-disabled=":: mandature.person.education"
+                     id="input-education" />
+            </div>
+          </div>
+          <div class="row form-group">
+            <label class="col-xs-4 form-control-label pg__level__round__details__person__form__label" for="input-profession-category">
+              Occupation
+            </label>
+            <div class="col-xs-8">
+              <input class="form-control"
+                     type="text"
+                     ng-model="mandature.person.profession_category"
+                     ng-disabled=":: mandature.person.profession_category"
+                     id="input-profession-category" />
+            </div>
+          </div>
+          <div class="row form-group">
+            <label class="col-xs-4 form-control-label pg__level__round__details__person__form__label" for="input-polical-leaning">
+              Political leaning
+            </label>
+            <div class="col-xs-8">
+              <input class="form-control"
+                     type="text"
+                     ng-model="mandature.polical_leaning"
+                     ng-disabled=":: mandature.polical_leaning"
+                     id="input-polical-leaning" />
+            </div>
+          </div>
+        </form>
       </div>
     </fieldset>
   </div>
