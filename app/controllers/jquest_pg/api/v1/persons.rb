@@ -33,7 +33,7 @@ module JquestPg
             post :genderize do
               person = Person.find(params[:id])
               # The person must be assigned to that user's progression
-              if progression[:assignment].resource == person
+              if progression[:assignment]["resource"]["person_id"] == person.id
                 # Change the gender
                 person.gender = params[:gender]
                 # Ensure a version is created even if the value is the same

@@ -2,7 +2,6 @@ module JquestPg
   class Person < ActiveRecord::Base
     has_paper_trail
     has_many :mandatures
-    has_many :assignments, foreign_key: :resource_id
     after_update :track_activities
 
     def display_name
@@ -22,8 +21,12 @@ module JquestPg
         task_taxonomy = "level:#{progression[:level]}:round:#{progression[:round]}:task:finished"
         # Does the gender have been touch (even if it didn't changed)
         if self.gender_touched? and progression[:round] == 1
-          # Find assignment for this user
-          assignment = user.assignments.where(resource: self).first
+          # Find assignment for this user...
+          assignment = user.assignments.
+            # ...joins through the mandatures table using the assignment's resource_id
+            joins('INNER JOIN jquest_pg_mandatures ON jquest_pg_mandatures.id = assignments.resource_id').
+            # ...filter mandatures with person id
+            find_by(jquest_pg_mandatures: { person_id: self.id })
           # We found it!
           unless assignment.nil?
             # Take its id
@@ -57,58 +60,8 @@ module JquestPg
       @gender_touched.present? and @gender_touched
     end
 
-    def self.some_are_assigned_to?(user, season=user.member_of)
-      self.assigned_to(user, season, true).length > 0
-    end
-
-    def self.assign_to!(user, season=user.member_of)
-      # A array of assigned person
-      assigned_persons = []
-      # Get the list of legislatures that can be assigned to the user
-      assignable_legislatures = Legislature.assignable_to user
-      # Number of persons picked from each legislatures depends of the number of legislature
-      per_legislatures = (6 / [assignable_legislatures.length, 1].max).ceil
-      # For each legislature...
-      assignable_legislatures.each do |legislature|
-        # Pick enough persons!
-        per_legislatures.times.each do
-          person = nil
-          # Attempts available to find a person (no more than 10)
-          attempts = 10
-          loop do
-            # Rick a random person not already assigned
-            person = legislature.persons.where.not(id: assigned_persons).order("RANDOM()").first
-            # Ensure no one else is assigned to that person
-            already_assigned = Assignment.exists? resource: person
-            # Save the attempt
-            attempts -= 1
-            break if not already_assigned or attempts == 0
-          end
-          assigned_persons << person unless person.nil?
-        end
-      end
-      # Now our assigned persons list must be populated, it is time to save it
-      # as assignments for the given user.
-      assignments = assigned_persons.map do |person|
-        Assignment.new user: user, resource: person, season: season
-      end
-      # Batch import of all assignments
-      Assignment.import assignments
-      # Returns the persons
-      assigned_persons
-    end
-
     def self.assigned_to(user, season=user.member_of, force=true)
-      ids = user.assignments.where(resource_type: Person).map(&:resource_id)
-      # Collect persons assigned to that user
-      persons = where(id: ids)
-      # The user may not have assigned person yet
-      if force and persons.length == 0
-        # Assign person to the user
-        persons = Person.assign_to! user, season
-      end
-      # And returns persons list
-      persons
+      Mandature.assigned_to(user).includes(:person).map(&:person)
     end
   end
 end

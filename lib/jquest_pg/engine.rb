@@ -34,7 +34,7 @@ module JquestPg
           def create_assignements
             # Assign only if the user is member of this season (using its engine)
             if not self.member_of.nil? and self.member_of.engine == JquestPg::Engine
-              Person::some_are_assigned_to? self
+              Mandature::some_are_assigned_to? self
             end
           end
       end

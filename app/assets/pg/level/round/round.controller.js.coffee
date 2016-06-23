@@ -5,7 +5,7 @@ angular.module 'jquest'
       title: "Round #{seasons.current().progression.round}"
       # Find the currency assignment according to the user activity
       isCurrentAssingnment: (a)->
-        seasons.current().progression.assignment?.resource_id is a.id
+        seasons.current().progression.assignment?.resource.person.id is a.id
       # Redirect to a child state according to the current round
       constructor: ->
         switch seasons.current().progression.round
