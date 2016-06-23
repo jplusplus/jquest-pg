@@ -11,4 +11,4 @@ angular.module 'jquest'
           assignements: (seasons, SeasonRestangular)->
             'ngInject'
             # Wait for the season to be ready before getting assigments
-            SeasonRestangular().one('persons').one('assigned').getList()
+            SeasonRestangular().one('mandatures').one('assigned').getList()

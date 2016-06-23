@@ -57,9 +57,15 @@
         &__legend {
           text-align: left;
 
-          &__fullname {
-            padding:.5rem;
+          &__fullname, &__legislature {
+            padding:0 .5rem;
             font-weight: bold;
+          }
+
+          &__legislature {
+            padding:0 .5rem;
+            font-weight: lighter;
+            font-size:.9em;
           }
         }
       }

@@ -7,6 +7,7 @@ module JquestPg
         format :json
 
         mount Persons
+        mount Mandatures
       end
     end
   end
