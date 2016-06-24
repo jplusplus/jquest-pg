@@ -1,85 +1,131 @@
 <div class="pg__level__round__details">
   <div class="card">
-    <fieldset ng-repeat="mandature in level.assignements track by mandature.id"
-         class="pg__level__round__details__person"
-         ng-show="round.isCurrentAssingnment(mandature)">
+    <div class="pg__level__round__details__person">
       <div class="pg__level__round__details__heading card-block">
         <h4 class="card-title">Find detail information</h4>
         <p class="card-text">At least one is required before you can move on.</p>
       </div>
-      <div class="row card-block">
-        <div class="col-xs-4 col-xs-push-8">
-          <span class="img-thumbnail pg__level__round__details__person__image">
-            <div class="pg__level__round__details__person__image__legend">
-              <div class="pg__level__round__details__person__image__legend__fullname">{{ mandature.person.fullname }}</div>
-              <div class="pg__level__round__details__person__image__legend__legislature">{{ mandature.legislature.name }}</div>
-            </div>
-            <img src="{{ mandature.person.image || 'http://placehold.it/200x250/ccc9c4/fff' }}" alt="" />
-          </span>
-        </div>
-        <form class="col-xs-8 col-xs-pull-4 pg__level__round__details__person__form">
-          <div class="row form-group">
-            <label class="col-xs-4 form-control-label pg__level__round__details__person__form__label" for="input-birthdate">
+      <form>
+        <div class="pg__level__round__details__person__form card-block">
+          <fieldset class="form-group">
+            <label class="pg__level__round__details__person__form__label" for="input-birthdate">
               Date of birth
             </label>
-            <div class="col-xs-8">
-              <input class="form-control"
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-sm"
                      type="text"
-                     ng-model="mandature.person.birthdate"
-                     ng-disabled=":: mandature.person.birthdate"
+                     ng-model="details.person.birthdate"
+                     ng-disabled=":: details.person.birthdate"
                      id="input-birthdate" />
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" ng-click="details.editSource('education', details.person)" type="button">
+                  Add source
+                </button>
+              </span>
             </div>
-          </div>
-          <div class="row form-group">
-            <label class="col-xs-4 form-control-label pg__level__round__details__person__form__label" for="input-birthplace">
+            <div class="small text-muted">Lorem ipsum dolor description von Date of birth.</div>
+          </fieldset>
+          <fieldset class="form-group">
+            <label class="pg__level__round__details__person__form__label" for="input-birthplace">
               Place of birth
             </label>
-            <div class="col-xs-8">
-              <input class="form-control"
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-sm"
                      type="text"
-                     ng-model="mandature.person.birthplace"
-                     ng-disabled=":: mandature.person.birthplace"
+                     ng-model="details.person.birthplace"
+                     ng-disabled=":: details.person.birthplace"
                      id="input-birthplace" />
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" ng-click="details.editSource('education', details.person)" type="button">
+                  Add source
+                 </button>
+              </span>
             </div>
-          </div>
-          <div class="row form-group">
-            <label class="col-xs-4 form-control-label pg__level__round__details__person__form__label" for="input-education">
+            <div class="small text-muted">Lorem ipsum dolor description von Place of birth.</div>
+          </fieldset>
+          <fieldset class="form-group">
+            <label class="pg__level__round__details__person__form__label" for="input-role">
+              Role in {{ details.mandature.legislature.name }}
+            </label>
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-sm"
+                     type="text"
+                     ng-model="details.mandature.role"
+                     ng-disabled=":: details.mandature.role"
+                     id="input-role" />
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" ng-click="details.editSource('education', details.person)" type="button">
+                  Add source
+                </button>
+              </span>
+            </div>
+            <div class="small text-muted">Lorem ipsum dolor description von Education.</div>
+          </fieldset>
+          <fieldset class="form-group">
+            <label class="pg__level__round__details__person__form__label" for="input-education">
               Education
             </label>
-            <div class="col-xs-8">
-              <input class="form-control"
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-sm"
                      type="text"
-                     ng-model="mandature.person.education"
-                     ng-disabled=":: mandature.person.education"
+                     ng-model="details.person.education"
+                     ng-disabled=":: details.person.education"
                      id="input-education" />
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" ng-click="details.editSource('education', details.person)" type="button">
+                  Add source
+                </button>
+              </span>
             </div>
-          </div>
-          <div class="row form-group">
-            <label class="col-xs-4 form-control-label pg__level__round__details__person__form__label" for="input-profession-category">
+            <div class="small text-muted">Lorem ipsum dolor description von Education.</div>
+          </fieldset>
+          <fieldset class="form-group">
+            <label class="pg__level__round__details__person__form__label" for="input-profession-category">
               Occupation
             </label>
-            <div class="col-xs-8">
-              <input class="form-control"
-                     type="text"
-                     ng-model="mandature.person.profession_category"
-                     ng-disabled=":: mandature.person.profession_category"
-                     id="input-profession-category" />
+            <div class="input-group input-group-sm">
+              <select class="form-control form-control-sm"
+                     ng-options="pl for pl in details.professionCategories"
+                     ng-model="details.person.profession_category"
+                     ng-disabled=":: details.person.profession_category"
+                     id="input-profession-category">
+                <option value="">—</option>
+              </select>
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" ng-click="details.editSource('education', details.person)" type="button">
+                  Add source
+                </button>
+              </span>
             </div>
-          </div>
-          <div class="row form-group">
-            <label class="col-xs-4 form-control-label pg__level__round__details__person__form__label" for="input-polical-leaning">
+            <div class="small text-muted">Lorem ipsum dolor description von Occupation.</div>
+          </fieldset>
+          <fieldset class="form-group">
+            <label class="pg__level__round__details__person__form__label" for="input-polical-leaning">
               Political leaning
             </label>
-            <div class="col-xs-8">
-              <input class="form-control"
-                     type="text"
-                     ng-model="mandature.polical_leaning"
-                     ng-disabled=":: mandature.polical_leaning"
-                     id="input-polical-leaning" />
+            <div class="input-group input-group-sm">
+              <select class="form-control form-control-sm"
+                     ng-options="pl for pl in details.politicalLeanings"
+                     ng-model="details.mandature.polical_leaning"
+                     ng-disabled=":: details.mandature.polical_leaning"
+                     id="input-polical-leaning">
+                <option value="">—</option>
+              </select>
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" ng-click="details.editSource('education', details.person)" type="button">
+                  Add source
+                </button>
+              </span>
             </div>
-          </div>
-        </form>
-      </div>
-    </fieldset>
+            <div class="small text-muted">Lorem ipsum dolor description von Political leaning.</div>
+          </fieldset>
+        </div>
+        <div class="card-footer text-xs-right">
+          <button class="btn btn-primary" type="submit">
+            Next
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

@@ -2,15 +2,16 @@ angular.module 'jquest'
   .controller 'MainSeasonPgCtrl', (seasons, $state, LEVELS, CATEGORIES)->
     'ngInject'
     new class MainSeasonPgCtrl
-      progression: seasons.current().progression
-      buildLevel: (level, index)->
+      progression: => seasons.current().progression
+      progress: => (6 - @progression().remaining_assignments)/6 * 100
+      buildLevel: (level, index)=>
         angular.extend {
           # Level is not unlocked yet
-          locked: (index + 1) > seasons.current().progression.level
+          locked: (index + 1) > @progression().level
           # Level is done, congrats!
-          done: (index + 1) < seasons.current().progression.level
+          done: (index + 1) < @progression().level
         }, level
-      category:  CATEGORIES
+      category: CATEGORIES
       constructor: ->
         # Group levels by categories
         @categories = _.chain(LEVELS).map(@buildLevel).groupBy('category').value()

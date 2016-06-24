@@ -13,16 +13,16 @@ module JquestPg
       # Find the user finished assignements
       fids = activities.where(taxonomy: "level:#{level}:round:#{round}:task:finished").map(&:value)
       # Get the remaining assignments
-      remaining_assigments = user.assignments.where.not(id: fids).order(:id)
+      remaining_assignments = user.assignments.where.not(id: fids).order(:id)
       # Current assignment is the first of the remaining
-      assignment = remaining_assigments.first
+      assignment = remaining_assignments.first
       # Return a simple hash
       {
         level: level,
         round: round,
         points: user.season_points(season),
-        # Remaining assigments count
-        remaining_assigments: remaining_assigments.length,
+        # Remaining assignments count
+        remaining_assignments: remaining_assignments.length,
         # Return it as JSON resolving the nested resources
         assignment: assignment.as_json(
           include: {

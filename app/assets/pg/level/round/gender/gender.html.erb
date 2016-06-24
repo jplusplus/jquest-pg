@@ -2,10 +2,10 @@
   <div class="card card-block">
     <fieldset ng-repeat="mandature in level.assignements track by mandature.id"
          class="pg__level__round__gender__person"
-         ng-show="round.isCurrentAssingnment(mandature)">
+         ng-show="round.isCurrentAssignment(mandature)">
       <div class="pg__level__round__gender__person__stack">
         <div class="pg__level__round__gender__person__stack__image pg__level__round__gender__person__stack__image--{{ mandature.person.choice }} img-thumbnail">
-          <img ng-src="http://placehold.it/200x250/fff/756a75" />
+          <img ng-src="http://placehold.it/200x250/B3A2B3/fff" />
           <div class="pg__level__round__gender__person__stack__image__legend">
             <div class="pg__level__round__gender__person__stack__image__legend__fullname">{{ mandature.person.fullname }}</div>
             <div class="pg__level__round__gender__person__stack__image__legend__legislature">{{ mandature.legislature.name }}</div>

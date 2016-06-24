@@ -5,6 +5,35 @@ angular.module 'jquest'
       'Parliaments of foreign countries'
       'Historical parliaments'
     ]
+  .constant 'PROFESSION_CATEGORIES',
+    [
+      'Armed forces'
+      'Businessman/woman'
+      'Civil servant'
+      'Farmer'
+      'Journalist, public relations'
+      'Lawyer'
+      'Manual worker, craftsman/woman'
+      'Medical doctor, dentist, optician '
+      'Miner'
+      'Teacher'
+      'University professor'
+      'Student'
+      'No occupation'
+      'Other'
+    ]
+  .constant 'POLITICAL_LEANINGS',
+    [
+      'Communist'
+      'Left (non-communist)'
+      'Center-left (social democrat)'
+      'Green'
+      'Liberal'
+      'Conservative'
+      'Nationalist'
+      'Regionalist'
+      'Other'
+    ]
   .constant 'LEVELS',
     [
       {

@@ -4,8 +4,10 @@ angular.module 'jquest'
     new class MainSeasonPgLevelRoundCtrl
       title: "Round #{seasons.current().progression.round}"
       # Find the currency assignment according to the user activity
-      isCurrentAssingnment: (manddature)->
+      isCurrentAssignment: (manddature)->
         seasons.current().progression.assignment?.resource.id is manddature.id
+      getCurrentAssignment: ->
+        seasons.current().progression.assignment
       # Redirect to a child state according to the current round
       constructor: ->
         switch seasons.current().progression.round

@@ -12,5 +12,30 @@
       </div>
       <div ui-view></div>
     </div>
+    <div class="col-lg-4 pg__level__round__overview">
+      <div class="pg__level__round__overview__progress card">
+        <div class="card-block">
+          {{ pg.progression().remaining_assignments }} tasks remaining before next round.
+          <progress class="progress pg__level__round__overview__progress__bar" value="{{ pg.progress() }}" max="100">
+            <div class="progress">
+              <span class="progress-bar" ng-style="{ width: pg.progress() + '%' }">
+                {{ pg.progress() }}%
+              </span>
+            </div>
+          </progress>
+        </div>
+      </div>
+      <div class="pg__level__round__overview__representative" ng-hide="pg.progression().round == 1" ng-init="person = round.getCurrentAssignment().resource.person">
+        <div class="pg__level__round__overview__representative__cover"
+             ng-style="{ backgroundImage: 'url(' + (person.image || 'http://placehold.it/500x300/B3A2B3/fff') + ')' }">
+             <div class="card-block pg__level__round__overview__representative__caption">
+               <div class="pg__level__round__overview__representative__cover__caption__fullname">{{ person.fullname }}</div>
+               <div class="pg__level__round__overview__representative__cover__caption__legislature">
+                 {{ round.getCurrentAssignment().resource.legislature.name }}
+               </div>
+             </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
