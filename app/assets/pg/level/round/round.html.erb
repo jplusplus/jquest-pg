@@ -25,13 +25,13 @@
           </progress>
         </div>
       </div>
-      <div class="pg__level__round__overview__representative" ng-hide="pg.progression().round == 1" ng-init="person = round.getCurrentAssignment().resource.person">
+      <div class="pg__level__round__overview__representative" ng-hide="pg.progression().round == 1">
         <div class="pg__level__round__overview__representative__cover"
-             ng-style="{ backgroundImage: 'url(' + (person.image || 'http://placehold.it/500x300/B3A2B3/fff') + ')' }">
+             ng-style="{ backgroundImage: 'url(' + (round.person.image || 'http://placehold.it/500x300/B3A2B3/fff') + ')' }">
              <div class="card-block pg__level__round__overview__representative__caption">
-               <div class="pg__level__round__overview__representative__cover__caption__fullname">{{ person.fullname }}</div>
+               <div class="pg__level__round__overview__representative__cover__caption__fullname">{{ round.person.fullname }}</div>
                <div class="pg__level__round__overview__representative__cover__caption__legislature">
-                 {{ round.getCurrentAssignment().resource.legislature.name }}
+                 {{ round.mandature.legislature.name }}
                </div>
              </div>
         </div>

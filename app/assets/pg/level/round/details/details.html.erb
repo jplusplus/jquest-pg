@@ -7,113 +7,113 @@
       </div>
       <form>
         <div class="pg__level__round__details__person__form card-block">
-          <fieldset class="form-group">
+          <fieldset class="form-group" ng-disabled=":: round.person.birthdate">
             <label class="pg__level__round__details__person__form__label" for="input-birthdate">
               Date of birth
             </label>
             <div class="input-group input-group-sm">
               <input class="form-control form-control-sm"
                      type="text"
-                     ng-model="details.person.birthdate"
-                     ng-disabled=":: details.person.birthdate"
+                     ng-model="round.person.birthdate"
                      id="input-birthdate" />
               <span class="input-group-btn">
-                <button class="btn btn-secondary" ng-click="details.editSource('education', details.person)" type="button">
-                  Add source
+                <button class="btn btn-secondary" ng-click="details.editSource('birthdate', round.person)" type="button">
+                  <span ng-hide="details.hasSource('birthdate', round.person)">Add source</span>
+                  <span ng-show="details.hasSource('birthdate', round.person)">Sourced</span>
                 </button>
               </span>
             </div>
             <div class="small text-muted">Lorem ipsum dolor description von Date of birth.</div>
           </fieldset>
-          <fieldset class="form-group">
+          <fieldset class="form-group" ng-disabled=":: round.person.birthplace">
             <label class="pg__level__round__details__person__form__label" for="input-birthplace">
               Place of birth
             </label>
             <div class="input-group input-group-sm">
               <input class="form-control form-control-sm"
                      type="text"
-                     ng-model="details.person.birthplace"
-                     ng-disabled=":: details.person.birthplace"
+                     ng-model="round.person.birthplace"
                      id="input-birthplace" />
               <span class="input-group-btn">
-                <button class="btn btn-secondary" ng-click="details.editSource('education', details.person)" type="button">
-                  Add source
+                <button class="btn btn-secondary" ng-click="details.editSource('birthplace', round.person)" type="button">
+                  <span ng-hide="details.hasSource('birthplace', round.person)">Add source</span>
+                  <span ng-show="details.hasSource('birthplace', round.person)">Sourced</span>
                  </button>
               </span>
             </div>
             <div class="small text-muted">Lorem ipsum dolor description von Place of birth.</div>
           </fieldset>
-          <fieldset class="form-group">
+          <fieldset class="form-group" ng-disabled=":: round.mandature.role">
             <label class="pg__level__round__details__person__form__label" for="input-role">
-              Role in {{ details.mandature.legislature.name }}
+              Role in {{ round.mandature.legislature.name }}
             </label>
             <div class="input-group input-group-sm">
               <input class="form-control form-control-sm"
                      type="text"
-                     ng-model="details.mandature.role"
-                     ng-disabled=":: details.mandature.role"
+                     ng-model="round.mandature.role"
                      id="input-role" />
               <span class="input-group-btn">
-                <button class="btn btn-secondary" ng-click="details.editSource('education', details.person)" type="button">
-                  Add source
+                <button class="btn btn-secondary" ng-click="details.editSource('role', round.person)" type="button">
+                  <span ng-hide="details.hasSource('role', round.person)">Add source</span>
+                  <span ng-show="details.hasSource('role', round.person)">Sourced</span>
                 </button>
               </span>
             </div>
             <div class="small text-muted">Lorem ipsum dolor description von Education.</div>
           </fieldset>
-          <fieldset class="form-group">
+          <fieldset class="form-group" ng-disabled=":: round.person.education">
             <label class="pg__level__round__details__person__form__label" for="input-education">
               Education
             </label>
             <div class="input-group input-group-sm">
               <input class="form-control form-control-sm"
                      type="text"
-                     ng-model="details.person.education"
-                     ng-disabled=":: details.person.education"
+                     ng-model="round.person.education"
                      id="input-education" />
               <span class="input-group-btn">
-                <button class="btn btn-secondary" ng-click="details.editSource('education', details.person)" type="button">
-                  Add source
+                <button class="btn btn-secondary" ng-click="details.editSource('education', round.person)" type="button">
+                  <span ng-hide="details.hasSource('education', round.person)">Add source</span>
+                  <span ng-show="details.hasSource('education', round.person)">Sourced</span>
                 </button>
               </span>
             </div>
             <div class="small text-muted">Lorem ipsum dolor description von Education.</div>
           </fieldset>
-          <fieldset class="form-group">
+          <fieldset class="form-group" ng-disabled=":: round.person.profession_category">
             <label class="pg__level__round__details__person__form__label" for="input-profession-category">
               Occupation
             </label>
             <div class="input-group input-group-sm">
               <select class="form-control form-control-sm"
                      ng-options="pl for pl in details.professionCategories"
-                     ng-model="details.person.profession_category"
-                     ng-disabled=":: details.person.profession_category"
+                     ng-model="round.person.profession_category"
                      id="input-profession-category">
                 <option value="">—</option>
               </select>
               <span class="input-group-btn">
-                <button class="btn btn-secondary" ng-click="details.editSource('education', details.person)" type="button">
-                  Add source
+                <button class="btn btn-secondary" ng-click="details.editSource('profession_category', round.person)" type="button">
+                  <span ng-hide="details.hasSource('profession_category', round.person)">Add source</span>
+                  <span ng-show="details.hasSource('profession_category', round.person)">Sourced</span>
                 </button>
               </span>
             </div>
             <div class="small text-muted">Lorem ipsum dolor description von Occupation.</div>
           </fieldset>
-          <fieldset class="form-group">
+          <fieldset class="form-group" ng-disabled=":: round.mandature.polical_leaning">
             <label class="pg__level__round__details__person__form__label" for="input-polical-leaning">
               Political leaning
             </label>
             <div class="input-group input-group-sm">
               <select class="form-control form-control-sm"
                      ng-options="pl for pl in details.politicalLeanings"
-                     ng-model="details.mandature.polical_leaning"
-                     ng-disabled=":: details.mandature.polical_leaning"
+                     ng-model="round.mandature.polical_leaning"
                      id="input-polical-leaning">
                 <option value="">—</option>
               </select>
               <span class="input-group-btn">
-                <button class="btn btn-secondary" ng-click="details.editSource('education', details.person)" type="button">
-                  Add source
+                <button class="btn btn-secondary" ng-click="details.editSource('polical_leaning', round.person)" type="button">
+                  <span ng-hide="details.hasSource('polical_leaning', round.person)">Add source</span>
+                  <span ng-show="details.hasSource('polical_leaning', round.person)">Sourced</span>
                 </button>
               </span>
             </div>

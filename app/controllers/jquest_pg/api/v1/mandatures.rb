@@ -31,10 +31,7 @@ module JquestPg
 
             desc "Get a mandature"
             get do
-              Mandature.find(params[:id]).
-                # Join to related tables
-                includes(:person).
-                includes(:legislature)
+              Mandature.find(params[:id])
             end
           end
 
