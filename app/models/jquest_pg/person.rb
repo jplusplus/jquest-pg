@@ -2,6 +2,7 @@ module JquestPg
   class Person < ActiveRecord::Base
     has_paper_trail
     has_many :mandatures
+    has_many :sources, foreign_key: :resource_id
     after_update :track_activities
 
     def display_name

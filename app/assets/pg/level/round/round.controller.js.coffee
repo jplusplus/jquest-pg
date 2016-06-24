@@ -1,11 +1,11 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgLevelRoundCtrl', (assignements, seasons, $state)->
+  .controller 'MainSeasonPgLevelRoundCtrl', (seasons, $state)->
     'ngInject'
     new class MainSeasonPgLevelRoundCtrl
       title: "Round #{seasons.current().progression.round}"
       # Find the currency assignment according to the user activity
       isCurrentAssignment: (manddature)->
-        seasons.current().progression.assignment?.resource.id is manddature.id
+        seasons.current().progression.assignment?.resource_id is manddature.id
       getCurrentAssignment: ->
         seasons.current().progression.assignment
       # Redirect to a child state according to the current round

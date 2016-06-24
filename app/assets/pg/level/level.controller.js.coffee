@@ -1,9 +1,10 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgLevelCtrl', (assignements, seasons, $state, LEVELS, $scope)->
+  .controller 'MainSeasonPgLevelCtrl', (people, mandatures, seasons, $state, LEVELS, $scope)->
     'ngInject'
     new class MainSeasonPgLevelCtrl
       # Assignements are always the same during a level
-      assignements: assignements
+      people: people
+      mandatures: mandatures
       # Method to start a round
       startRound: =>
         progression = seasons.current().progression

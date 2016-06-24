@@ -1,7 +1,7 @@
 module JquestPg
   module API
-    # Inherit from jQuest API Base
     class Base < Grape::API
+      # Inherit from jQuest API helpers
       helpers ::API::AuthenticableHelpers
 
       helpers do

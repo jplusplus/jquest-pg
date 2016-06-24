@@ -1,5 +1,5 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgLevelRoundGenderCtrl', (assignements, seasons, SeasonRestangular, $timeout)->
+  .controller 'MainSeasonPgLevelRoundGenderCtrl', (seasons, SeasonRestangular, $timeout)->
     'ngInject'
     new class MainSeasonPgLevelRoundGenderCtrl
       male: (person)=> @genderize person, 'male'
@@ -10,7 +10,7 @@ angular.module 'jquest'
         person.choice = value
         # Wait for the season to be ready before getting assigments
         SeasonRestangular()
-          .one('persons', person.id)
+          .one('people', person.id)
           .all('genderize')
           .post gender: value
           .finally (r)->

@@ -11,9 +11,7 @@ module JquestPg
               includes(:person).
               includes(:legislature).
               # Paginates results
-              page(params[:page]).
-              # Serialize including associations
-              as_json(include: [:person, :legislature])
+              page(params[:page])
           end
 
           desc "Return list of mandatures assigned to the user"
@@ -23,9 +21,7 @@ module JquestPg
             Mandature.assigned_to(current_user).
               # Join to related tables
               includes(:person).
-              includes(:legislature).
-              # Serialize including associations
-              as_json(include: [:person, :legislature])
+              includes(:legislature)
           end
 
           params do
@@ -38,9 +34,7 @@ module JquestPg
               Mandature.find(params[:id]).
                 # Join to related tables
                 includes(:person).
-                includes(:legislature).
-                # Serialize including associations
-                as_json(include: [:person, :legislature])
+                includes(:legislature)
             end
           end
 

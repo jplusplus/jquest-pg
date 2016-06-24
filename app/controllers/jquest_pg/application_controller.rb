@@ -24,13 +24,7 @@ module JquestPg
         # Remaining assignments count
         remaining_assignments: remaining_assignments.length,
         # Return it as JSON resolving the nested resources
-        assignment: assignment.as_json(
-          include: {
-            resource: {
-              include: [:person, :legislature]
-            }
-          }
-        )
+        assignment: assignment
       }
     end
   end

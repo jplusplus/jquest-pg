@@ -5,8 +5,9 @@ module JquestPg
         prefix 'v1'
         rescue_from :all
         format :json
+        formatter :json, Grape::Formatter::ActiveModelSerializers
 
-        mount Persons
+        mount People
         mount Mandatures
       end
     end

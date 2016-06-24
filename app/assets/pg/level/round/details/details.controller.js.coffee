@@ -1,5 +1,5 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgLevelRoundDetailsCtrl', ($uibModal, $scope, seasons, SeasonRestangular, PROFESSION_CATEGORIES, POLITICAL_LEANINGS)->
+  .controller 'MainSeasonPgLevelRoundDetailsCtrl', ($uibModal, $scope, seasons, mandatures, people, SeasonRestangular, PROFESSION_CATEGORIES, POLITICAL_LEANINGS)->
     'ngInject'
     new class MainSeasonPgLevelRoundDetailsCtrl
       professionCategories: PROFESSION_CATEGORIES
@@ -9,5 +9,6 @@ angular.module 'jquest'
           templateUrl: 'level/round/details/source/source.html'
           scope: $scope
       constructor: ->
-        @mandature = angular.copy seasons.current().progression.assignment?.resource
-        @person = angular.copy @mandature.person
+        @assignementResourceId = seasons.current().progression.assignment.resource_id
+        @mandature = angular.copy _.find(mandatures, id: @assignementResourceId)
+        @person = angular.copy _.find(people, id: @mandature.person.id)
