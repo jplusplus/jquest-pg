@@ -10,9 +10,9 @@ angular.module 'jquest'
           level: null
           round: null
         resolve:
-          mandature: (seasons, mandatures)->
+          mandature: (seasons, mandatures, Restangular)->
             'ngInject'
-            angular.copy _.find(mandatures, id: seasons.current().progression.assignment.resource_id)
-          person: (people, mandature)->
+            Restangular.copy _.find(mandatures, id: seasons.current().progression.assignment.resource_id)
+          person: (people, mandature, Restangular)->
             'ngInject'
-            angular.copy _.find(people, id: mandature.person.id)
+            Restangular.copy _.find(people, id: mandature.person.id)

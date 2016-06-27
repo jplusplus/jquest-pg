@@ -26,24 +26,38 @@ module JquestPg
               Person.find(params[:id])
             end
 
+            desc "Update a person"
+            put do
+              authenticate!
+              person = Person.find params[:id]
+              # The person must be assigned to that user's progression
+              authorize person, :update?
+              # Create or update sources
+              params[:sources].map! do |source|
+                source.resource = person
+                Source.update_or_create source
+              end
+              person.update_attributes permitted_params(person, params)
+              # Return a person
+              person
+            end
+
             desc "Genderize a person"
             params do
               requires :gender, type: String, desc: 'new gender'
             end
             post :genderize do
-              person = Person.find(params[:id])
+              authenticate!
+              person = Person.find params[:id]
               # The person must be assigned to that user's progression
-              if Mandature.find(progression[:assignment]["resource_id"]).person == person
-                # Change the gender
-                person.gender = params[:gender]
-                # Ensure a version is created even if the value is the same
-                person.touch_with_version unless person.gender_changed?
-                person.save!
-                # Return a person
-                person
-              else
-                error!({ error: 'Unauthorized.' }, 403)
-              end
+              authorize person, :update?
+              # Change the gender
+              person.gender = params[:gender]
+              # Ensure a version is created even if the value is the same
+              person.touch_with_version unless person.gender_changed?
+              person.save!
+              # Return a person
+              person
             end
           end
 

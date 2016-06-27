@@ -4,6 +4,7 @@ PATH
     jquest_pg (0.0.7)
       active_model_serializers (~> 0.10.0)
       grape-active_model_serializers
+      pundit
       rails (~> 4.2.6)
       schema_plus_foreign_keys
 
@@ -106,6 +107,8 @@ GEM
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
     pkg-config (1.1.7)
+    pundit (1.1.0)
+      activesupport (>= 3.0.0)
     rack (1.6.4)
     rack-accept (0.4.5)
       rack (>= 0.4)

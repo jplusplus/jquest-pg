@@ -33,6 +33,22 @@ module JquestPg
             get do
               Mandature.find(params[:id])
             end
+
+            desc "Update a mandature"
+            put do
+              authenticate!
+              mandature = Mandature.find params[:id]
+              # The mandature must be assigned to that user's progression
+              authorize mandature, :update?
+              # Create or update sources
+              params[:sources].map! do |source|
+                source.resource = mandature
+                Source.update_or_create source
+              end
+              mandature.update_attributes permitted_params(mandature, params)
+              # Return a mandature
+              mandature
+            end
           end
 
         end

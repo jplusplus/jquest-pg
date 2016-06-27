@@ -144,24 +144,24 @@
               Lorem ipsum dolor description von Occupation.
             </div>
           </fieldset>
-          <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.mandature.polical_leaning">
+          <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.mandature.political_leaning">
             <div class="col-xs-8">
-              <label class="pg__level__round__details__person__form__label" for="input-polical-leaning">
+              <label class="pg__level__round__details__person__form__label" for="input-political-leaning">
                 Political leaning
               </label>
               <div class="input-group input-group">
                 <select class="form-control form-control"
                        ng-options="pl for pl in details.politicalLeanings"
-                       ng-model="round.mandature.polical_leaning"
-                       id="input-polical-leaning">
+                       ng-model="round.mandature.political_leaning"
+                       id="input-political-leaning">
                   <option value="">—</option>
                 </select>
                 <span class="input-group-btn">
-                  <button class="btn btn-secondary" ng-click="details.editSource('polical_leaning', round.person)" type="button">
-                    <span ng-hide="details.hasSource('polical_leaning', round.person)">
+                  <button class="btn btn-secondary" ng-click="details.editSource('political_leaning', round.person)" type="button">
+                    <span ng-hide="details.hasSource('political_leaning', round.person)">
                       Add source
                     </span>
-                    <span ng-show="details.hasSource('polical_leaning', round.person)">
+                    <span ng-show="details.hasSource('political_leaning', round.person)">
                       <i class="fa fa-check-circle-o text-success"></i>
                       Sourced
                     </span>
