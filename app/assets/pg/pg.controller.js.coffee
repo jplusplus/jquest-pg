@@ -1,5 +1,5 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgCtrl', (seasons, $state, LEVELS, CATEGORIES)->
+  .controller 'MainSeasonPgCtrl', (seasons, $state, SETTINGS)->
     'ngInject'
     new class MainSeasonPgCtrl
       progression: => seasons.current().progression
@@ -11,10 +11,10 @@ angular.module 'jquest'
           # Level is done, congrats!
           done: (index + 1) < @progression().level
         }, level
-      category: CATEGORIES
+      category: SETTINGS.CATEGORIES
       constructor: ->
         # Group levels by categories
-        @categories = _.chain(LEVELS).map(@buildLevel).groupBy('category').value()
+        @categories = _.chain(SETTINGS.LEVELS).map(@buildLevel).groupBy('category').value()
         # Get activities for the current season
         seasons.activities().then (activities)->
           # Look for the 'intro'

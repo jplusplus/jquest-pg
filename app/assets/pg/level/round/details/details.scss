@@ -34,5 +34,39 @@
         font-size: .9em;
       }
     }
+
+    &__group {
+      position: relative;
+      
+      &:hover &__helper {
+        opacity:1;
+      }
+
+      &__helper {
+        $base-color: mix($card-border-color, $body-color, 60);
+        opacity:.3;
+        font-size:.8em;
+        position: relative;
+        color: $base-color;
+        border-left:$base-color 1px solid;
+        position: absolute;
+        bottom:0;
+        right:0;
+
+        &:before {
+          content:"";
+          border:$base-color 1px solid;
+          border-right:0;
+          border-top:0;
+          height: .5em;
+          width: .5em;
+          position: absolute;
+          top:50%;
+          right:100%;
+          background:$card-bg;
+          @include vendor-prefix(transform, rotate(45deg) translate(0em, -50%));
+        }
+      }
+    }
   }
 }

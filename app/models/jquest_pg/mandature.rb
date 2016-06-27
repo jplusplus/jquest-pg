@@ -2,6 +2,7 @@ module JquestPg
   class Mandature < ActiveRecord::Base
     belongs_to :legislature
     belongs_to :person
+    has_many :sources, foreign_key: :resource_id
     has_many :assignments, foreign_key: :resource_id
 
 
