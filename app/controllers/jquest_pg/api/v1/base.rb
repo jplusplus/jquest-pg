@@ -7,6 +7,7 @@ module JquestPg
         format :json
         formatter :json, Grape::Formatter::ActiveModelSerializers
 
+        mount Diversities
         mount People
         mount Mandatures
       end
