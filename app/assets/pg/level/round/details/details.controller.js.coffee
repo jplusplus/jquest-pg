@@ -1,5 +1,5 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgLevelRoundDetailsCtrl', ($uibModal, $scope, $timeout, $q, SETTINGS, mandature, person, seasons)->
+  .controller 'MainSeasonPgLevelRoundDetailsCtrl', ($uibModal, $scope, $state, $q, SETTINGS, mandature, person, seasons)->
     'ngInject'
     new class MainSeasonPgLevelRoundDetailsCtrl
       # A hash of object clones
@@ -15,9 +15,11 @@ angular.module 'jquest'
         $q.all([
           person.put(),
           mandature.put()
-        # Reload progression after both promises have be resolved
-        ]).finally seasons.reload
-
+        ]).finally ->
+          # Reload progression after both promises have be resolved
+          seasons.reload().then ->
+            # Once the season is reloaded, we might refresh the current round
+            $state.go 'main.season.pg.level.round', seasons.current().progression
       editSource: (field, resource)=>
         # Create a modal
         @editSourceModal = $uibModal.open

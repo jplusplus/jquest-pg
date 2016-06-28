@@ -9,6 +9,7 @@ angular.module 'jquest'
         params:
           level: null
           round: null
+          assignment: null
         resolve:
           mandature: (seasons, mandatures, Restangular)->
             'ngInject'

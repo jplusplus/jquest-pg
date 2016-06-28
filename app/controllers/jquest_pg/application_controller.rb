@@ -10,7 +10,7 @@ module JquestPg
       # Determines the level counting the number of assignment (6 new for each level)
       level = user.assignments.where(season: season).count()/6.to_i
       # Determines the round according to the number of distinct assignments
-      round = activities.distinct.pluck(:assignment_id).count()/6 + 1
+      round = activities.group(:taxonomy, :assignment_id).count().length/6 + 1
       # Determine the current taxonomy according to the round
       round_taxonomies = { 1 => 'genderize', 2 => 'details', 3 => 'diversity' }
       round_taxonomy = round_taxonomies[round]

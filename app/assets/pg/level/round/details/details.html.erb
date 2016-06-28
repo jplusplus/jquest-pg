@@ -7,7 +7,7 @@
       </div>
       <form ng-submit="details.submit()">
         <div class="pg__level__round__details__person__form card-block">
-          <fieldset class="form-group pg__level__round__details__person__group" ngdisabled=":: round.person.birthdate">
+          <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.person.birthdate">
             <div class="col-xs-8">
               <label class="pg__level__round__details__person__form__label" for="input-birthdate">
                 Date of birth
@@ -34,7 +34,7 @@
               Lorem ipsum dolor description von Date of birth.
             </div>
           </fieldset>
-          <fieldset class="form-group pg__level__round__details__person__group" ngdisabled=":: round.person.birthplace">
+          <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.person.birthplace">
             <div class="col-xs-8">
               <label class="pg__level__round__details__person__form__label" for="input-birthplace">
                 Place of birth
@@ -61,7 +61,7 @@
               Lorem ipsum dolor description von Place of birth.
             </div>
           </fieldset>
-          <fieldset class="form-group pg__level__round__details__person__group" ngdisabled=":: round.mandature.role">
+          <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.mandature.role">
             <div class="col-xs-8">
               <label class="pg__level__round__details__person__form__label" for="input-role">
                 Role in {{ round.mandature.legislature.name }}
@@ -88,7 +88,7 @@
               Lorem ipsum dolor description von Education.
             </div>
           </fieldset>
-          <fieldset class="form-group pg__level__round__details__person__group" ngdisabled=":: round.person.education">
+          <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.person.education">
             <div class="col-xs-8">
               <label class="pg__level__round__details__person__form__label" for="input-education">
                 Education
@@ -115,7 +115,7 @@
               Lorem ipsum dolor description von Education.
             </div>
           </fieldset>
-          <fieldset class="form-group pg__level__round__details__person__group" ngdisabled=":: round.person.profession_category">
+          <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.person.profession_category">
             <div class="col-xs-8">
               <label class="pg__level__round__details__person__form__label" for="input-profession-category">
                 Occupation
@@ -144,7 +144,7 @@
               Lorem ipsum dolor description von Occupation.
             </div>
           </fieldset>
-          <fieldset class="form-group pg__level__round__details__person__group" ngdisabled=":: round.mandature.political_leaning">
+          <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.mandature.political_leaning">
             <div class="col-xs-8">
               <label class="pg__level__round__details__person__form__label" for="input-political-leaning">
                 Political leaning
@@ -179,7 +179,7 @@
             <i class="fa fa-warning fa-fw"></i>&nbsp;
             Information with no source are not accepted.
           </div>
-          <button class="btn btn-primary" type="submit" ng-disabled="details.changes(true) < 2">
+          <button class="btn btn-primary" type="submit" ng-disabled="details.changes(true) < 1">
             Next
           </button>
         </div>
