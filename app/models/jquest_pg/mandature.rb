@@ -86,5 +86,12 @@ module JquestPg
       # And returns mandatures list
       mandatures
     end
+
+    def self.unassigned_to(user, season=user.member_of, force=true)
+      # Ids of the mandatures assigned to that user
+      mids = Mandature.assigned_to(user, season, force).map(&:id)
+      # Mandatures not assigned to that user
+      Mandature.where.not(id: mids)
+    end
   end
 end

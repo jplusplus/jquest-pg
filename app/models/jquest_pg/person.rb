@@ -66,5 +66,12 @@ module JquestPg
       Mandature.assigned_to(user).includes(:person).map(&:person)
     end
 
+    def self.unassigned_to(user, season=user.member_of, force=true)
+      # Ids of the people not assigned to that user
+      pids = Mandature.unassigned_to(user).includes(:person).distinct.pluck(:person_id)
+      # Persons matching those ids
+      Person.where(id: pids)
+    end
+
   end
 end
