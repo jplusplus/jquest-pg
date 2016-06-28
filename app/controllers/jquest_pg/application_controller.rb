@@ -1,18 +1,21 @@
 module JquestPg
   class ApplicationController < SeasonController
-    
+
     def index
       render 'jquest_pg/index', :layout => 'layouts/application'
     end
 
     def progression(user, season=user.member_of)
-      activities = user.activities.where season: season
-      # Get the higher level the user finished: we are now to the next level
-      level = activities.where(taxonomy: "level:finish").maximum(:value).to_i + 1
-      # Get the higher round current level: we are now to the next level
-      round = activities.where(taxonomy: "level:#{level}:round:finished").maximum(:value).to_i + 1
-      # Find the user finished assignements
-      fids = activities.where(taxonomy: "level:#{level}:round:#{round}:task:finished").map(&:value)
+      activities = user.activities.where(season: season).where.not(assignment: nil)
+      # Determines the level counting the number of assignment (6 new for each level)
+      level = user.assignments.where(season: season).count()/6.to_i
+      # Determines the round according to the number of distinct assignments
+      round = activities.distinct.pluck(:assignment_id).count()/6 + 1
+      # Determine the current taxonomy according to the round
+      round_taxonomies = { 1 => 'genderize', 2 => 'details', 3 => 'diversity' }
+      round_taxonomy = round_taxonomies[round]
+      # Find the user finished assignements for the current round's taxonomy
+      fids = activities.where(taxonomy: round_taxonomy).distinct.pluck(:assignment_id)
       # Get the remaining assignments
       remaining_assignments = user.assignments.where.not(id: fids).order(:id)
       # Current assignment is the first of the remaining

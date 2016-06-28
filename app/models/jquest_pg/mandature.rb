@@ -1,10 +1,37 @@
 module JquestPg
   class Mandature < ActiveRecord::Base
+    has_paper_trail
     belongs_to :legislature
     belongs_to :person
     has_many :sources, foreign_key: :resource_id
     has_many :assignments, foreign_key: :resource_id
+    after_update :track_activities
 
+    def track_activities
+      # Find the last version of this model
+      uid = versions.last.nil? ? nil : versions.last.whodunnit
+      # This someone must exist!
+      return if uid.nil?
+      # Find the user
+      user = User.find uid
+      # Find assignment for this user...
+      assignment = Assignment.where(user: user, resource: self).first
+      # Get user progression
+      progression = JquestPg::ApplicationController.new.progression user
+      # ROUND 2
+      # Multiple value may have changed
+      if progression[:round] == 2
+        # Attributes that might changed
+        [:role, :political_leaning].each do |n|
+          # Did it changed?
+          if method("#{n}_changed?").call
+            # And save the activity
+            Activity.find_or_create_by user: user, taxonomy: 'details', value: n,
+                                       points: 2, assignment: assignment, resource: self
+          end
+        end
+      end
+    end
 
     def self.some_are_assigned_to?(user, season=user.member_of)
       self.assigned_to(user, season, true).length > 0

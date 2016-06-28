@@ -23,7 +23,6 @@ module JquestPg
     end
 
     initializer :create_assignements do |app|
-
       module HasAssignments
         extend ActiveSupport::Concern
         included do
@@ -40,7 +39,6 @@ module JquestPg
       end
       # include the extension
       User.send(:include, HasAssignments)
-
     end
 
   end
