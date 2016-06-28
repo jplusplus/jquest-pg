@@ -19,7 +19,7 @@ module JquestPg
           desc "Return list of people not assigned to the user"
           get :unassigned do
             authenticate!
-            # Collect person assigned to this user
+            # Collect person unassigned to this user
             Person.unassigned_to(current_user).order("RANDOM()").page(params[:page])
           end
 

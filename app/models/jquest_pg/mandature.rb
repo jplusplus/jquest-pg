@@ -43,7 +43,7 @@ module JquestPg
       # Get the list of legislatures that can be assigned to the user
       assignable_legislatures = Legislature.assignable_to user
       # Number of mandature picked from each legislatures depends of the number of legislature
-      per_legislatures = (6 / [assignable_legislatures.length, 1].max).ceil
+      per_legislatures = [(6.0 / assignable_legislatures.length).ceil, 1].max
       # For each legislature...
       assignable_legislatures.each do |legislature|
         # Pick enough mandature!
