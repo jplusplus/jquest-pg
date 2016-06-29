@@ -36,7 +36,7 @@ module JquestPg
         [:birthdate, :birthplace, :education, :profession_category].each do |n|
           # Did it changed?
           if method("#{n}_changed?").call
-            activity.merge! points: 2, taxonomy: 'details', points: 2, value: n
+            activity.merge! points: 2, taxonomy: 'details', value: n
             # And save the activity
             Activity.find_or_create_by **activity
           end

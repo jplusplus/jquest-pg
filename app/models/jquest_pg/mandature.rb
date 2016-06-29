@@ -7,6 +7,10 @@ module JquestPg
     has_many :assignments, foreign_key: :resource_id
     after_update :track_activities
 
+    def to_s
+      "#{person.fullname} in #{legislature.name}"
+    end
+
     def track_activities
       # Find the last version of this model
       uid = versions.last.nil? ? nil : versions.last.whodunnit
@@ -42,6 +46,8 @@ module JquestPg
       assigned_mandatures = []
       # Get the list of legislatures that can be assigned to the user
       assignable_legislatures = Legislature.assignable_to user
+      # Stop here if no mandatures is assignable
+      return assigned_mandatures if assignable_legislatures.length == 0
       # Number of mandature picked from each legislatures depends of the number of legislature
       per_legislatures = [(6.0 / assignable_legislatures.length).ceil, 1].max
       # For each legislature...
@@ -60,7 +66,9 @@ module JquestPg
             attempts -= 1
             break if not already_assigned or attempts == 0
           end
-          assigned_mandatures << mandature unless mandature.nil?
+          if mandature.nil? and assigned_mandatures.length < 6
+            assigned_mandatures << mandature
+          end
         end
       end
       # Now our assigned mandatures list must be populated, it is time to save it
@@ -76,15 +84,19 @@ module JquestPg
 
     def self.assigned_to(user, season=user.member_of, force=true)
       ids = user.assignments.where(resource_type: Mandature).map(&:resource_id)
-      # Collect mandatures assigned to that user
-      mandatures = where(id: ids)
       # The user may not have assigned mandature yet
-      if force and mandatures.length == 0
+      if not ids.nil? and ids.length > 0
+        # Collect mandatures assigned to that user
+        where id: ids
+      elsif force
         # Assign mandature to the user
-        mandatures = Mandature.assign_to! user, season
+        Mandature.assign_to! user, season
+        # Recursive call, without forcing assignments this time
+        assigned_to user, season, false
+      else
+        # None assigned
+        none
       end
-      # And returns mandatures list
-      mandatures
     end
 
     def self.unassigned_to(user, season=user.member_of, force=true)

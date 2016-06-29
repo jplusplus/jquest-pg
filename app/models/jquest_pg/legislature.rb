@@ -133,6 +133,9 @@ module JquestPg
           languages = legislature.languages.split(',').map(&:strip)
           languages.include? 'en' or languages.include? user.spoken_language
         end
+      else
+        # Unkownm level, no legislatures
+        legislatures = legislatures.none
       end
       # Returns all assignable legislatures
       legislatures
