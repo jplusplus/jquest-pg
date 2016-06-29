@@ -66,7 +66,7 @@ module JquestPg
             attempts -= 1
             break if not already_assigned or attempts == 0
           end
-          if mandature.nil? and assigned_mandatures.length < 6
+          if not mandature.nil? and assigned_mandatures.length < 6
             assigned_mandatures << mandature
           end
         end
@@ -91,6 +91,7 @@ module JquestPg
       elsif force
         # Assign mandature to the user
         Mandature.assign_to! user, season
+        puts 'assigned_to', user.email
         # Recursive call, without forcing assignments this time
         assigned_to user, season, false
       else
