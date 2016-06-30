@@ -14,14 +14,30 @@ module JquestPg
               page(params[:page])
           end
 
-          desc "Return list of mandatures assigned to the user"
-          get :assigned do
-            authenticate!
-            # Collect mandature assigned to this user
-            Mandature.assigned_to(current_user, current_user.member_of, false, :pending).
-              # Join to related tables
-              includes(:person).
-              includes(:legislature)
+          route_param :assigned do
+            desc "Return list of mandatures assigned to the user"
+            get do
+              authenticate!
+              # Collect mandature assigned to this user
+              Mandature.assigned_to(current_user, current_user.member_of, false).
+                # Join to related tables
+                includes(:person).
+                includes(:legislature).
+                # Paginates results
+                page(params[:page])
+            end
+
+            desc "Return list of mandatures assigned to the user and still pending"
+            get :pending do
+              authenticate!
+              # Collect mandature assigned to this user
+              Mandature.assigned_to(current_user, current_user.member_of, false, :pending).
+                # Join to related tables
+                includes(:person).
+                includes(:legislature).
+                # Paginates results
+                page(params[:page])
+            end
           end
 
           params do

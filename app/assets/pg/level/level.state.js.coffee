@@ -10,7 +10,7 @@ angular.module 'jquest'
         resolve:
           mandatures: (seasons, SeasonRestangular)->
             'ngInject'
-            SeasonRestangular().one('mandatures').one('assigned').getList()
+            SeasonRestangular().one('mandatures').one('assigned').one('pending').getList()
           people: (seasons, SeasonRestangular)->
             'ngInject'
-            SeasonRestangular().one('people').one('assigned').getList()
+            SeasonRestangular().one('people').one('assigned').one('pending').getList()

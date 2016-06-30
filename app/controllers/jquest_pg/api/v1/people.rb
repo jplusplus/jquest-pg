@@ -9,18 +9,31 @@ module JquestPg
             Person.page(params[:page])
           end
 
-          desc "Return list of people assigned to the user"
-          get :assigned do
-            authenticate!
-            # Collect person assigned to this user
-            Person.assigned_to current_user, season, true, :pending
+          route_param :assigned do
+            desc "Return list of people assigned to the user"
+            get do
+              authenticate!
+              # Collect person assigned to this user
+              Person.assigned_to(current_user, season).
+                # Paginates results
+                page(params[:page])
+            end
+
+            desc "Return list of people assigned to the user and still pending"
+            get :pending do
+              authenticate!
+              # Collect person assigned to this user
+              Person.assigned_to(current_user, season, true, :pending).              
+                # Paginates results
+                page(params[:page])
+            end
           end
 
           desc "Return list of people not assigned to the user"
           get :unassigned do
             authenticate!
             # Collect person unassigned to this user
-            Person.unassigned_to(current_user, true, :pending).
+            Person.unassigned_to(current_user, true).
                    order("RANDOM()").
                    page(params[:page])
           end
