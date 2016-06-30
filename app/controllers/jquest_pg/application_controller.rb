@@ -25,7 +25,7 @@ module JquestPg
       # Return a simple hash
       OpenStruct.new level: level,
                      round: round,
-                     points: user.season_points(season),
+                     points: user.points.find_or_create_by(season: season).value,
                      # Remaining assignments count
                      remaining_assignments: remaining_assignments.length,
                      # Return it as JSON resolving the nested resources
