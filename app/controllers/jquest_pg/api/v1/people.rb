@@ -13,14 +13,16 @@ module JquestPg
           get :assigned do
             authenticate!
             # Collect person assigned to this user
-            Person.assigned_to current_user
+            Person.assigned_to current_user, season, true, :pending
           end
 
           desc "Return list of people not assigned to the user"
           get :unassigned do
             authenticate!
             # Collect person unassigned to this user
-            Person.unassigned_to(current_user).order("RANDOM()").page(params[:page])
+            Person.unassigned_to(current_user, true, :pending).
+                   order("RANDOM()").
+                   page(params[:page])
           end
 
           params do

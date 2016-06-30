@@ -8,6 +8,10 @@ module JquestPg
         def progression
           JquestPg::ApplicationController.new.progression current_user
         end
+
+        def season
+          Season.find_by engine_name: JquestPg.name
+        end
       end
 
       before do

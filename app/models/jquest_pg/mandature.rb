@@ -24,7 +24,7 @@ module JquestPg
       progression = JquestPg::ApplicationController.new.progression user
       # ROUND 2
       # Multiple value may have changed
-      if progression[:round] == 2
+      if progression.round == 2
         # Attributes that might changed
         [:role, :political_leaning].each do |n|
           # Did it changed?
@@ -82,8 +82,13 @@ module JquestPg
       assigned_mandatures
     end
 
-    def self.assigned_to(user, season=user.member_of, force=true)
-      ids = user.assignments.where(resource_type: Mandature).map(&:resource_id)
+    def self.assigned_to(user, season=user.member_of, force=true, status=nil)
+      # All user assignments
+      assignments = user.assignments
+      # According to status
+      assignments = assignments.where(status: status) unless status.nil?
+      # Get all assignments status
+      ids = assignments.where(resource_type: Mandature).map(&:resource_id)
       # The user may not have assigned mandature yet
       if not ids.nil? and ids.length > 0
         # Collect mandatures assigned to that user
@@ -99,9 +104,9 @@ module JquestPg
       end
     end
 
-    def self.unassigned_to(user, season=user.member_of, force=true)
+    def self.unassigned_to(user, season=user.member_of, force=true, status=nil)
       # Ids of the mandatures assigned to that user
-      mids = Mandature.assigned_to(user, season, force).map(&:id)
+      mids = Mandature.assigned_to(user, season, force, status).map(&:id)
       # Mandatures not assigned to that user
       Mandature.where.not(id: mids)
     end

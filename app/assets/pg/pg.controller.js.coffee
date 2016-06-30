@@ -7,9 +7,9 @@ angular.module 'jquest'
       buildLevel: (level, index)=>
         angular.extend {
           # Level is not unlocked yet
-          locked: (index + 1) > @progression().level
+          locked: => (index + 1) > @progression().level
           # Level is done, congrats!
-          done: (index + 1) < @progression().level
+          done: => (index + 1) < @progression().level
         }, level
       category: SETTINGS.CATEGORIES
       constructor: ->

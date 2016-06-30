@@ -18,7 +18,7 @@ module JquestPg
           get :assigned do
             authenticate!
             # Collect mandature assigned to this user
-            Mandature.assigned_to(current_user).
+            Mandature.assigned_to(current_user, current_user.member_of, false, :pending).
               # Join to related tables
               includes(:person).
               includes(:legislature)

@@ -56,7 +56,7 @@ module JquestPg
       # Gets legislature for her level of progression
       legislatures = all
       # Different assignements according the level
-      case progression[:level]
+      case progression.level
       # LEVEL 1, 2, 3
       #   * legislature.difficulty_level is current level
       #   * legislature.end_date after the current year
@@ -64,7 +64,7 @@ module JquestPg
       #   * legislature.languages includes user.spoken_language
       when 1, 2, 3
         # Some Filtering can be performed
-        legislatures = legislatures.where difficulty_level: progression[:level]
+        legislatures = legislatures.where difficulty_level: progression.level
         legislatures = legislatures.where 'end_date >= ?', Date.today
         legislatures = legislatures.where country: user.home_country
         # Filter legislature that use the same language than the user

@@ -33,12 +33,40 @@ module JquestPg
           def create_assignements
             # Assign only if the user is member of this season (using its engine)
             if not self.member_of.nil? and self.member_of.engine == JquestPg::Engine
-              Mandature::some_are_assigned_to? self
+              # Ensure the user has pending assignment
+              Mandature::assigned_to self, self.member_of, true, :pending
             end
           end
       end
       # include the extension
       User.send(:include, HasAssignments)
+    end
+
+    initializer :finish_assignments do |app|
+      module FinishAssignments
+        extend ActiveSupport::Concern
+        included do
+          after_create :finish_assignements
+        end
+
+        protected
+          def finish_assignements
+            # Finish assignments only if the user is member of this season (using its engine)
+            if not user.member_of.nil? and user.member_of.engine == JquestPg::Engine
+              # Get user progression
+              progression = JquestPg::ApplicationController.new.progression user
+              # Did we have enought assignments for this level
+              if user.assignments.count() < progression.level * 6
+                # Mark all pending assignments as done
+                user.assignments.pending.update_all status: :done
+                # Find new assignments
+                Mandature::assigned_to user, user.member_of, true, :pending
+              end
+            end
+          end
+      end
+      # include the extension
+      Activity.send(:include, FinishAssignments)
     end
 
   end

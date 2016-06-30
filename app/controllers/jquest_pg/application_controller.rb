@@ -7,10 +7,12 @@ module JquestPg
 
     def progression(user, season=user.member_of)
       activities = user.activities.where(season: season).where.not(assignment: nil)
-      # Determines the level counting the number of assignment (6 new for each level)
-      level = [1, user.assignments.where(season: season).count()/6.to_i].max
-      # Determines the round according to the number of distinct assignments
-      round = activities.group(:taxonomy, :assignment_id).count().length/6 + 1
+      # Number of processed assignment deduced from the number of activity (one by assignment in a given taxonomy)
+      processed = activities.group(:taxonomy, :assignment_id).count().length
+      # Determines the level according to the number of processed assignments
+      level = [1, processed / (6*3) + 1].max
+      # Determines the round according to the number of processed assignments
+      round = [1, processed / 6 % 3 + 1].max
       # Determine the current taxonomy according to the round
       round_taxonomies = { 1 => 'genderize', 2 => 'details', 3 => 'diversity' }
       round_taxonomy = round_taxonomies[round]

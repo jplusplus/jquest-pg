@@ -1,6 +1,7 @@
 .pg {
   padding-top:1rem * $line-height;
 
+
   &__categories {
 
     &__item {
@@ -11,10 +12,19 @@
         padding: .5em 0;
       }
 
+      .row {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        align-items: stretch;
+      }
+
       &__level {
 
         padding:1em;
         background: $card-border-color;
+        flex:1;
+        height:100%;
 
         &__heading, &__description {
           margin:0;
@@ -27,16 +37,16 @@
 
         &__begin {
           margin-top:1em * $line-height;
-          background:transparent;
-          color: $link-color;
-          border-color: $link-color;
           border-width: 2px;
           @include vendor-prefix(border-radius, 2em);
           @include box-shadow(none);
 
-          &:disabled {
+          &.btn-primary:disabled {
             @include vendor-prefix(filter, grayscale(1));
             opacity: .2;
+            background:transparent;
+            color: $link-color;
+            border-color: $link-color;
           }
 
         }

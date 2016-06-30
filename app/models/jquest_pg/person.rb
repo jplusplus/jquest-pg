@@ -66,14 +66,21 @@ module JquestPg
         where(jquest_pg_mandatures: { person_id: id })
     end
 
-    def self.assigned_to(user, season=user.member_of, force=true)
-      ids = Mandature.assigned_to(user).includes(:person).map(&:person_id)
+    def self.assigned_to(user, season=user.member_of, force=true, status=nil)
+      ids = Mandature.
+                assigned_to(user, season, force, status).
+                includes(:person).
+                map(&:person_id)
       where(id: ids)
     end
 
-    def self.unassigned_to(user, season=user.member_of, force=true)
+    def self.unassigned_to(user, season=user.member_of, force=true, status=nil)
       # Ids of the people not assigned to that user
-      pids = Mandature.assigned_to(user).includes(:person).distinct.pluck(:person_id)
+      pids = Mandature.
+                  assigned_to(user, season, force, status).
+                  includes(:person).
+                  distinct.
+                  pluck(:person_id)
       # Persons matching those ids
       where.not(id: pids)
     end
