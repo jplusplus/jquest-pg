@@ -22,10 +22,13 @@ module JquestPg
       remaining_assignments = user.assignments.where.not(id: fids).order(:id)
       # Current assignment is the first of the remaining
       assignment = remaining_assignments.first
+      # Get user points
+      points = user.points.find_or_create_by season: season
       # Return a simple hash
       OpenStruct.new level: level,
                      round: round,
-                     points: user.points.find_or_create_by(season: season).value,
+                     points: points.value,
+                     position: points.position,
                      # Remaining assignments count
                      remaining_assignments: remaining_assignments.length,
                      # Return it as JSON resolving the nested resources

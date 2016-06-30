@@ -20,8 +20,9 @@
       }
 
       &__level {
-
+        position: relative;
         padding:1em;
+        padding-bottom:3rem * $line-height;
         background: $card-border-color;
         flex:1;
         height:100%;
@@ -36,7 +37,13 @@
         }
 
         &__begin {
-          margin-top:1em * $line-height;
+          position: absolute;
+          bottom: 1em;
+          left: 1em;
+          right: 0;
+          width:calc(100% - 2em);
+          display: block;
+
           border-width: 2px;
           @include vendor-prefix(border-radius, 2em);
           @include box-shadow(none);

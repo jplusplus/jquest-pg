@@ -20,7 +20,7 @@
                       {{ :: level.description }}
                     </p>
                     <button ui-sref="main.season.pg.level({ level: ($index + 1) })"
-                            class="btn btn-sm btn-block pg__categories__item__level__begin"
+                            class="btn btn-sm pg__categories__item__level__begin"
                             ng-class="{ 'btn-success': level.done(), 'btn-primary': !level.done() }"
                             ng-disabled="level.locked() || level.done()">
                       <span ng-if="!level.locked() && !level.done()">
