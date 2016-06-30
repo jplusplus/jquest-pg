@@ -21,15 +21,13 @@ module JquestPg
       # Current assignment is the first of the remaining
       assignment = remaining_assignments.first
       # Return a simple hash
-      {
-        level: level,
-        round: round,
-        points: user.season_points(season),
-        # Remaining assignments count
-        remaining_assignments: remaining_assignments.length,
-        # Return it as JSON resolving the nested resources
-        assignment: assignment
-      }
+      OpenStruct.new level: level,
+                     round: round,
+                     points: user.season_points(season),
+                     # Remaining assignments count
+                     remaining_assignments: remaining_assignments.length,
+                     # Return it as JSON resolving the nested resources
+                     assignment: assignment
     end
   end
 end

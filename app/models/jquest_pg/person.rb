@@ -9,6 +9,10 @@ module JquestPg
       fullname
     end
 
+    def to_s
+      display_name
+    end
+
     def track_activities
       # Find the last version of this model
       uid = versions.last.nil? ? nil : versions.last.whodunnit
@@ -63,14 +67,15 @@ module JquestPg
     end
 
     def self.assigned_to(user, season=user.member_of, force=true)
-      Mandature.assigned_to(user).includes(:person).map(&:person)
+      ids = Mandature.assigned_to(user).includes(:person).map(&:person_id)
+      where(id: ids)
     end
 
     def self.unassigned_to(user, season=user.member_of, force=true)
       # Ids of the people not assigned to that user
-      pids = Mandature.unassigned_to(user).includes(:person).distinct.pluck(:person_id)
+      pids = Mandature.assigned_to(user).includes(:person).distinct.pluck(:person_id)
       # Persons matching those ids
-      Person.where(id: pids)
+      where.not(id: pids)
     end
 
   end

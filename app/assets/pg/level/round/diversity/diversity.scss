@@ -1,0 +1,30 @@
+.pg__level__round__diversity {
+
+  &__body {
+
+    &__person {
+
+      &__image {
+        position: relative;
+        overflow: hidden;;
+        width:90%;
+        margin:auto;
+        display: block;
+        padding-top:4 / 3 * 100%;
+        background:no-repeat center center #B3A2B3;
+        background-size: cover;
+
+        &__legend {
+          color:white;
+          position: absolute;
+          bottom:0;
+          left:0;
+          right:0;
+          padding:.5rem;
+          font-weight: bold;
+          @include gradient-vertical( rgba(black, 0),  rgba(black, .3) );
+        }
+      }
+    }
+  }
+}

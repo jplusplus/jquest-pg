@@ -15,4 +15,4 @@ angular.module 'jquest'
           .post gender: value
           .finally (r)->
             # Reload progression after a short delay
-            $timeout seasons.reload, 1000
+            $timeout seasons.reload, 600
