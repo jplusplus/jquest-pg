@@ -1,0 +1,26 @@
+<div class="container pg__representatives">
+  <div class="card card-block">
+    <h3 class="card-title">My representatives</h3>
+    <div class="row">
+      <div class="col-xs-4 lead col-xs-push-8">
+        6 new representatives are assigned to you for every reached level.
+      </div>
+      <div class="col-xs-8 col-xs-pull-4">
+        <div class="row" infinite-scroll="representatives.all.next()" infinite-scroll-disabled='representatives.all.busy'>
+          <div ng-repeat="assignment in representatives.all.objects" class="col-sm-4 col-xs-">
+            <a class="card card-inverse pg__representatives__item" href="">
+              <div class="pg__representatives__item__image"
+                   ng-style="{ backgroundImage: 'url(' + (assignment.person.image || 'http://placehold.it/400x300/B3A2B3/664566') + ')' }"></div>
+              <div class="card-block card-img-overlay">
+                <h4 class="card-title">{{ assignment.resource.person.fullname }}</h4>
+                <div class="card-text">
+                  {{ assignment.resource.legislature.name }}
+                </div>
+              </div>
+            </a>
+          </div>
+        </ul>
+      </div>
+    <div>
+  </div>
+</div>

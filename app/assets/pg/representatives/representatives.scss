@@ -1,0 +1,17 @@
+.pg__representatives {
+
+  &__item {
+    display: block;
+    padding-top:4 / 3 * 100%;
+
+    &__image {
+      background: no-repeat center center;
+      background-size:cover;
+      position: absolute;
+      top:0;
+      left:0;
+      height:100%;
+      width:100%;
+    }
+  }
+}
