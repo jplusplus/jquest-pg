@@ -10,9 +10,9 @@
           <div ng-repeat="assignment in representatives.all.objects" class="col-sm-4 col-xs-">
             <a class="card card-inverse pg__representatives__item" href="">
               <div class="pg__representatives__item__image"
-                   ng-style="{ backgroundImage: 'url(' + (assignment.person.image || 'http://placehold.it/400x300/B3A2B3/664566') + ')' }"></div>
+                   ng-style="{ backgroundImage: 'url(' + (assignment.person.image || 'http://placehold.it/400x300/B3A2B3/C4B7C1') + ')' }"></div>
               <div class="card-block card-img-overlay">
-                <h4 class="card-title">{{ assignment.resource.person.fullname }}</h4>
+                <h5 class="card-title">{{ assignment.resource.person.fullname }}</h5>
                 <div class="card-text">
                   {{ assignment.resource.legislature.name }}
                 </div>
