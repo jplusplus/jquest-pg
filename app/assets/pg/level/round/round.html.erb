@@ -37,7 +37,7 @@
               <p>Those documents help you to achieve your mission by learning the best datajournalism techniques.</p>
               <ul>
                 <li ng-repeat="courseMaterial in season.courseMaterials">
-                  <a>
+                  <a ng-click="courseMaterials.select(courseMaterial)">
                     <div>
                       {{ courseMaterial.title }}
                     </div>
