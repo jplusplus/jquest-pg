@@ -41,6 +41,15 @@
       }
     }
 
+    &__course-material {
+      background:$brand-primary;
+      color:white;
+
+      a {
+        color:white;
+      }
+    }
+
     &__representative {
 
       &__cover {

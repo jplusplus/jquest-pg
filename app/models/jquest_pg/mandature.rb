@@ -48,7 +48,7 @@ module JquestPg
     end
 
     def person_fields_required
-      [:birthdate, :birthplace, :education, :profession_category, :gender]
+      [:birthdate, :birthplace, :education, :profession_category, :gender, :image]
     end
 
     def person_fields_completed

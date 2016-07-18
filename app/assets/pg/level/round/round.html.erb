@@ -1,6 +1,6 @@
 <div class="pg__level__round container">
   <div class="row">
-    <div class="col-lg-9">
+    <div class="col-lg-8">
       <div class="card pg__level__round__heading">
         <div class="card-block">
           <h3 class="card-title">
@@ -12,7 +12,7 @@
       </div>
       <div ui-view></div>
     </div>
-    <div class="col-lg-3 pg__level__round__overview">
+    <div class="col-lg-4 pg__level__round__overview">
       <div class="row">
         <div class="col-xs-6 col-lg-12">
           <div class="pg__level__round__overview__progress card">
@@ -28,16 +28,25 @@
             </div>
           </div>
         </div>
-        <div class="col-xs-6 col-lg-12">
-          <div class="pg__level__round__overview__representative" ng-hide="pg.progression().round == 1">
-            <div class="pg__level__round__overview__representative__cover"
-                 ng-style="{ backgroundImage: 'url(' + (round.person.image || 'http://placehold.it/500x300/B3A2B3/fff') + ')' }">
-                 <div class="card-block pg__level__round__overview__representative__caption">
-                   <div class="pg__level__round__overview__representative__cover__caption__fullname">{{ round.person.fullname }}</div>
-                   <div class="pg__level__round__overview__representative__cover__caption__legislature">
-                     {{ round.mandature.legislature.name }}
-                   </div>
-                 </div>
+        <div class="col-xs-6 col-lg-12" ng-show="season.courseMaterials.length">
+          <div class="pg__level__round__overview__course-material card card-inverse">
+            <div class="card-block card-text">
+              <h3 class="card-title">
+                <i class="fa fa-graduation-cap"></i> Course Materials
+              </h3>
+              <p>Those documents help you to achieve your mission by learning the best datajournalism techniques.</p>
+              <ul>
+                <li ng-repeat="courseMaterial in season.courseMaterials">
+                  <a>
+                    <div>
+                      {{ courseMaterial.title }}
+                    </div>
+                    <div class="small" ng-show="courseMaterial.category">
+                      <em>{{ courseMaterial.category }}</em>
+                    </div>
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

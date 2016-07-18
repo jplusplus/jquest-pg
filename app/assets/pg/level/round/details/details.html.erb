@@ -2,18 +2,48 @@
   <div class="card">
     <div class="pg__level__round__details__person">
       <div class="pg__level__round__details__heading card-block">
-        <h4 class="card-title">Find detail information</h4>
+        <h4 class="card-title">Find detail information about {{ round.person.fullname }}</h4>
         <p class="card-text">At least one is required before you can move on.</p>
       </div>
       <form ng-submit="details.submit()">
         <div class="pg__level__round__details__person__form card-block">
+
+          <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.person.image">
+
+              <div class="col-xs-8">
+                <label class="pg__level__round__details__person__form__label" for="input-image">
+                  Picture
+                </label>
+                <div class="input-group input-group">
+                  <input class="form-control"
+                         type="url"
+                         ng-model="round.person.image"
+                         id="input-image" />
+                  <span class="input-group-btn">
+                    <button class="btn btn-secondary" ng-click="details.editSource('image', round.person)" type="button">
+                      <span ng-hide="details.hasSource('image', round.person)">
+                        Add source
+                      </span>
+                      <span ng-show="details.hasSource('image', round.person)">
+                        <i class="fa fa-check-circle-o text-success"></i>
+                        Sourced
+                      </span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-xs-4 pg__level__round__details__person__group__image">
+                <img ng-src="{{ round.person.image }}" ng-if="round.person.image" class="img-thumbnail" />
+              </div>
+          </fieldset>
+
           <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.person.birthdate">
             <div class="col-xs-8">
               <label class="pg__level__round__details__person__form__label" for="input-birthdate">
                 Date of birth
               </label>
               <div class="input-group input-group">
-                <input class="form-control form-control"
+                <input class="form-control"
                        flatpickr
                        data-dateFormat="Y/m/d"
                        type="text"
@@ -42,7 +72,7 @@
                 Place of birth
               </label>
               <div class="input-group input-group">
-                <input class="form-control form-control"
+                <input class="form-control"
                        flatpickr
                        data-dateFormat="Y/m/d"
                        type="text"
@@ -71,7 +101,7 @@
                 Role in {{ round.mandature.legislature.name }}
               </label>
               <div class="input-group input-group">
-                <input class="form-control form-control"
+                <input class="form-control"
                        type="text"
                        ng-model="round.mandature.role"
                        id="input-role" />
@@ -98,7 +128,7 @@
                 Education
               </label>
               <div class="input-group input-group">
-                <input class="form-control form-control"
+                <input class="form-control"
                        type="text"
                        ng-model="round.person.education"
                        id="input-education" />
@@ -125,7 +155,7 @@
                 Occupation
               </label>
               <div class="input-group input-group">
-                <select class="form-control form-control"
+                <select class="form-control"
                        ng-options="pl for pl in details.professionCategories"
                        ng-model="round.person.profession_category"
                        id="input-profession-category">
@@ -154,7 +184,7 @@
                 Political leaning
               </label>
               <div class="input-group input-group">
-                <select class="form-control form-control"
+                <select class="form-control"
                        ng-options="pl for pl in details.politicalLeanings"
                        ng-model="round.mandature.political_leaning"
                        id="input-political-leaning">
