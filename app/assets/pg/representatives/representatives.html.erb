@@ -1,26 +1,55 @@
 <div class="container pg__representatives">
-  <div class="card card-block">
-    <h3 class="card-title">My representatives</h3>
-    <div class="row">
-      <div class="col-xs-4 lead col-xs-push-8">
+  <div class="card">
+    <div class="card-block">
+      <h3 class="card-title">My representatives</h3>
+      <p class="lead">
         6 new representatives are assigned to you for every reached level.
-      </div>
-      <div class="col-xs-8 col-xs-pull-4">
-        <div class="row" infinite-scroll="representatives.all.next()" infinite-scroll-disabled='representatives.all.busy'>
-          <div ng-repeat="assignment in representatives.all.objects" class="col-sm-4 col-xs-">
-            <a class="card card-inverse pg__representatives__item" href="">
-              <div class="pg__representatives__item__image"
-                   ng-style="{ backgroundImage: 'url(' + (assignment.person.image || 'http://placehold.it/400x300/B3A2B3/C4B7C1') + ')' }"></div>
-              <div class="card-block card-img-overlay">
-                <h5 class="card-title">{{ assignment.resource.person.fullname }}</h5>
-                <div class="card-text">
-                  {{ assignment.resource.legislature.name }}
-                </div>
-              </div>
-            </a>
-          </div>
-        </ul>
-      </div>
+      </p>
+    </div>
     <div>
+      <table infinite-scroll="representatives.all.next()" infinite-scroll-disabled='representatives.all.busy' class="pg__representatives small table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Assembly</th>
+            <th style="width: 30%;">Completion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="assignment in representatives.all.objects" class="pg__representatives__item">
+            <td>
+              <span class="label label-pill label-success" ng-show="assignment.status == 'done'" uib-tooltip="Done">
+                <i class="fa fa-fw fa-check"></i>
+              </span>
+              <span class="label label-pill label-warning" ng-show="assignment.status == 'pending'" uib-tooltip="Pending">
+                <i class="fa fa-fw fa-ellipsis-h"></i>
+              </span>
+            </td>
+            <td>
+              <a href="">
+                {{ assignment.resource.person.fullname }}
+              </a>
+            </td>
+            <td class="text-muted">
+              {{ assignment.resource.legislature.name }}
+            </td>
+            <td>
+              <progress class="progress pg__representatives__item__progress" value="{{ assignment.resource.completion }}" max="100" ng-class="{
+                  'progress-danger' : assignment.resource.completion <= 30,
+                  'progress-warning': assignment.resource.completion > 30 && assignment.resource.completion <= 60,
+                  'progress-success': assignment.resource.completion > 50
+                }">
+                <div class="progress">
+                  <span class="progress-bar" style="width: {{ assignment.resource.completion }}%;">
+                    {{ assignment.resource.completion }}%
+                  </span>
+                </div>
+              </progress>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

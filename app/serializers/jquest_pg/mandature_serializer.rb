@@ -3,7 +3,7 @@ module JquestPg
     include Rails.application.routes.url_helpers
 
     attributes :id, :legislature, :person, :political_leaning,
-               :role, :group, :area, :chamber, :sources
+               :role, :group, :area, :chamber, :sources, :completion
     # Use associated resources' serializers
     has_one :legislature
     has_one :person
