@@ -1,0 +1,78 @@
+<div class="container-fluid pg__data">
+  <div class="row">
+    <div class="col-xs-9">
+      <div class="card">
+        <div class="card-block">
+          <h3 class="card-title">Collected data</h3>
+          <p class="lead">
+            This is all mandatures collected and analysed so far.
+          </p>
+        </div>
+        <div class="table-responsive">
+          <table infinite-scroll="data.all.next()" infinite-scroll-disabled='data.all.busy' class="small table table-striped">
+            <thead>
+              <tr>
+                <th></th>
+                <th>person__name</th>
+                <th>person__gender</th>
+                <th>legislature__name</th>
+                <th>political_leaning</th>
+                <th>role</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="mandature in data.all.objects" class="pg__representatives__item">
+                <td class="text-muted">
+                  #{{ mandature.id }}
+                </td>
+                <td>
+                  {{ mandature.person.fullname }}
+                </td>
+                <td>
+                  {{ mandature.person.gender }}
+                </td>
+                <td>
+                  {{ mandature.legislature.name }}
+                </td>
+                <td>
+                  {{ mandature.political_leaning }}
+                </td>
+                <td>
+                  {{ mandature.role }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <form class="card">
+        <div class="card-block">
+          <h4 class="card-title">Filters</h4>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="form-group">
+              <label for="input-country">Country</label>
+              <select id="input-country" class="form-control"></select>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="form-group">
+              <label for="input-legislature">Legislature</label>
+              <select id="input-legislature" class="form-control"></select>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="form-group">
+              <label for="input-territory">Territory</label>
+              <input id="input-territory" class="form-control" />
+            </div>
+          </li>
+        </ul>
+      </form>
+      <div course-materials></div>
+    </div>
+  </div>
+</div>
