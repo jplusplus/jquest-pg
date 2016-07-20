@@ -10,6 +10,7 @@ module JquestPg
         mount Diversities
         mount People
         mount Mandatures
+        mount Legislatures
       end
     end
   end
