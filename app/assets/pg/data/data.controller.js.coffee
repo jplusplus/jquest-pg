@@ -12,9 +12,9 @@ angular.module 'jquest'
       # True is there is any result
       hasMandatures: mandatures.length
       # True if there is any filter
-      isFiltered: !!_.chain($stateParams).values().compact().value().length 
+      isFiltered: !!_.chain($stateParams).values().compact().value().length
       # Build CSV Download URL
-      csv: mandatures.getRequestedUrl().replace /mandatures/, 'mandatures.csv'
+      csv: mandatures.getRequestedUrl().replace(/mandatures/, 'mandatures.csv') + '&limit=' + 1e4
       # List of all countries
       countries: Restangular.all('countries').withHttpConfig(cache: yes).getList(limit: 300).$object
       # List of all legislatures

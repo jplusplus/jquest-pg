@@ -1,6 +1,49 @@
 <div class="container-fluid pg__data">
   <div class="row">
-    <div class="col-xs-9">
+    <div class="col-lg-3 col-lg-push-9">
+      <form class="card pg__data__filters" ng-submit="data.filter()">
+        <div class="card-block">
+          <h4 class="card-title">Filters</h4>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="form-group">
+              <label for="input-country">Country</label>
+              <select id="input-country" class="form-control" ng-disabled="!data.countries.length"
+                ng-model="data.filters.legislature__country"
+                ng-options="o.alpha2 as o.name for o in data.countries | orderBy:'name'">
+                <option value="">Any</option>
+              </select>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="form-group">
+              <label for="input-legislature">Legislature</label>
+              <select id="input-legislature" class="form-control" ng-disabled="!data.legislatures.length"
+                ng-model="data.filters.legislature"
+                ng-options="o.id as o.name for o in data.legislatures | orderBy:'name'">
+                <option value="">Any</option>
+              </select>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="form-group">
+              <label for="input-territory">Territory</label>
+              <input id="input-territory" ng-model="data.filters.legislature__territory" class="form-control" />
+            </div>
+          </li>
+        </ul>
+        <div class="card-footer text-xs-right">
+          <button type="submit" class="btn btn-primary">
+            <i class="fa fa-filter"></i>
+            Apply
+          </button>
+        </div>
+      </form>
+      <div course-materials></div>
+    </div>
+
+    <div class="col-lg-9 col-lg-pull-3">
       <div class="card">
         <div class="card-block">
           <h3 class="card-title">Collected data</h3>
@@ -64,48 +107,6 @@
           </table>
         </div>
       </div>
-    </div>
-    <div class="col-xs-3">
-      <form class="card pg__data__filters" ng-submit="data.filter()">
-        <div class="card-block">
-          <h4 class="card-title">Filters</h4>
-        </div>
-        <ul class="list-group">
-          <li class="list-group-item">
-            <div class="form-group">
-              <label for="input-country">Country</label>
-              <select id="input-country" class="form-control" ng-disabled="!data.countries.length"
-                ng-model="data.filters.legislature__country"
-                ng-options="o.alpha2 as o.name for o in data.countries | orderBy:'name'">
-                <option value="">Any</option>
-              </select>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="form-group">
-              <label for="input-legislature">Legislature</label>
-              <select id="input-legislature" class="form-control" ng-disabled="!data.legislatures.length"
-                ng-model="data.filters.legislature"
-                ng-options="o.id as o.name for o in data.legislatures | orderBy:'name'">
-                <option value="">Any</option>
-              </select>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="form-group">
-              <label for="input-territory">Territory</label>
-              <input id="input-territory" ng-model="data.filters.legislature__territory" class="form-control" />
-            </div>
-          </li>
-        </ul>
-        <div class="card-footer text-xs-right">
-          <button type="submit" class="btn btn-primary">
-            <i class="fa fa-filter"></i>
-            Apply
-          </button>
-        </div>
-      </form>
-      <div course-materials></div>
     </div>
   </div>
 </div>
