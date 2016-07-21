@@ -10,13 +10,13 @@ module JquestPg
 
       class Base < Grape::API
         prefix 'v1'
-        # rescue_from :all
+        rescue_from :all
 
-        content_type :json, 'application/json'
         content_type :csv, 'text/csv'
+        content_type :json, 'application/json'
 
-        format :json
         format :csv
+        format :json
 
         formatter :json, Grape::Formatter::ActiveModelSerializers
         formatter :csv, CsvFormatter

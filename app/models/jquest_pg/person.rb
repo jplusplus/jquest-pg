@@ -1,9 +1,16 @@
 module JquestPg
   class Person < ActiveRecord::Base
+    include CsvAttributes
+
     has_paper_trail
     has_many :mandatures
     has_many :sources, foreign_key: :resource_id
     after_update :track_activities
+
+    def self.csv_attributes
+      %w{fullname email education profession_category profession
+        image twitter facebook gender birthdate birthplace phone}
+    end
 
     def display_name
       fullname

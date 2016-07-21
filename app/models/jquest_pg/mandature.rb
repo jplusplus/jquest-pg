@@ -12,7 +12,7 @@ module JquestPg
     after_update :track_activities
 
     def self.csv_attributes
-      %w{id legislature person_id political_leaning role group area chamber}
+      %w{id legislature person political_leaning role group area chamber}
     end
 
     def self.legislature(id)
