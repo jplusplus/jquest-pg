@@ -8,7 +8,11 @@
             This is all mandatures collected and analysed so far.
           </p>
         </div>
-        <div class="table-responsive">
+        <p ng-hide="data.all.objects.length" class="pg__data__no-results card-block lead">
+          <i class="fa fa-filter"></i>
+          No mandature match with your filters.
+        </p>
+        <div class="table-responsive" ng-show="data.all.objects.length">
           <table infinite-scroll="data.all.next()" infinite-scroll-disabled='data.all.busy' class="small table table-striped">
             <thead>
               <tr>
@@ -47,7 +51,7 @@
       </div>
     </div>
     <div class="col-xs-3">
-      <form class="card pg__data__filters">
+      <form class="card pg__data__filters" ng-submit="data.filter()">
         <div class="card-block">
           <h4 class="card-title">Filters</h4>
         </div>
@@ -56,8 +60,8 @@
             <div class="form-group">
               <label for="input-country">Country</label>
               <select id="input-country" class="form-control" ng-disabled="!data.countries.length"
-                ng-model="data.filter.country"
-                ng-options="o.code as o.name for o in data.countries | orderBy:'name'">
+                ng-model="data.filters.legislature__country"
+                ng-options="o.alpha2 as o.name for o in data.countries | orderBy:'name'">
                 <option value="">Any</option>
               </select>
             </div>
@@ -66,7 +70,7 @@
             <div class="form-group">
               <label for="input-legislature">Legislature</label>
               <select id="input-legislature" class="form-control" ng-disabled="!data.legislatures.length"
-                ng-model="data.filter.legislature"
+                ng-model="data.filters.legislature"
                 ng-options="o.id as o.name for o in data.legislatures | orderBy:'name'">
                 <option value="">Any</option>
               </select>
@@ -75,7 +79,7 @@
           <li class="list-group-item">
             <div class="form-group">
               <label for="input-territory">Territory</label>
-              <input id="input-territory" class="form-control" />
+              <input id="input-territory" ng-model="data.filters.legislature__territory" class="form-control" />
             </div>
           </li>
         </ul>

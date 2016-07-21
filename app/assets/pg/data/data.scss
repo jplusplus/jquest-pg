@@ -1,3 +1,7 @@
-.main__pg__data {
+.pg__data {
 
+  &__no-results {
+    text-align: left;
+    border-top:1px dashed $card-border-color;
+  }
 }

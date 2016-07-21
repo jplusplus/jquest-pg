@@ -1,11 +1,26 @@
 module JquestPg
   class Mandature < ActiveRecord::Base
+    # Add a filter method to the scope
+    include Filterable
+
     has_paper_trail
     belongs_to :legislature
     belongs_to :person
     has_many :sources, foreign_key: :resource_id
     has_many :assignments, foreign_key: :resource_id
     after_update :track_activities
+
+    def self.legislature(id)
+      where 'legislature_id = ?', id.to_i
+    end
+
+    def self.legislature__country(code)
+      joins(:legislature).where 'jquest_pg_legislatures.country = ?', code
+    end
+
+    def self.legislature__territory(territory)
+      joins(:legislature).where 'jquest_pg_legislatures.territory = ?', territory
+    end
 
     def to_s
       "#{person.fullname} in #{legislature.name}"

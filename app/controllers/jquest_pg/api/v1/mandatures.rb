@@ -10,8 +10,12 @@ module JquestPg
               # Join to related tables
               includes(:person).
               includes(:legislature).
+              # We allow filtering
+              filter(params.slice(:legislature, :legislature__country, :legislature__territory)).
               # Paginates results
-              page(params[:page])
+              page(params[:page]).
+              # Default limit is 25
+              per(params[:limit])
           end
 
           route_param :assigned do
@@ -24,7 +28,9 @@ module JquestPg
                 includes(:person).
                 includes(:legislature).
                 # Paginates results
-                page(params[:page])
+                page(params[:page]).
+                # Default limit is 25
+                per(params[:limit])
             end
 
             desc "Return list of mandatures assigned to the user and still pending"
@@ -36,7 +42,9 @@ module JquestPg
                 includes(:person).
                 includes(:legislature).
                 # Paginates results
-                page(params[:page])
+                page(params[:page]).
+                # Default limit is 25
+                per(params[:limit])
             end
           end
 

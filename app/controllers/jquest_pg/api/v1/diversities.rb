@@ -5,7 +5,10 @@ module JquestPg
         resource :diversities do
           desc "Return list of diversities"
           get do
-            Diversity.page(params[:page])
+            Diversity.
+              page(params[:page]).
+              # Default limit is 25
+              per(params[:limit])
           end
 
           post do

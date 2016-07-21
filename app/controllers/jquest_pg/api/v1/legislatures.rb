@@ -6,7 +6,10 @@ module JquestPg
 
           desc "Return list of legislatures"
           get do
-            Legislature.page(params[:page])
+            Legislature.
+              page(params[:page]).
+              # Default limit is 25
+              per(params[:limit])
           end
 
         end

@@ -6,7 +6,10 @@ module JquestPg
 
           desc "Return list of people"
           get do
-            Person.page(params[:page])
+            Person.
+              page(params[:page]).
+              # Default limit is 25
+              per(params[:limit])
           end
 
           route_param :assigned do
@@ -16,16 +19,20 @@ module JquestPg
               # Collect person assigned to this user
               Person.assigned_to(current_user, season).
                 # Paginates results
-                page(params[:page])
+                page(params[:page]).
+                # Default limit is 25
+                per(params[:limit])
             end
 
             desc "Return list of people assigned to the user and still pending"
             get :pending do
               authenticate!
               # Collect person assigned to this user
-              Person.assigned_to(current_user, season, true, :pending).              
+              Person.assigned_to(current_user, season, true, :pending).
                 # Paginates results
-                page(params[:page])
+                page(params[:page]).
+                # Default limit is 25
+                per(params[:limit])
             end
           end
 
@@ -35,7 +42,9 @@ module JquestPg
             # Collect person unassigned to this user
             Person.unassigned_to(current_user, true).
                    order("RANDOM()").
-                   page(params[:page])
+                   page(params[:page]).
+                   # Default limit is 25
+                   per(params[:limit])
           end
 
           params do
