@@ -2,6 +2,7 @@ module JquestPg
   class Mandature < ActiveRecord::Base
     # Add a filter method to the scope
     include Filterable
+    include CsvAttributes
 
     has_paper_trail
     belongs_to :legislature
@@ -9,6 +10,10 @@ module JquestPg
     has_many :sources, foreign_key: :resource_id
     has_many :assignments, foreign_key: :resource_id
     after_update :track_activities
+
+    def self.csv_attributes
+      %w{id legislature person_id political_leaning role group area chamber}
+    end
 
     def self.legislature(id)
       where 'legislature_id = ?', id.to_i

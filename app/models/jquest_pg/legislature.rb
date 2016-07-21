@@ -1,9 +1,15 @@
 module JquestPg
   class Legislature < ActiveRecord::Base
 
+    include CsvAttributes
+
     has_many :mandatures
     has_many :persons, through: :mandatures
-    before_validation :format_params
+    before_validation :format_param
+
+    def self.csv_attributes
+      %w{id name territory country start_date end_date number_of_members languages}
+    end
 
     def languages
       # Not languages defined
