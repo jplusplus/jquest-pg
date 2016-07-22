@@ -8,11 +8,13 @@ angular.module 'jquest'
         templateUrl: 'data/data.html'
         url: 'data'
         params:
-          legislature__country:
+          person_fullname_or_legislature_name_cont:
             value:null
-          legislature__territory:
+          legislature_country_eq:
             value:null
-          legislature:
+          legislature_territory_cont:
+            value:null
+          legislature_id_eq:
             value:null
         resolve:
           mandatures: (seasons, SeasonRestangular, $stateParams)->

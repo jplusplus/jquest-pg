@@ -4,14 +4,22 @@ module JquestPg
       class Mandatures < Grape::API
         resource :mandatures do
 
+
           desc "Return list of mandatures"
+          params do
+            optional :legislature_id_eq, type: Integer
+            optional :legislature_country_eq, type: String
+            optional :legislature_territory_cont, type: String
+            optional :person_fullname_or_legislature_name_cont, type: String
+          end
           get do
             Mandature.
+              # We allow filtering
+              search(declared params).
+              result.
               # Join to related tables
               includes(:person).
               includes(:legislature).
-              # We allow filtering
-              filter(params.slice(:legislature, :legislature__country, :legislature__territory)).
               # Paginates results
               page(params[:page]).
               # Default limit is 25

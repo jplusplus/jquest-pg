@@ -15,18 +15,6 @@ module JquestPg
       %w{id legislature person political_leaning role group area chamber}
     end
 
-    def self.legislature(id)
-      where 'legislature_id = ?', id.to_i
-    end
-
-    def self.legislature__country(code)
-      joins(:legislature).where 'jquest_pg_legislatures.country = ?', code
-    end
-
-    def self.legislature__territory(territory)
-      joins(:legislature).where 'jquest_pg_legislatures.territory = ?', territory
-    end
-
     def to_s
       "#{person.fullname} in #{legislature.name}"
     end
