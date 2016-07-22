@@ -61,7 +61,7 @@ angular.module 'jquest'
       }
       {
         type: 'text'
-        body: 'Who\'s <em>we</em>?<br />We\'re Journalism++, a small agency for datajournalism. We were awarded the Data Journalism Award in 2014 and the European Press Prize in 2015 and we work with the largest news organizations on this continent.'
+        body: '<p>Who\'s <em>we</em>?</p>We\'re Journalism++, a small agency for datajournalism. We were awarded the Data Journalism Award in 2014 and the European Press Prize in 2015 and we work with the largest news organizations on this continent.'
       }
       {
         type: 'text'

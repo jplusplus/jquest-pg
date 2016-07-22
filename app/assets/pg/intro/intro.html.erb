@@ -5,7 +5,7 @@
     <fieldset ng-switch="slide.type" ng-disabled="slide.choice">
       <div ng-switch-when="text">
         <div ng-click="intro.next()">
-          <h2 class="pg__intro__slide__body" ng-bind-html="slide.body"></h2>
+          <div class="pg__intro__slide__body" ng-bind-html="slide.body"></div>
           <p class="lead" ng-if="!$last">Press <kbd>space</kbd> or touch to continue.</p>
         </div>
         <p ng-if="$last">

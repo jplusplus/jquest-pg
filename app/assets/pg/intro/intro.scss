@@ -34,6 +34,7 @@
       &__image {
         margin:auto;
         max-width: 100%;
+        max-height:30vh;
 
         background:white;
         @include vendor-prefix(transition, 600ms);
@@ -55,6 +56,8 @@
 
     &__body {
       margin:5vh 0;
+      font-size: 1.8rem;
+      line-height: 2.5rem;
 
       &__big {
         font-size:1.5em;
