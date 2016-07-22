@@ -14,23 +14,10 @@
                 <label class="pg__level__round__details__person__form__label" for="input-image">
                   Picture
                 </label>
-                <div class="input-group input-group">
-                  <input class="form-control"
-                         type="url"
-                         ng-model="round.person.image"
-                         id="input-image" />
-                  <span class="input-group-btn">
-                    <button class="btn btn-secondary" ng-click="details.editSource('image', round.person)" type="button">
-                      <span ng-hide="details.hasSource('image', round.person)">
-                        Add source
-                      </span>
-                      <span ng-show="details.hasSource('image', round.person)">
-                        <i class="fa fa-check-circle-o text-success"></i>
-                        Sourced
-                      </span>
-                    </button>
-                  </span>
-                </div>
+                <input class="form-control"
+                       type="url"
+                       ng-model="round.person.image"
+                       id="input-image" />
               </div>
               <div class="col-xs-4 pg__level__round__details__person__group__image">
                 <img ng-src="{{ round.person.image }}" ng-if="round.person.image" class="img-thumbnail" />
@@ -42,7 +29,7 @@
               <label class="pg__level__round__details__person__form__label" for="input-birthdate">
                 Date of birth
               </label>
-              <div class="input-group input-group">
+              <div class="input-group">
                 <input class="form-control"
                        flatpickr
                        data-dateFormat="Y/m/d"
@@ -71,7 +58,7 @@
               <label class="pg__level__round__details__person__form__label" for="input-birthplace">
                 Place of birth
               </label>
-              <div class="input-group input-group">
+              <div class="input-group">
                 <input class="form-control"
                        flatpickr
                        data-dateFormat="Y/m/d"
@@ -100,7 +87,7 @@
               <label class="pg__level__round__details__person__form__label" for="input-role">
                 Role in {{ round.mandature.legislature.name }}
               </label>
-              <div class="input-group input-group">
+              <div class="input-group">
                 <input class="form-control"
                        type="text"
                        ng-model="round.mandature.role"
@@ -127,7 +114,7 @@
               <label class="pg__level__round__details__person__form__label" for="input-education">
                 Education
               </label>
-              <div class="input-group input-group">
+              <div class="input-group">
                 <input class="form-control"
                        type="text"
                        ng-model="round.person.education"
@@ -154,7 +141,7 @@
               <label class="pg__level__round__details__person__form__label" for="input-profession-category">
                 Occupation
               </label>
-              <div class="input-group input-group">
+              <div class="input-group">
                 <select class="form-control"
                        ng-options="pl for pl in details.professionCategories"
                        ng-model="round.person.profession_category"
@@ -183,7 +170,7 @@
               <label class="pg__level__round__details__person__form__label" for="input-political-leaning">
                 Political leaning
               </label>
-              <div class="input-group input-group">
+              <div class="input-group">
                 <select class="form-control"
                        ng-options="pl for pl in details.politicalLeanings"
                        ng-model="round.mandature.political_leaning"

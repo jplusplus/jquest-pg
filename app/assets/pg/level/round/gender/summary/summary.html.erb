@@ -1,0 +1,55 @@
+<div class="pg__level__round__gender__summary">
+  <div class="card">
+    <div class="pg__level__round__gender__summary__heading  card-block">
+      <h4 class="card-title">
+        Congratulations, you finished round 1
+      </h4>
+      <p class="card-text lead">
+        You just qualified the gender of 6 elected representatives.
+      </p>
+    </div>
+    <div class="card-block text-xs-center">
+      <div class="row">
+        <div class="col-xs-6">
+          <h5>Your summary</h5>
+          <c3chart bindto-id="chart-gender-assignments">
+            <chart-legend show-legend="false" />
+            <chart-tooltip show-tooltip="false" />
+            <chart-column ng-repeat="(gender, count) in summary.amongAssignments"
+                          column-id="{{ gender }}"
+                          column-values="{{ count }}"
+                          column-color="{{ summary.genderColor(gender) }}"
+                          column-type="pie" />
+            <chart-pie expand="false" />
+          </c3chart>
+        </div>
+        <div class="col-xs-6">
+            <h5>Total so far</h5>
+            <c3chart bindto-id="chart-gender-all">
+              <chart-legend show-legend="false" />
+              <chart-tooltip show-tooltip="false" />
+              <chart-column ng-repeat="(gender, count) in summary.amongAll"
+                            column-id="{{ gender }}"
+                            column-values="{{ count }}"
+                            column-color="{{ summary.genderColor(gender) }}"
+                            column-type="pie" />
+              <chart-pie expand="false" />
+            </c3chart>
+        </div>
+      </div>
+      <ul class="list-inline pg__level__round__gender__summary__legend">
+        <li ng-repeat="(key, gender) in summary.genders">
+          <span ng-style="{ color: gender.color }">
+            <i class="fa fa-square"></i>
+          </span>
+          {{ gender.name }}
+        </li>
+      </ul>
+    </div>
+    <div class="card-footer text-xs-right">
+      <a class="btn btn-primary" ng-click="level.startRound()">
+        Continue
+      </a>
+    </div>
+  </div>
+</div>

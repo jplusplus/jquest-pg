@@ -19,5 +19,7 @@ angular.module 'jquest'
         $scope.$on 'progression:changed', (ev, changed)=>
           # Level changed
           if changed[0] then $state.go 'main.season.pg'
-          # Round changed
+          # Round changed and we are now to round 2
+          else if seasons.current().progression.round is 2
+            $state.go 'main.season.pg.level.round.gender.summary'
           else do @startRound

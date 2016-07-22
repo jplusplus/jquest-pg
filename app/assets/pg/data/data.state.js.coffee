@@ -3,10 +3,10 @@ angular.module 'jquest'
     'ngInject'
     $stateProvider
       .state 'main.season.pg.data',
+        url: 'data'
         controller: 'MainSeasonPgDataCtrl'
         controllerAs: 'data'
         templateUrl: 'data/data.html'
-        url: 'data'
         params:
           person_fullname_or_legislature_name_cont:
             value:null

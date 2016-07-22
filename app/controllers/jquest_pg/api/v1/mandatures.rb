@@ -26,6 +26,22 @@ module JquestPg
               per(params[:limit])
           end
 
+
+          desc "Return summary about all mandatures"
+          get :summary do
+            # Get all mandatures and related tables
+            mandatures = Mandature.includes(:person).includes(:legislature)
+            # Count by gender
+            genders = mandatures.select { |m| not m.person.gender.blank? }
+            genders = genders.group_by { |m| m.person.gender }
+            genders = genders.map { |k,v| [k, v.length] }.to_h
+            # Returns a hash
+            {
+              total: mandatures.length,
+              genders: genders
+            }
+          end
+
           route_param :assigned do
             desc "Return list of mandatures assigned to the user"
             get do

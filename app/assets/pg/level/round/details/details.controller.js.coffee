@@ -45,6 +45,9 @@ angular.module 'jquest'
           @setSource field, resource, value
       getSource: (field, resource)=>
         _.find(resource.sources or [], field: field)
+      requiresSource: (field)=>
+        # Some field don't require source
+        -1 is ['image'].indexOf field
       hasSource: (field, resource)=>
         source = @getSource(field, resource)
         (!!source) and source.value isnt ''
@@ -82,7 +85,7 @@ angular.module 'jquest'
           # Did the value value changed
           unless clone[key] is resource[key] or resource[key] is ''
             # Do the value must be sourced? If yes, has it got a source?
-            if not sourced or @hasSource key, resource
+            if not sourced or not @requiresSource(key) or @hasSource key, resource
               # Add it to the list!
               changed.push key
         # Returns the array of changed field
