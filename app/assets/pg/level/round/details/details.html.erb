@@ -2,7 +2,15 @@
   <div class="card">
     <div class="pg__level__round__details__person">
       <div class="pg__level__round__details__heading card-block">
-        <h4 class="card-title">Find detail information about {{ round.person.fullname }}</h4>
+        <h4 class="card-title">
+          Find detail information about {{ round.person.fullname }}
+          <div class="lead">
+            {{ round.mandature.legislature.name }}
+            <span class="small" ng-if="round.mandature.legislature.name != round.mandature.legislature.name_local">
+              ({{ round.mandature.legislature.name_local }})
+            </span>
+          </div>
+        </h4>
         <p class="card-text">At least one is required before you can move on.</p>
       </div>
       <form ng-submit="details.submit()">
@@ -60,8 +68,6 @@
               </label>
               <div class="input-group">
                 <input class="form-control"
-                       flatpickr
-                       data-dateFormat="Y/m/d"
                        type="text"
                        ng-model="round.person.birthplace"
                        id="input-birthplace" />

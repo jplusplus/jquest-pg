@@ -1,6 +1,13 @@
 .pg__level__round__details {
 
+  &__heading {
+    .lead .small {
+      font-weight: inherit;
+    }
+  }
+
   &__person {
+
 
     &__image {
 
