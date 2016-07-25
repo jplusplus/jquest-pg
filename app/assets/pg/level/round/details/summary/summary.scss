@@ -1,0 +1,44 @@
+.pg__level__round__details__summary {
+
+  &__legend {
+    height:30vh;
+
+    &__europe {
+      color: $text-muted;
+      position: absolute;
+      top:0;
+      left:50%;
+      font-size:.9em;
+      line-height:1.2em;
+      white-space: nowrap;
+      @include vendor-prefix(transform, translate(-50%, -50%));
+    }
+  }
+
+  &__bar {
+    position: relative;
+    width: 15vh;
+    background: $card-border-color;
+    height: 30vh;
+    margin:auto;
+
+    &__median {
+      position: absolute;
+      width:100%;
+      left:0;
+      bottom:0;
+      background: mix($brand-primary, $card-bg);
+      color: white;
+      font-size:.8em;
+    }
+
+    &__europe {
+      background: $brand-primary;
+      height:1px;
+      width:150%;
+      position: absolute;
+      top:0;
+      left:-25%;
+    }
+  }
+}

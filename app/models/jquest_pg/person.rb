@@ -55,6 +55,12 @@ module JquestPg
       end
     end
 
+    def age
+      unless birthdate.blank?
+        Time.now.year - Time.parse(birthdate).year
+      end
+    end
+
     def gender=(value)
       super
       # To track touch on gender field (even if the value didn't changed)

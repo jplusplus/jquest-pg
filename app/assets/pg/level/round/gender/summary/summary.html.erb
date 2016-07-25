@@ -15,7 +15,7 @@
           <c3chart bindto-id="chart-gender-assignments">
             <chart-legend show-legend="false" />
             <chart-tooltip show-tooltip="false" />
-            <chart-column ng-repeat="(gender, count) in summary.amongAssignments"
+            <chart-column ng-repeat="(gender, count) in summary.assigned.gender"
                           column-id="{{ gender }}"
                           column-values="{{ count }}"
                           column-color="{{ summary.genderColor(gender) }}"
@@ -28,7 +28,7 @@
             <c3chart bindto-id="chart-gender-all">
               <chart-legend show-legend="false" />
               <chart-tooltip show-tooltip="false" />
-              <chart-column ng-repeat="(gender, count) in summary.amongAll"
+              <chart-column ng-repeat="(gender, count) in summary.global.gender"
                             column-id="{{ gender }}"
                             column-values="{{ count }}"
                             column-color="{{ summary.genderColor(gender) }}"

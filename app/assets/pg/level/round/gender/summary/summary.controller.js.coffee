@@ -1,9 +1,9 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgLevelRoundSummaryCtrl', (mandatures, summary)->
+  .controller 'MainSeasonPgLevelRoundGenderSummaryCtrl', (summary)->
     'ngInject'
-    new class MainSeasonPgLevelRoundSummaryCtrl
-      amongAssignments: _.countBy mandatures, (m)-> m.person.gender
-      amongAll: summary.genders
+    new class MainSeasonPgLevelRoundGenderSummaryCtrl
+      global: summary.global
+      assigned: summary.assigned
       genders:
         other:
           name: 'Other'

@@ -2,11 +2,11 @@ angular.module 'jquest'
   .config ($stateProvider)->
     'ngInject'
     $stateProvider
-      .state 'main.season.pg.level.round.gender.summary',
+      .state 'main.season.pg.level.round.details.summary',
         url: '/summary'
-        controller: 'MainSeasonPgLevelRoundGenderSummaryCtrl'
+        controller: 'MainSeasonPgLevelRoundDetailsSummaryCtrl'
         controllerAs: 'summary'
-        templateUrl: 'level/round/gender/summary/summary.html'
+        templateUrl: 'level/round/details/summary/summary.html'
         resolve:
           summary: (seasons, SeasonRestangular)->
             'ngInject'

@@ -12,6 +12,13 @@ module JquestPg
         def season
           Season.find_by engine_name: JquestPg.name
         end
+
+        # Calculate the median of the given array
+        def median(array)
+          sorted = array.sort
+          len = sorted.length
+          (sorted[(len - 1) / 2] + sorted[len / 2]) / 2.0
+        end
       end
 
       before do

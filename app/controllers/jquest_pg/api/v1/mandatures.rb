@@ -4,7 +4,6 @@ module JquestPg
       class Mandatures < Grape::API
         resource :mandatures do
 
-
           desc "Return list of mandatures"
           params do
             optional :legislature_id_eq, type: Integer
@@ -29,17 +28,33 @@ module JquestPg
 
           desc "Return summary about all mandatures"
           get :summary do
-            # Get all mandatures and related tables
-            mandatures = Mandature.includes(:person).includes(:legislature)
-            # Count by gender
-            genders = mandatures.select { |m| not m.person.gender.blank? }
-            genders = genders.group_by { |m| m.person.gender }
-            genders = genders.map { |k,v| [k, v.length] }.to_h
-            # Returns a hash
-            {
-              total: mandatures.length,
-              genders: genders
-            }
+            # Empty hash containing result
+            result = {}
+            # Mandatures assigned to the user
+            assigned = Mandature.assigned_to(current_user, current_user.member_of, false)
+            # All mandatures
+            global = Mandature.includes :person
+            # Create a hash of values for the two subsets
+            { global: global, assigned: assigned }.map do |key, mandatures|
+              # Count by gender
+              gender = mandatures.select { |m| not m.person.gender.blank? }
+              gender = gender.group_by { |m| m.person.gender }
+              gender = gender.map { |k,v| [k, v.length] }.to_h
+              # Age values
+              ages = mandatures.map(&:person).map(&:age).compact
+              # Returns a hash
+              result[key] = {
+                total: mandatures.length,
+                gender: gender,
+                age: {
+                  min: ages.min,
+                  max: ages.max,
+                  median: median(ages)
+                }
+              }
+            end
+            # Return the result hash
+            result
           end
 
           route_param :assigned do
