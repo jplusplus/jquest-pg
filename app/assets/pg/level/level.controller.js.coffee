@@ -22,4 +22,7 @@ angular.module 'jquest'
           # Round changed and we are now to round 2
           else if seasons.current().progression.round is 2
             $state.go 'main.season.pg.level.round.gender.summary'
+          # Round changed and we are now to round 3
+          else if seasons.current().progression.round is 3
+            $state.go 'main.season.pg.level.round.details.summary'
           else do @startRound
