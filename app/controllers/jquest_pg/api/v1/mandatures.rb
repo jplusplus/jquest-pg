@@ -31,7 +31,7 @@ module JquestPg
             # Empty hash containing result
             result = {}
             # Mandatures assigned to the user
-            assigned = Mandature.assigned_to(current_user, current_user.member_of, false)
+            assigned = Mandature.assigned_to(current_user, current_user.member_of, false, :pending)
             # All mandatures
             global = Mandature.includes :person
             # Create a hash of values for the two subsets
