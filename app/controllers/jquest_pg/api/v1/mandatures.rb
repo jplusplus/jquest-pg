@@ -47,9 +47,9 @@ module JquestPg
                 total: mandatures.length,
                 gender: gender,
                 age: {
-                  min: ages.min,
-                  max: ages.max,
-                  median: median(ages)
+                  min: ages.empty? ? nil : ages.min,
+                  max: ages.empty? ? nil : ages.max,
+                  median: ages.empty? ? nil : median(ages)
                 }
               }
             end
