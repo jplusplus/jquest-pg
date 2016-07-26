@@ -6,6 +6,29 @@ module JquestPg
     end
 
     def progression(user, season=user.member_of)
+      # Find or create Point instance for this season
+      point = user.points.find_or_create_by(season: season)
+      # Determine the current taxonomy according to the round
+      round_taxonomies = { 1 => 'genderize', 2 => 'details', 3 => 'diversity' }
+      round_taxonomy = round_taxonomies[point.round]
+      # Find the user finished assignements for the current round's taxonomy
+      fids = activities.where(taxonomy: round_taxonomy).distinct.pluck(:assignment_id)
+      # Get the remaining assignments
+      remaining_assignments = user.assignments.where.not(id: fids).order(:id)
+      # Current assignment is the first of the remaining
+      assignment = remaining_assignments.first
+      # Return a simple hash
+      OpenStruct.new level: point.level,
+                     round: point.round,
+                     points: points.value,
+                     position: points.position,
+                     # Remaining assignments count
+                     remaining_assignments: remaining_assignments.length,
+                     # Return it as JSON resolving the nested resources
+                     assignment: assignment
+    end
+
+    def progression_legacy(user, season=user.member_of)
       activities = user.activities.where(season: season).where.not(assignment: nil)
       # Number of processed assignment deduced from the number of activity (one by assignment in a given taxonomy)
       processed = activities.group(:taxonomy, :assignment_id).count().length
