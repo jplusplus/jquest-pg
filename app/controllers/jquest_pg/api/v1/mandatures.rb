@@ -109,6 +109,8 @@ module JquestPg
                 Source.update_or_create source
               end
               mandature.update_attributes permitted_params(mandature, params)
+              # Go to the next round
+              current_user_point.next_round unless progression.remaining_assignments > 0
               # Return a mandature
               mandature
             end

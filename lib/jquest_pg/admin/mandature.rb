@@ -19,6 +19,37 @@ if defined?(ActiveAdmin)
         end
       }
     )
+
+
+    batch_action :restore do |ids, inputs|
+      JquestPg::Mandature.find(ids).each do |mandature|
+        mandature.restore!
+      end
+      redirect_to collection_path, :flash =>{
+        :notice =>  ids.length.to_s + ' mandature'.pluralize(ids.length) + ' restored.'
+      }
+    end
+
+    collection_action :restore_all, method: :get do
+      JquestPg::Mandature.all.each do |mandature|
+        mandature.restore!
+      end
+      redirect_to collection_path, notice: "All mandatures restored to initial state!"
+    end
+
+    member_action :restore, method: :get do
+      resource.restore!
+      redirect_to resource_path, notice: "Restored to initial state"
+    end
+
+    action_item :restore_all, only: :index do
+      link_to 'Restore all', restore_all_admin_pg_mandatures_path
+    end
+
+    action_item :restore, only: :show do
+      link_to 'Restore', restore_admin_pg_mandature_path
+    end
+
     index title: 'Mandatures' do
       selectable_column
       id_column

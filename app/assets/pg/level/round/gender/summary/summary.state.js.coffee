@@ -3,7 +3,6 @@ angular.module 'jquest'
     'ngInject'
     $stateProvider
       .state 'main.season.pg.level.round.gender.summary',
-        url: '/summary'
         controller: 'MainSeasonPgLevelRoundGenderSummaryCtrl'
         controllerAs: 'summary'
         templateUrl: 'level/round/gender/summary/summary.html'

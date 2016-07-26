@@ -44,7 +44,7 @@ module JquestPg
       # Multiple value may have changed
       else
         # Attributes that might changed
-        [:birthdate, :birthplace, :education, :profession_category].each do |n|
+        [:birthdate, :birthplace, :education, :profession_category, :image].each do |n|
           # Did it changed?
           if method("#{n}_changed?").call
             activity.merge! points: 2, taxonomy: 'details', value: n
@@ -77,6 +77,10 @@ module JquestPg
         joins('INNER JOIN jquest_pg_mandatures ON jquest_pg_mandatures.id = assignments.resource_id').
         # ...filter mandatures with person id
         where(jquest_pg_mandatures: { person_id: id })
+    end
+
+    def assigned_to?(user)
+      as_assignments.exists? user: user
     end
 
     def self.assigned_to(user, season=user.member_of, force=true, status=nil)

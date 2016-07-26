@@ -69,6 +69,8 @@ module JquestPg
                 Source.update_or_create source
               end
               person.update_attributes permitted_params(person, params)
+              # Go to the next round
+              current_user_point.next_round unless progression.remaining_assignments > 0
               # Return a person
               person
             end
@@ -87,6 +89,8 @@ module JquestPg
               # Ensure a version is created even if the value is the same
               person.touch_with_version unless person.gender_changed?
               person.save!
+              # Go to the next round
+              current_user_point.next_round unless progression.remaining_assignments > 0
               # Return a person
               person
             end

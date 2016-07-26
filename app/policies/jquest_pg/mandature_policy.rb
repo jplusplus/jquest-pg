@@ -7,9 +7,9 @@ module JquestPg
       if @user.role? :teacher, :admin
         [ :legislature_id, :person_id, :political_leaning,
           :role, :group, :area, :chamber ]
-      elsif progression[:round] == 2
+      else
         # Get columns names
-        names = JquestPg::Manature.columns.map(&:name)
+        names = JquestPg::Mandature.columns.map(&:name)
         # Filter non empty ones and return symbols
         names.select{ |name| @model[name].blank? }.map(&:to_sym)
       end
@@ -33,7 +33,16 @@ module JquestPg
     end
 
     def update?
-      create? or Mandature.find(progression[:assignment]["resource_id"]).person == @model
+      create? or @model.assigned_to? @user
     end
+
+    def restore?
+      create?
+    end
+
+    def restore_all?
+      restore?
+    end
+
   end
 end

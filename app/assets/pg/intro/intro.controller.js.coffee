@@ -16,6 +16,10 @@ angular.module 'jquest'
           combo: ['left']
           description: "Go to the previous slide."
           callback: => do @prev
+        hotkeys.add
+          combo: ['esc']
+          description: "End the introduction."
+          callback: => do @end
       # Ends intro
       end: =>
         seasons.current().one('intro').put().finally ->

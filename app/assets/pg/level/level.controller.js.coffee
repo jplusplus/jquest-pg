@@ -17,6 +17,7 @@ angular.module 'jquest'
         do @startRound
         # Start again if the progression changed
         $scope.$on 'progression:changed', (ev, changed)=>
+          console.log changed, seasons.current().progression
           # Level changed
           if changed[0] then $state.go 'main.season.pg'
           # Round changed and we are now to round 2

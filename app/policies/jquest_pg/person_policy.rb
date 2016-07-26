@@ -11,7 +11,7 @@ module JquestPg
           :gender, :birthdate, :birthplace, :phone ]
       elsif progression[:round] == 1
         [:gender]
-      elsif progression[:round] == 2
+      else
         # Get columns names
         names = JquestPg::Person.columns.map(&:name)
         # Filter non empty ones and return symbols
@@ -37,7 +37,7 @@ module JquestPg
     end
 
     def update?
-      create? or Mandature.find(progression[:assignment]["resource_id"]).person == @model
+      create? or @model.assigned_to? @user
     end
   end
 end

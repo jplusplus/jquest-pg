@@ -57,10 +57,8 @@ module JquestPg
               progression = JquestPg::ApplicationController.new.progression user
               # Did we have enought assignments for this level
               if user.assignments.count() < progression.level * 6
-                # Mark all pending assignments as done
-                user.assignments.pending.update_all status: :done
-                # Find new assignments
-                Mandature::assigned_to user, user.member_of, true, :pending
+                # Set new assignments for this user
+                JquestPg::ApplicationController.new.new_assignments! user
               end
             end
           end

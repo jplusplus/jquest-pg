@@ -5,7 +5,15 @@ module JquestPg
       render 'jquest_pg/index', :layout => 'layouts/application'
     end
 
+    def new_assignments!(user, season=user.member_of)
+      # Mark all pending assignments as done
+      user.assignments.pending.where(season: season).update_all status: :done
+      # Find new assignments
+      Mandature::assigned_to user, season, true, :pending
+    end
+
     def progression(user, season=user.member_of)
+      activities = user.activities.where(season: season).where.not(assignment: nil)
       # Find or create Point instance for this season
       point = user.points.find_or_create_by(season: season)
       # Determine the current taxonomy according to the round
@@ -20,8 +28,8 @@ module JquestPg
       # Return a simple hash
       OpenStruct.new level: point.level,
                      round: point.round,
-                     points: points.value,
-                     position: points.position,
+                     points: point.value,
+                     position: point.position,
                      # Remaining assignments count
                      remaining_assignments: remaining_assignments.length,
                      # Return it as JSON resolving the nested resources

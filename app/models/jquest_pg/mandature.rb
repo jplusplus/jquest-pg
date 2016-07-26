@@ -74,6 +74,21 @@ module JquestPg
       100.0 * cc / ll
     end
 
+    def assigned_to?(user)
+      user.assignments.exists?(resource: self)
+    end
+
+    def restore!
+      # Does the version exist?
+      unless versions.first.nil?
+        versions.first.reify.save!
+      end
+      # Does the version for the related person exist?
+      unless person.nil? or person.versions.first.nil?
+        person.versions.first.reify.save!
+      end
+    end
+
     def self.some_are_assigned_to?(user, season=user.member_of)
       self.assigned_to(user, season, true).length > 0
     end

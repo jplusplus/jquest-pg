@@ -13,6 +13,10 @@ module JquestPg
           Season.find_by engine_name: JquestPg.name
         end
 
+        def current_user_point
+          current_user.points.find_by(season: season)
+        end
+
         # Calculate the median of the given array
         def median(array)
           sorted = array.sort

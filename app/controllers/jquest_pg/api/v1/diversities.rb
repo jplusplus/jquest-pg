@@ -11,10 +11,15 @@ module JquestPg
               per(params[:limit])
           end
 
+          desc "Create a diversity object"
           post do
-            Diversity.create value: params.value,
-                             resource_a: Person.find(params.resource_a.id),
-                             resource_b: Person.find(params.resource_b.id)
+            diversity = Diversity.create value: params.value,
+                                         resource_a: Person.find(params.resource_a.id),
+                                         resource_b: Person.find(params.resource_b.id)
+            # Go to the next level
+            current_user_point.next_level unless progression.remaining_assignments > 0
+            # Returns the new diversity
+            diversity
           end
 
           get :request do
