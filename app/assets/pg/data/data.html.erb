@@ -54,7 +54,7 @@
         <div class="card-block">
           <h3 class="card-title">Collected data</h3>
           <p class="lead">
-            This is all mandatures collected and analysed so far.
+            Browse the data collected so far.
           </p>
           <div class="pg__data__download" ng-if="data.hasMandatures">
             <a class="btn btn-link" ng-href="{{ data.csv }}"
@@ -67,10 +67,10 @@
         </div>
         <p ng-hide="data.hasMandatures" class="pg__data__no-results card-block lead">
           <i class="fa fa-filter"></i>
-          No mandature match with your filters.
+          No person matched your filters.
         </p>
         <div class="alert alert-warning pg__data__filter-warning" ng-if="data.hasMandatures && data.isFiltered">
-          Those data are filtered.
+          You have active filters.
           <a class="alert-link" ui-sref="main.season.pg.data({})" ui-sref-opts="{ inherit: false }">
             <i class="fa fa-times"></i>
             Reset
