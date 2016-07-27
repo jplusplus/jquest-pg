@@ -38,37 +38,44 @@ angular.module 'jquest'
     LEVELS:
       [
         {
-          title: 'Level 1'
+          title: 'Level 1',
+          index: 1,
           description: 'National parliament of your home country'
           category: 0
         }
         {
-          title: 'Level 2'
+          title: 'Level 2',
+          index: 2,
           description: 'Regional parliament of your home country'
           category: 0
         }
         {
-          title: 'Level 3'
+          title: 'Level 3',
+          index: 3,
           description: 'Local parliament of your home country'
           category: 0
         }
         {
-          title: 'Level 4'
+          title: 'Level 4',
+          index: 4,
           description: 'Foreign parliament'
           category: 1
         }
         {
-          title: 'Level 5'
+          title: 'Level 5',
+          index: 5,
           description: 'Older parliament of home country'
           category: 1
         }
         {
-          title: 'Level 6'
+          title: 'Level 6',
+          index: 6,
           description: 'Very foreign parliament'
           category: 1
         }
         {
-          title: 'Level 7'
+          title: 'Level 7',
+          index: 7,
           description: 'Historical parliament'
           category: 2
         }
