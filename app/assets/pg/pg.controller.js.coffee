@@ -12,7 +12,7 @@ angular.module 'jquest'
           done: => (index + 1) < @progression().level
         }, level
       category: SETTINGS.CATEGORIES
-      seeksAttention: (level)=>
+      seeksAttentionOnLevel: (level)=>
         @progression().level is level.index and @progression().round is 1
       constructor: ->
         # Group levels by categories

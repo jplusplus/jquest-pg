@@ -15,7 +15,7 @@ angular.module 'jquest'
           .post gender: value
           .finally (r)->
             # Reload progression after a short delay
-            $timeout(seasons.reload, 600).then ->
+            $timeout(seasons.reload, 600).then =>
               # Still on this round
               if seasons.current().progression.round is 1
                 # Once the season is reloaded, we might refresh the current round

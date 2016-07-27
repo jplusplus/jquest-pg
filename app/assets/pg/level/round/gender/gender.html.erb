@@ -1,8 +1,6 @@
 <div class="pg__level__round__gender" ui-view>
-  <div class="card card-block">
-    <fieldset ng-repeat="mandature in level.mandatures track by mandature.id"
-         class="pg__level__round__gender__person"
-         ng-show="round.isCurrentAssignment(mandature)">
+  <div class="card card-block" ng-init="mandature = round.mandature">    
+    <fieldset class="pg__level__round__gender__person">
       <div class="pg__level__round__gender__person__stack">
         <div class="pg__level__round__gender__person__stack__image pg__level__round__gender__person__stack__image--{{ mandature.person.choice }} img-thumbnail">
           <img ng-src="http://placehold.it/200x250/B3A2B3/fff" />
