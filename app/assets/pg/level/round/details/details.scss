@@ -8,31 +8,6 @@
 
   &__person {
 
-
-    &__image {
-
-      background:white;
-      @include vendor-prefix(box-shadow, 0 1px 2px rgba(0,0,0,.1) );
-
-      img {
-        width: 100%;
-      }
-
-      &__legend {
-        text-align: left;
-        padding:.5rem;
-
-        &__fullname, &__legislature {
-          font-weight: bold;
-        }
-
-        &__legislature {
-          font-weight: lighter;
-          font-size:.9em;
-        }
-      }
-    }
-
     &__form {
 
       &__label {
@@ -55,11 +30,12 @@
         top:-1rem;
         bottom:0;
 
-        img {
+        .pg__person-cover {
           position: absolute;
+          bottom:0;
           left:0;
-          top:0;
-          height:100%;
+          width:120px;
+          height:120px;
           padding:0;
         }
       }

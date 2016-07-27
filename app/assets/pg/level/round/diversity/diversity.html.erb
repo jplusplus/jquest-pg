@@ -10,16 +10,16 @@
     <div class="pg__level__round__diversity__body card-block">
       <div class="row">
         <div class="col-xs-6 pg__level__round__diversity__body__person" ng-click="diversity.value(-1)">
-          <div class="pg__level__round__diversity__body__person__image img-thumbnail"
-               ng-style="{ backgroundImage: 'url(' + (diversity.person_a.image || 'http://placehold.it/300x350/B3A2B3/fff') + ')' }">
+          <div class="pg__level__round__diversity__body__person__image pg__person-cover img-thumbnail">
+            <img ng-src="{{ diversity.person_a.image }}" src="" />
             <div class="pg__level__round__diversity__body__person__image__legend">
               {{ diversity.person_a.fullname }}
             </div>
           </div>
         </div>
         <div class="col-xs-6 pg__level__round__diversity__body__person" ng-click="diversity.value(1)">
-          <div class="pg__level__round__diversity__body__person__image img-thumbnail"
-               ng-style="{ backgroundImage: 'url(' + (diversity.person_b.image || 'http://placehold.it/300x350/B3A2B3/fff') + ')' }">
+          <div class="pg__level__round__diversity__body__person__image pg__person-cover img-thumbnail">
+            <img ng-src="{{ diversity.person_b.image }}" src="" />
             <div class="pg__level__round__diversity__body__person__image__legend">
               {{ diversity.person_b.fullname }}
             </div>

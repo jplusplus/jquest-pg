@@ -28,7 +28,9 @@
                        id="input-image" />
               </div>
               <div class="col-xs-4 pg__level__round__details__person__group__image">
-                <img ng-src="{{ round.person.image }}" ng-if="round.person.image" class="img-thumbnail" />
+                <div class="pg__person-cover img-thumbnail">
+                  <img ng-src="{{ round.person.image }}" src="" />
+                </div>
               </div>
           </fieldset>
 

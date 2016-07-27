@@ -1,6 +1,44 @@
 .pg {
   padding-top:1rem * $line-height;
 
+  &__person-cover {
+    position: relative;
+    width:100%;
+    padding-top:125%;
+    overflow: hidden;
+
+    img {
+      position: absolute;
+      display: block;
+      top:50%;
+      left:50%;
+      width: 100%;
+      min-height: 100%;
+      background-color: #455666;
+      @include vendor-prefix(object-fit, cover);
+      @include vendor-prefix(transform, translate(-50%, -50%));
+
+      &:after {
+        content: "\f118";
+        font-size: 10vh;
+        font-family: FontAwesome;
+        color: lighten(#455666, 10);
+        background: inherit;
+        width:100%;
+        padding:50% 0;
+
+        display: block;
+        text-align: center;
+        border:0;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        @include vendor-prefix(transform, translate(-50%, -50%));
+      }
+    }
+  }
+
 
   &__categories {
 
