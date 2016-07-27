@@ -8,9 +8,9 @@ angular.module 'jquest'
         templateUrl: 'level/level.html'
         url: "play"
         resolve:
-          mandatures: (seasons, SeasonRestangular)->
+          mandatures: (seasonRestangular)->
             'ngInject'
-            SeasonRestangular().one('mandatures').one('assigned').one('pending').getList()
-          people: (seasons, SeasonRestangular)->
+            seasonRestangular.one('mandatures').one('assigned').one('pending').getList()
+          people: (seasonRestangular)->
             'ngInject'
-            SeasonRestangular().one('people').one('assigned').one('pending').getList()
+            seasonRestangular.one('people').one('assigned').one('pending').getList()

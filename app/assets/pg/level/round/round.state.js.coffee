@@ -13,7 +13,14 @@ angular.module 'jquest'
         resolve:
           mandature: (seasons, mandatures, Restangular)->
             'ngInject'
-            Restangular.copy _.find(mandatures, id: seasons.current().progression.assignment.resource_id)
-          person: (people, mandature, Restangular)->
-            'ngInject'
-            Restangular.copy _.find(people, id: mandature.person.id)
+            # Get the resource id
+            mid = seasons.current().progression.assignment.resource_id
+            # Find the mandature that match with this id
+            mandature = _.find(mandatures, id: mid)
+            # Copy it
+            mandature = Restangular.copy mandature
+            # Restangularize nested elements
+            Restangular.restangularizeElement mandature, mandature.person
+            Restangular.restangularizeElement mandature, mandature.legislature
+            # Returns the mandature
+            mandature

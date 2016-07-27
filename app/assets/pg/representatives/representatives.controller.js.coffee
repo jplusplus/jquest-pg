@@ -3,4 +3,3 @@ angular.module 'jquest'
     'ngInject'
     new class MainSeasonPgRepresentativesCtrl
       all: new Paginator assignments
-      constructor: ->

@@ -1,5 +1,5 @@
-<div class="container pg__representatives">
-  <div class="card">
+<div class="container">
+  <div class="card pg__representatives" ui-view>
     <div class="card-block">
       <h3 class="card-title">My representatives</h3>
       <p class="lead">
@@ -27,7 +27,7 @@
               </span>
             </td>
             <td>
-              <a href="">
+              <a ui-sref="main.season.pg.representatives.edit(assignment.resource)">
                 {{ assignment.resource.person.fullname }}
               </a>
             </td>

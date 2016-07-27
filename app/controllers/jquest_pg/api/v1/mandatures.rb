@@ -57,7 +57,7 @@ module JquestPg
             result
           end
 
-          route_param :assigned do
+          resource :assigned do
             desc "Return list of mandatures assigned to the user"
             get do
               authenticate!

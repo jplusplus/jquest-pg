@@ -1,0 +1,200 @@
+<form ng-submit="form.submit()">
+
+  <div class="mandature-form card-block">
+
+    <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.person.image">
+        <div class="col-xs-8">
+          <label class="mandature-form__group__label" for="input-image">
+            Picture
+          </label>
+          <input class="form-control"
+                 type="url"
+                 ng-model="form.mandature.person.image"
+                 id="input-image" />
+        </div>
+        <div class="col-xs-4 mandature-form__group__image">
+          <div class="pg__person-cover img-thumbnail">
+            <img ng-src="{{ form.mandature.person.image }}" src="" />
+          </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.person.birthdate">
+      <div class="col-xs-8">
+        <label class="mandature-form__group__label" for="input-birthdate">
+          Date of birth
+        </label>
+        <div class="input-group">
+          <input class="form-control"
+                 flatpickr
+                 data-dateFormat="Y/m/d"
+                 type="text"
+                 ng-model="form.mandature.person.birthdate"
+                 id="input-birthdate" />
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" ng-click="form.editSource('birthdate', form.mandature.person)" type="button">
+              <span ng-hide="form.hasSource('birthdate', form.mandature.person)">
+                Add source
+              </span>
+              <span ng-show="form.hasSource('birthdate', form.mandature.person)">
+                <i class="fa fa-check-circle-o text-success"></i>
+                Sourced
+              </span>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div class="col-xs-4 mandature-form__group__helper">
+        If you can only find a year, set the birthdate to January 1<sup>st</sup> of that year.
+      </div>
+    </fieldset>
+    <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.person.birthplace">
+      <div class="col-xs-8">
+        <label class="mandature-form__group__label" for="input-birthplace">
+          Place of birth
+        </label>
+        <div class="input-group">
+          <input class="form-control"
+                 type="text"
+                 ng-model="form.mandature.person.birthplace"
+                 id="input-birthplace" />
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" ng-click="form.editSource('birthplace', form.mandature.person)" type="button">
+              <span ng-hide="form.hasSource('birthplace', form.mandature.person)">
+                Add source
+              </span>
+              <span ng-show="form.hasSource('birthplace', form.mandature.person)">
+                <i class="fa fa-check-circle-o text-success"></i>
+                Sourced
+              </span>
+             </button>
+          </span>
+        </div>
+      </div>
+      <div class="col-xs-4 mandature-form__group__helper">
+        Or the country only if you only have this piece of information.
+      </div>
+    </fieldset>
+    <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.role">
+      <div class="col-xs-8">
+        <label class="mandature-form__group__label" for="input-role">
+          Role in {{ form.mandature.legislature.name }}
+        </label>
+        <div class="input-group">
+          <input class="form-control"
+                 type="text"
+                 ng-model="form.mandature.role"
+                 id="input-role" />
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" ng-click="form.editSource('role', mandature)" type="button">
+              <span ng-hide="form.hasSource('role', mandature)">
+                Add source
+              </span>
+              <span ng-show="form.hasSource('role', mandature)">
+                <i class="fa fa-check-circle-o text-success"></i>
+                Sourced
+              </span>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div class="col-xs-4 mandature-form__group__helper">
+        Is this representative a plain member or does s/he hold a more senior position, like president of the assembly?
+      </div>
+    </fieldset>
+    <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.person.education">
+      <div class="col-xs-8">
+        <label class="mandature-form__group__label" for="input-education">
+          Education
+        </label>
+        <div class="input-group">
+          <input class="form-control"
+                 type="text"
+                 ng-model="form.mandature.person.education"
+                 id="input-education" />
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" ng-click="form.editSource('education', form.mandature.person)" type="button">
+              <span ng-hide="form.hasSource('education', form.mandature.person)">
+                Add source
+              </span>
+              <span ng-show="form.hasSource('education', form.mandature.person)">
+                <i class="fa fa-check-circle-o text-success"></i>
+                Sourced
+              </span>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div class="col-xs-4 mandature-form__group__helper">
+        Where was this person educated? Which university or school?
+      </div>
+    </fieldset>
+    <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.person.profession_category">
+      <div class="col-xs-8">
+        <label class="mandature-form__group__label" for="input-profession-category">
+          Occupation
+        </label>
+        <div class="input-group">
+          <select class="form-control"
+                 ng-options="pl for pl in form.professionCategories"
+                 ng-model="form.mandature.person.profession_category"
+                 id="input-profession-category">
+            <option value="">—</option>
+          </select>
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" ng-click="form.editSource('profession_category', form.mandature.person)" type="button">
+              <span ng-hide="form.hasSource('profession_category', form.mandature.person)">
+                Add source
+              </span>
+              <span ng-show="form.hasSource('profession_category', form.mandature.person)">
+                <i class="fa fa-check-circle-o text-success"></i>
+                Sourced
+              </span>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div class="col-xs-4 mandature-form__group__helper">
+        Select the occupation that's closest to the job of this representative.
+      </div>
+    </fieldset>
+    <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.political_leaning">
+      <div class="col-xs-8">
+        <label class="mandature-form__group__label" for="input-political-leaning">
+          Political leaning
+        </label>
+        <div class="input-group">
+          <select class="form-control"
+                 ng-options="pl for pl in form.politicalLeanings"
+                 ng-model="form.mandature.political_leaning"
+                 id="input-political-leaning">
+            <option value="">—</option>
+          </select>
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" ng-click="form.editSource('political_leaning', form.mandature.person)" type="button">
+              <span ng-hide="form.hasSource('political_leaning', form.mandature.person)">
+                Add source
+              </span>
+              <span ng-show="form.hasSource('political_leaning', form.mandature.person)">
+                <i class="fa fa-check-circle-o text-success"></i>
+                Sourced
+              </span>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div class="col-xs-4 mandature-form__group__helper">
+        Select the political leaning that best describes this representative.
+      </div>
+    </fieldset>
+  </div>
+  <div class="card-footer text-xs-right">
+    <div class="pull-xs-left" ng-show="form.changes(false) > form.changes(true)">
+      <i class="fa fa-warning fa-fw"></i>&nbsp;
+      Data points without a source are not accepted.
+    </div>
+    <button class="btn btn-primary" type="submit" ng-disabled="form.changes(true) < 1">
+      Save
+    </button>
+  </div>
+</form>

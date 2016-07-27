@@ -1,5 +1,5 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgDataCtrl', (mandatures, Paginator, Restangular, SeasonRestangular, $state, $stateParams)->
+  .controller 'MainSeasonPgDataCtrl', (mandatures, Paginator, Restangular, seasonRestangular, $state, $stateParams)->
     'ngInject'
     new class MainSeasonPgDataCtrl
       filter: =>
@@ -18,4 +18,4 @@ angular.module 'jquest'
       # List of all countries
       countries: Restangular.all('countries').withHttpConfig(cache: yes).getList(limit: 300).$object
       # List of all legislatures
-      legislatures: SeasonRestangular().all('legislatures').withHttpConfig(cache: yes).getList(limit: 300).$object
+      legislatures: seasonRestangular.all('legislatures').withHttpConfig(cache: yes).getList(limit: 300).$object

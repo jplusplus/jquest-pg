@@ -17,6 +17,6 @@ angular.module 'jquest'
           legislature_id_eq:
             value:null
         resolve:
-          mandatures: (seasons, SeasonRestangular, $stateParams)->
+          mandatures: (seasons, seasonRestangular, $stateParams)->
             'ngInject'
-            SeasonRestangular().all('mandatures').getList($stateParams)
+            seasonRestangular.all('mandatures').getList($stateParams)

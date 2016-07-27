@@ -7,6 +7,6 @@ angular.module 'jquest'
         controllerAs: 'diversity'
         templateUrl: 'level/round/diversity/diversity.html'
         resolve:
-          diversity: (SeasonRestangular)->
+          diversity: (seasonRestangular)->
             'njInject'
-            SeasonRestangular().all('diversities').one('request').get()
+            seasonRestangular.all('diversities').one('request').get()

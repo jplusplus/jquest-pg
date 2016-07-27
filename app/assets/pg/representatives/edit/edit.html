@@ -1,0 +1,16 @@
+<div class="card-block">
+  <h3 class="card-title">
+    <a ui-sref="^">
+      My representatives
+    </a>
+    <i class="fa fa-caret-right" aria-hidden="true"></i>
+    {{ edit.mandature.person.fullname }}
+  </h3>
+  <div class="lead">
+    {{ edit.mandature.legislature.name }}
+    <span class="small" ng-if="edit.mandature.legislature.name != edit.mandature.legislature.name_local">
+      ({{ edit.mandature.legislature.name_local }})
+    </span>
+  </div>
+</div>
+<mandature-form mandature="edit.mandature" finally="edit.finally()" />
