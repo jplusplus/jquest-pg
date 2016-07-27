@@ -85,6 +85,21 @@ module JquestPg
                 # Default limit is 25
                 per(params[:limit])
             end
+
+
+            desc "Return list of mandatures assigned to the user and done"
+            get :done do
+              authenticate!
+              # Collect mandature assigned to this user
+              Mandature.assigned_to(current_user, current_user.member_of, false, :done).
+                # Join to related tables
+                includes(:person).
+                includes(:legislature).
+                # Paginates results
+                page(params[:page]).
+                # Default limit is 25
+                per(params[:limit])
+            end
           end
 
           params do
