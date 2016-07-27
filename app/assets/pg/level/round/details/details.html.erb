@@ -3,7 +3,7 @@
     <div class="pg__level__round__details__person">
       <div class="pg__level__round__details__heading card-block">
         <h4 class="card-title">
-          Find detail information about {{ round.person.fullname }}
+          Find data about {{ round.person.fullname }}
           <div class="lead">
             {{ round.mandature.legislature.name }}
             <span class="small" ng-if="round.mandature.legislature.name != round.mandature.legislature.name_local">
@@ -11,7 +11,7 @@
             </span>
           </div>
         </h4>
-        <p class="card-text">At least one is required before you can move on.</p>
+        <p class="card-text">You must find at least one piece of data before you can move on.</p>
       </div>
       <form ng-submit="details.submit()">
         <div class="pg__level__round__details__person__form card-block">
@@ -58,7 +58,7 @@
               </div>
             </div>
             <div class="col-xs-4 pg__level__round__details__person__group__helper">
-              Lorem ipsum dolor description von Date of birth.
+              If you can only find a year, set the birthdate to January 1<sup>st</sup> of that year.
             </div>
           </fieldset>
           <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.person.birthplace">
@@ -85,7 +85,7 @@
               </div>
             </div>
             <div class="col-xs-4 pg__level__round__details__person__group__helper">
-              Lorem ipsum dolor description von Place of birth.
+              Or the country only if you only have this piece of information.
             </div>
           </fieldset>
           <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.mandature.role">
@@ -112,7 +112,7 @@
               </div>
             </div>
             <div class="col-xs-4 pg__level__round__details__person__group__helper">
-              Lorem ipsum dolor description von Education.
+              Is this representative a plain member or does s/he hold a more senior position, like president of the assembly?
             </div>
           </fieldset>
           <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.person.education">
@@ -139,7 +139,7 @@
               </div>
             </div>
             <div class="col-xs-4 pg__level__round__details__person__group__helper">
-              Lorem ipsum dolor description von Education.
+              Where was this person educated? Which university or school?
             </div>
           </fieldset>
           <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.person.profession_category">
@@ -168,7 +168,7 @@
               </div>
             </div>
             <div class="col-xs-4 pg__level__round__details__person__group__helper">
-              Lorem ipsum dolor description von Occupation.
+              Select the occupation that's closest to the job of this representative.
             </div>
           </fieldset>
           <fieldset class="form-group pg__level__round__details__person__group" ng-disabled=":: round.mandature.political_leaning">
@@ -197,14 +197,14 @@
               </div>
             </div>
             <div class="col-xs-4 pg__level__round__details__person__group__helper">
-              Lorem ipsum dolor description von Political leaning.
+              Select the political leaning that best describes this representative.
             </div>
           </fieldset>
         </div>
         <div class="card-footer text-xs-right">
           <div class="pull-xs-left" ng-show="details.changes(false) > details.changes(true)">
             <i class="fa fa-warning fa-fw"></i>&nbsp;
-            Information with no source are not accepted.
+            Data points without a source are not accepted.
           </div>
           <button class="btn btn-primary" type="submit" ng-disabled="details.changes(true) < 1">
             Next
