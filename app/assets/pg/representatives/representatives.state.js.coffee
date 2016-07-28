@@ -8,6 +8,8 @@ angular.module 'jquest'
         templateUrl: 'representatives/representatives.html'
         url: 'my-representatives'
         resolve:
+          $title: ->
+            'My representatives'
           assignments: (Restangular)->
             'ngInject'
             Restangular.all('assignments').getList()

@@ -11,6 +11,9 @@ angular.module 'jquest'
           round: null
           assignment: null
         resolve:
+          $title: (seasons)->
+            'ngInject'
+            'Round ' + seasons.current().progression.round
           mandature: (seasons, mandatures, Restangular)->
             'ngInject'
             # Get the resource id

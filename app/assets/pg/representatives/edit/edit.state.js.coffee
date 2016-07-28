@@ -8,6 +8,8 @@ angular.module 'jquest'
         controller: 'MainSeasonPgRepresentativesEditCtrl'
         controllerAs: 'edit'
         resolve:
+          $title: ->
+            'Edit'
           done: (seasonRestangular)->
             seasonRestangular.all('mandatures').one('assigned').getList('done', limit: 100)
           mandature: (seasonRestangular, $stateParams, $state, done, growl)->

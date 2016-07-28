@@ -7,3 +7,5 @@ angular.module 'jquest'
         controllerAs: 'intro'
         templateUrl: 'intro/intro.html'
         url: 'intro'
+        resolve:
+          $title: -> 'Introduction'

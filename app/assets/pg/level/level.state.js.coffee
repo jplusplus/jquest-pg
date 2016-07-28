@@ -8,6 +8,9 @@ angular.module 'jquest'
         templateUrl: 'level/level.html'
         url: "play"
         resolve:
+          $title: (seasons)->
+            'ngInject'
+            'Level ' + seasons.current().progression.level
           mandatures: (seasonRestangular)->
             'ngInject'
             seasonRestangular.one('mandatures').one('assigned').one('pending').getList()
