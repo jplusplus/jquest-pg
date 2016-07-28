@@ -4,7 +4,6 @@ angular.module 'jquest'
     new class MandatureFormCtrl
       # Common attributes
       mandature: $scope.mandature
-      person: $scope.mandature.person
       # A hash of object clones
       clones: {}
       # Available values for select
@@ -13,9 +12,9 @@ angular.module 'jquest'
       # Creates clones to track changes on the main resources
       constructor: ->
         @createClone @mandature
-        @createClone @person
+        @createClone @mandature.person
       submit: (resources)=>
-        $q.all([ @person.put(), @mandature.put() ]).finally $scope.finally
+        $q.all([ @mandature.person.put(), @mandature.put() ]).finally $scope.finally
       editSource: (field, resource)=>
         # Create a modal
         @editSourceModal = $uibModal.open
@@ -35,7 +34,7 @@ angular.module 'jquest'
       # Get changes count
       changes: (sourced=no)=>
         # Get changes count for the two resources
-        @getChanges(@person, sourced).length + @getChanges(@mandature, sourced).length
+        @getChanges(@mandature.person, sourced).length + @getChanges(@mandature, sourced).length
       saveSourceFn: (field, resource)=>
         (value)=>
           @setSource field, resource, value
