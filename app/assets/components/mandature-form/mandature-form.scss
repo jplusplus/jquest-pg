@@ -4,6 +4,8 @@ mandature-form {
 
 .mandature-form {
 
+  max-width: map-get($container-max-widths, 'lg');
+
   &__group {
     position: relative;
 
