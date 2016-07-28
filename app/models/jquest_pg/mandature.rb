@@ -39,31 +39,21 @@ module JquestPg
       end
     end
 
-    def legislature_fields_required
-      [:role, :political_leaning, :name]
+    def fields_required
+      [:role, :political_leaning]
     end
 
-    def legislature_fields_completed
-      legislature_fields_required.reduce 0 do |memo, field|
-        memo + ( legislature[field].blank? ? 0 : 1 )
-      end
-    end
-
-    def person_fields_required
-      [:birthdate, :birthplace, :education, :profession_category, :gender, :image]
-    end
-
-    def person_fields_completed
-      person_fields_required.reduce 0 do |memo, field|
-        memo + ( person[field].blank? ? 0 : 1 )
+    def fields_completed
+      fields_required.reduce 0 do |memo, field|
+        memo + ( read_attribute(field).blank? ? 0 : 1 )
       end
     end
 
     def completion
       # Field to complete
-      ll = person_fields_required.length + legislature_fields_required.length
+      ll = person.fields_required.length + fields_required.length
       # Field completed
-      cc = person_fields_completed + legislature_fields_completed
+      cc = person.fields_completed + fields_completed
       # Return the percentage of completed field
       100.0 * cc / ll
     end

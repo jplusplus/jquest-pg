@@ -49,6 +49,16 @@ module JquestPg
       end
     end
 
+    def fields_required
+      [:birthdate, :birthplace, :education, :profession_category, :gender, :image]
+    end
+
+    def fields_completed
+      fields_required.reduce 0 do |memo, field|
+        memo + ( read_attribute(field).blank? ? 0 : 1 )
+      end
+    end
+
     def age
       unless birthdate.blank?
         Time.now.year - Time.parse(birthdate).year

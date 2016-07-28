@@ -38,11 +38,16 @@
               {{ assignment.resource.legislature.name }}
             </td>
             <td>
-              <progress class="progress pg__representatives__item__progress" value="{{ assignment.resource.completion }}" max="100" ng-class="{
-                  'progress-danger' : assignment.resource.completion <= 30,
-                  'progress-warning': assignment.resource.completion > 30 && assignment.resource.completion <= 60,
-                  'progress-success': assignment.resource.completion > 50
-                }">
+              <progress
+                    value="{{ assignment.resource.completion }}"
+                    max="100"
+                    uib-tooltip="{{ assignment.resource.completion | number:0 }}% complete"
+                    class="progress pg__representatives__item__progress"
+                    ng-class="{
+                      'progress-danger' : assignment.resource.completion <= 30,
+                      'progress-warning': assignment.resource.completion > 30 && assignment.resource.completion <= 60,
+                      'progress-success': assignment.resource.completion > 50
+                    }">
                 <div class="progress">
                   <span class="progress-bar" style="width: {{ assignment.resource.completion }}%;">
                     {{ assignment.resource.completion }}%
