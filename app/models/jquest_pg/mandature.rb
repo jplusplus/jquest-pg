@@ -28,19 +28,13 @@ module JquestPg
       user = User.find uid
       # Find assignment for this user...
       assignment = Assignment.where(user: user, resource: self).first
-      # Get user progression
-      progression = JquestPg::ApplicationController.new.progression user
-      # ROUND 2
-      # Multiple value may have changed
-      if progression.round == 2
-        # Attributes that might changed
-        [:role, :political_leaning].each do |n|
-          # Did it changed?
-          if method("#{n}_changed?").call
-            # And save the activity
-            Activity.find_or_create_by user: user, taxonomy: 'details', value: n,
-                                       points: 2, assignment: assignment, resource: self
-          end
+      # Attributes that might changed
+      [:role, :political_leaning].each do |n|
+        # Did it changed?
+        if method("#{n}_changed?").call and not read_attribute(n).blank?
+          # And save the activity
+          Activity.find_or_create_by user: user, taxonomy: 'details', value: n,
+                                     points: 2, assignment: assignment, resource: self
         end
       end
     end

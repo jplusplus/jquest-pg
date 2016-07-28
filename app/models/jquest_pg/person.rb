@@ -31,26 +31,20 @@ module JquestPg
       assignment = as_assignments.where(user: user).first
       # This assignment must exist!
       return if assignment.nil?
-      # Get user progression
-      progression = JquestPg::ApplicationController.new.progression user
       # Build a hash describing the new activity
       activity = { user: user, resource: self, assignment: assignment }
-      # ROUND 1
       # Does the gender have been touch (even if it didn't changed)
-      if gender_touched? and progression[:round] == 1
+      if gender_touched?
         # And save the activity
         Activity.find_or_create_by **activity.merge!(taxonomy: 'genderize', points: 1)
-      # ROUND 2
+      end
       # Multiple value may have changed
-      else
-        # Attributes that might changed
-        [:birthdate, :birthplace, :education, :profession_category, :image].each do |n|
-          # Did it changed?
-          if method("#{n}_changed?").call
-            activity.merge! points: 2, taxonomy: 'details', value: n
-            # And save the activity
-            Activity.find_or_create_by **activity
-          end
+      [:birthdate, :birthplace, :education, :profession_category, :image].each do |n|
+        # Did it changed?
+        if method("#{n}_changed?").call and not read_attribute(n).blank?
+          activity.merge! points: 2, taxonomy: 'details', value: n
+          # And save the activity
+          Activity.find_or_create_by **activity
         end
       end
     end
