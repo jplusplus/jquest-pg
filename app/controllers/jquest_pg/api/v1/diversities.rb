@@ -47,6 +47,12 @@ module JquestPg
               Diversity.new(resource_a: unassigned, resource_b: assigned)
             end
           end
+
+          get :ranking do
+            authenticate!
+            # Return all diversities ranking
+            Diversity.as_ranking.map { |item| item[1] }
+          end
         end
       end
     end
