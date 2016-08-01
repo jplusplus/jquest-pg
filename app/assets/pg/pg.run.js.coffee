@@ -15,4 +15,3 @@ angular.module 'jquest'
       Menu.addItem name: "My representatives", state: 'main.season.pg.representatives', category: 'Your mission', priority: 100
       Menu.addItem name: "Leaderboard", state: 'main.season.leaderboard', category: 'Your mission'
       Menu.addItem name: "Collected data", state: 'main.season.pg.data', category: 'Your mission'
-      Menu.addItem name: "About", state: 'main.season.pg.about'
