@@ -4,17 +4,16 @@
   &__slide {
     margin: auto;
     width:100%;
-    max-width: 770px;
     text-align: center;
     padding:5vh;
     position: absolute;
     top:0;
-    left:50%;
+
     opacity:1;
-    @include vendor-prefix(transform, translateX(-50%));
 
     &__stack {
       margin:auto;
+      margin-bottom:$spacer * 2;
       max-width: 100%;
       display: inline-block;
       position: relative;
@@ -52,10 +51,32 @@
           @include vendor-prefix(transform, translate3d(100%, 0, 0) rotate(20deg) );
         }
       }
+
+      &__caption {
+        font-weight: bold;
+        font-size: .7em;
+        width: 100%;
+        position: absolute;
+        top:100%;
+        padding:$spacer;
+      }
+    }
+
+    &__instruction {
+      position: fixed;
+      bottom: 5vh;
+      left:0;
+      right:0;
+
+      @include media-breakpoint-down(sm) {
+        display: none;
+      }
     }
 
     &__body {
-      margin:5vh 0;
+      max-width:660px;
+      margin:5vh auto;
+      margin-bottom:$spacer;
       font-size: 1.8rem;
       line-height: 2.5rem;
 
