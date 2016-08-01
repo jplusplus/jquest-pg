@@ -56,4 +56,13 @@ mandature-form {
     }
   }
 
+  &__sources-alert {
+    cursor: not-allowed;
+    display: inline-block;
+
+    .btn[disabled] {
+      pointer-events: none;
+    }
+  }
+
 }

@@ -190,12 +190,15 @@
     </fieldset>
   </div>
   <div class="card-footer text-xs-right">
-    <div class="pull-xs-left" ng-show="form.changes(false) > form.changes(true)">
-      <i class="fa fa-warning fa-fw"></i>&nbsp;
-      Data points without a source are not accepted.
+    <div uib-tooltip="Data points without a source are not accepted"
+         tooltip-append-to-body="true"
+         tooltip-is-open="form.changes(false) > form.changes(true)"
+         tooltip-trigger="'none'"
+         tooltip-class="tooltip-danger"
+         class="mandature-form__sources-alert">
+      <button class="btn btn-primary" type="submit" ng-disabled="form.changes(true) < 1">
+        Save
+      </button>
     </div>
-    <button class="btn btn-primary" type="submit" ng-disabled="form.changes(true) < 1">
-      Save
-    </button>
   </div>
 </form>
