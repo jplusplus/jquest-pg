@@ -51,7 +51,7 @@ namespace :jquest_pg do
   end
 
   def legislature_fields
-    [:name_english, :name_local, :chamber, :territory, :languages,
+    [:name_english, :name_local, :territory, :languages,
      :difficulty_level, :country, :start_date, :end_date, :number_of_members]
   end
 
@@ -142,7 +142,7 @@ namespace :jquest_pg do
     ws
   end
 
-  desc "Download legislatures list from masterfile"
+  desc "Download mandatures from masterfile"
   task :sync do
     person_created = 0
     person_updated = 0
@@ -166,9 +166,15 @@ namespace :jquest_pg do
       # Get all person with a similar fullname
       # (we use an offline method to compare fingerprint)
       if (similars = persons_similar_by( mandature_hash.slice(:fullname) ) ).length > 0
+        # Those persons migth already be related to the current legislature
+        similar_mandatures = JquestPg::Mandature.where(person_id: similars.map(&:id) )
+        # The legislature is related to a similar mandature
+        if mandature = similar_mandatures.select{ |m| m.legislature_id == legislature.id }.first
+          # So we found the person!
+          person = mandature.person
         # They have the same name, we must find a way to differenciate them.
         # We check the birthdate.
-        if mandature_hash[:birthdate].present?
+        elsif mandature_hash[:birthdate].present?
           # The same person is the one with the same birthdate
           person = similars.select{ |s| s.birthdate == mandature_hash[:birthdate] }.first
         end
@@ -181,20 +187,20 @@ namespace :jquest_pg do
       # No one is similar
       if person.nil? and mandature_hash[:fullname].present?
         # We create the person!
-        person = JquestPg::Person.create! mandature_hash.slice(person_fields)
+        person = JquestPg::Person.create! mandature_hash.slice(*person_fields)
         # Count person created
         person_created += 1
       # Merge values
       else
         # We use the person object we found
-        person.update! mandature_hash.slice(person_fields)
+        person.update! mandature_hash.slice(*person_fields)
         # Count person updated
         person_updated += 1
       end
       # We may now create the mandature to join the person to the legislature
       mandature = JquestPg::Mandature.find_or_create_by(legislature: legislature, person: person)
       # And we update its attributes
-      mandature.update! mandature_hash.slice(mandature_fields)
+      mandature.update! mandature_hash.slice(*mandature_fields)
     end
     # Finally, output the result
     puts "#{check_mark} #{person_created} person(s) created, #{person_updated} updated."
