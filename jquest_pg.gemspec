@@ -25,6 +25,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'pundit'
   s.add_dependency 'grape-active_model_serializers'
   s.add_dependency 'active_model_serializers', '~> 0.10.0'
+  s.add_dependency 'google_drive'
+  s.add_dependency 'tty'
   # Allow references with a different name (usefull with engine-prefixed tables)
   # See https://github.com/SchemaPlus/schema_plus_foreign_keys#migrations
   s.add_dependency 'schema_plus_foreign_keys'

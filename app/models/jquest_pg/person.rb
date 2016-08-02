@@ -16,6 +16,30 @@ module JquestPg
       fullname
     end
 
+    def description
+      @description ||=begin
+        description = []
+        description << (fullname || '').strip + ','
+        description << "was born" if birthdate? or birthplace?
+        description << "in #{birthplace.strip}" if birthplace?
+        description << "the #{birthdate.strip}" if birthdate?
+        description << "member of" if mandatures.length > 0
+        # Add each mandatures to the description
+        mandatures.each_with_index.map do |mandature, i|
+          if i > 0
+            if i == mandatures.length - 1
+              description << 'and'
+            else
+              description << ','
+            end
+          end
+          description << "« #{mandature.legislature.name.strip} »"
+        end
+        # Joins the description array as one sentence
+        description * ' '
+      end
+    end
+
     def to_s
       display_name
     end
