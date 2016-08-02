@@ -2,7 +2,7 @@ angular.module 'jquest'
   .constant 'SETTINGS',
     CATEGORIES:
       [
-        'Parliaments of {{ country_name }}'
+        'Parliaments of {{ home_country_name }}'
         'Parliaments of foreign countries'
         'Historical parliaments'
       ]

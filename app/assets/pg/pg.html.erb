@@ -9,7 +9,7 @@
           </div>
           <ul class="list-group list-group-flush pg__categories">
             <li class="list-group-item pg__categories__item" ng-repeat="category in :: pg.categories">
-              <h4 class="pg__categories__item__heading">{{ pg.category[$index] | translate: main.user.school }}</h4>
+              <h4 class="pg__categories__item__heading">{{ pg.category[$index] | translate: main.user }}</h4>
               <div class="row">
                 <div class="col-md-4" ng-repeat="level in :: category">
                   <div class="pg__categories__item__level animated" ng-class="{ 'tada': pg.seeksAttentionOnLevel(level) }">
