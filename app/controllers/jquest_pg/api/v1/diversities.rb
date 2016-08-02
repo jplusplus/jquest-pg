@@ -25,26 +25,33 @@ module JquestPg
           get :request do
             authenticate!
             # No one unassigned by default
-            unassigned = Person.none
-            assigned = progression.assignment.resource.person
+            unassigned = Assignment.none
+            person = progression.assignment.resource.person
             # Loop until a diversity request can be created with this unassigned person
-            # Person.assigned_to(current_user).order("RANDOM()").each
             begin
               # An assigned person can only be in diversity twice
-              return nil if Diversity.occurrences(assigned) > 2
+              return nil if Diversity.occurrences(person) > 2
               # Loop until a diversity request can be created with this unassigned person
               loop do
-                # Collect a random person not assigned to this user with an image
-                unassigned = Person.unassigned_to(current_user).where.not(image: nil).order("RANDOM()").limit(1).first
+                # Get other users' assignments
+                other_users_assignments = Assignment.unassigned_to(current_user).
+                  # ...joins through the mandatures table using the assignment's resource_id
+                  joins('INNER JOIN jquest_pg_mandatures ON jquest_pg_mandatures.id = assignments.resource_id').
+                  joins('INNER JOIN jquest_pg_people ON jquest_pg_people.id = jquest_pg_mandatures.person_id').
+                  # Filter other assignments to only get the one with images
+                  where.not(jquest_pg_people: { image: nil })
+                puts other_users_assignments
+                # Collect a random assignment
+                unassigned = other_users_assignments.order("RANDOM()").limit(1).first
                 # Break if there is to few unassigned people
                 break if unassigned.nil?
                 # Break if the people have not been compared yet
-                break unless Diversity.both_exists?(unassigned, assigned)
+                break unless Diversity.both_exists?(unassigned.resource.person, person)
               end
               # Nothing to propose
               return nil if unassigned.nil?
               # Instanciate a diversity record without saving it
-              Diversity.new(resource_a: unassigned, resource_b: assigned)
+              Diversity.new(resource_a: unassigned.resource.person, resource_b: person)
             end
           end
 
