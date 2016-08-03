@@ -1,4 +1,4 @@
-<form ng-submit="form.submit()">
+<form ng-submit="form.submit()" name="mandatureForm">
 
   <div class="mandature-form card-block">
 
@@ -28,9 +28,12 @@
         <div class="input-group">
           <input class="form-control"
                  flatpickr
-                 data-dateFormat="Y/m/d"
+                 data-dateFormat="Y-m-d"
+                 data-allow-input=true
+                 placeholder="YYYY-MM-DD"
                  type="text"
                  ng-model="form.mandature.person.birthdate"
+                 name="birthdate"
                  id="input-birthdate" />
           <span class="input-group-btn">
             <button class="btn btn-secondary" ng-click="form.editSource('birthdate', form.mandature.person)" type="button">
@@ -43,6 +46,9 @@
               </span>
             </button>
           </span>
+        </div>
+        <div class="text-danger small" ng-if="mandatureForm.birthdate.$invalid">
+          Not a valid date format (use YYYY-MM-DD).
         </div>
       </div>
       <div class="col-xs-4 mandature-form__group__helper">
