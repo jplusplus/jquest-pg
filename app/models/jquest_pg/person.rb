@@ -85,7 +85,7 @@ module JquestPg
 
     def age
       unless birthdate.blank?
-        Time.now.year - Time.parse(birthdate).year
+        Time.now.year - birthdate.year
       end
     end
 
