@@ -9,4 +9,4 @@ angular.module 'jquest'
         # Reload season progression (for updated points)
         do seasons.reload
         # Go to the parent state
-        $state.go '^'
+        $state.go '^', null, reload: yes
