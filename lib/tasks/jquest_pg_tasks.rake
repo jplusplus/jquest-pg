@@ -116,19 +116,24 @@ namespace :jquest_pg do
   def pick_similar_person(mandature_hash, summary=false)
     # Any similar person?
     if similar_persons(mandature_hash).any?
-      # Print a table with information about the ambiguous manature
-      mandature_as_table mandature if summary
-      # Build a question with a specific format
-      sentence = "We found several or ambiguous persons named " +
-                 pastel.bold(mandature_hash[:fullname])
-      # Prompt user to
-      prompt.select sentence do |menu|
-        # We can also decide to return nil (and so create a new person)
-        menu.choice 'Create a new one', nil
-        # For each similar person...
-        similar_persons(mandature_hash).each do |person|
-          # Create a choise
-          menu.choice "Merge with " + person.description, person
+      # Automerge!
+      if (ENV['merge'] || 'prompt').to_sym == :all
+        similar_persons(mandature_hash).first
+      else
+        # Print a table with information about the ambiguous manature
+        mandature_as_table mandature if summary
+        # Build a question with a specific format
+        sentence = "\r#{question_mark} We found several or ambiguous persons named " +
+                   pastel.bold(mandature_hash[:fullname])
+        # Prompt user to
+        prompt.select sentence do |menu|
+          # For each similar person...
+          similar_persons(mandature_hash).each do |person|
+            # Create a choise
+            menu.choice "Merge with " + person.description, person
+          end
+          # We can also decide to return nil (and so create a new person)
+          menu.choice 'Create a new one', nil
         end
       end
     end
@@ -173,10 +178,14 @@ namespace :jquest_pg do
   end
 
   def find_among_similar_legislature(legislature, mandature_hash)
+    person = nil
+    # Loop into similar legislature
     legislature.similars.detect do |similar|
       # Shall we find
-      similar.persons.find_by_fullname mandature_hash[:fullname]
+      person ||= similar.persons.find_by_fullname mandature_hash[:fullname]
     end
+    # Return the person (or nil)
+    person
   end
 
   def find_person(legislature, mandature_hash)
@@ -238,6 +247,6 @@ namespace :jquest_pg do
     # Finish the bar
     bar.finish
     # Finally, output the result
-    puts "#{check_mark} #{person_created} person(s) created, #{person_updated} updated."
+    puts "#{check_mark} #{person_created} person(s) created, #{person_updated} merged."
   end
 end
