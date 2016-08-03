@@ -41,7 +41,10 @@ namespace :jquest_pg do
   end
 
   def pick_legislature_hash
-    row = prompt.enum_select "Which legislature should we import?" do |menu|
+    # Question to ask
+    question = "Which legislature should we import?"
+    # Pick a row!
+    row = prompt.enum_select question do |menu|
       legislatures.rows.drop(1).each do |row|
         menu.choice row[ worksheet_col_idx(legislatures, 'name') ], row
       end
@@ -110,17 +113,23 @@ namespace :jquest_pg do
     end
   end
 
-  def pick_similar_person(mandature, similars, summary=false)
-    # Print a table with information about the ambiguous manature
-    mandature_as_table mandature if summary
-    # Build a question with a specific format
-    sentence = "We found several or ambiguous persons named " +
-               pastel.bold(mandature[:fullname])
-    # Prompt user to
-    prompt.select sentence do |menu|
-      menu.choice 'Create a new one', nil
-      similars.each do |person|
-        menu.choice "Merge with " + person.description, person
+  def pick_similar_person(mandature_hash, summary=false)
+    # Any similar person?
+    if similar_persons(mandature_hash).any?
+      # Print a table with information about the ambiguous manature
+      mandature_as_table mandature if summary
+      # Build a question with a specific format
+      sentence = "We found several or ambiguous persons named " +
+                 pastel.bold(mandature_hash[:fullname])
+      # Prompt user to
+      prompt.select sentence do |menu|
+        # We can also decide to return nil (and so create a new person)
+        menu.choice 'Create a new one', nil
+        # For each similar person...
+        similar_persons(mandature_hash).each do |person|
+          # Create a choise
+          menu.choice "Merge with " + person.description, person
+        end
       end
     end
   end
@@ -142,10 +151,54 @@ namespace :jquest_pg do
     ws
   end
 
+  def similar_persons(mandature_hash)
+    # A hash of similar person
+    @similars ||= {}
+    # Get the similar person by fullname
+    @similars[mandature_hash] ||= persons_similar_by( mandature_hash.slice(:fullname) )
+  end
+
+  def find_similar_person(mandature_hash)
+    # The person has a birthdate?
+    if mandature_hash[:birthdate].present?
+      # Any similar person?
+      if similar_persons(mandature_hash).any?
+        # Iterate over similar persons
+        similar_persons(mandature_hash).detect do |similar|
+          # Same birthdate?
+          similar.birthdate == mandature_hash[:birthdate].to_date
+        end
+      end
+    end
+  end
+
+  def find_among_similar_legislature(legislature, mandature_hash)
+    legislature.similars.detect do |similar|
+      # Shall we find
+      similar.persons.find_by_fullname mandature_hash[:fullname]
+    end
+  end
+
+  def find_person(legislature, mandature_hash)
+    ## There is basicaly 4 ways to find a person
+    ## 1
+    # Try to find this person in the legislature
+    person ||= legislature.persons.find_by_fullname mandature_hash[:fullname]
+    ## 2
+    # Try to find a person born at the same date with a similar fullname
+    person ||= find_similar_person mandature_hash
+    ## 3
+    # Try to find a person with the exact same fullname among the members of a similar legislature
+    person ||= find_among_similar_legislature legislature, mandature_hash
+    ## 4
+    # At last, try to pick someone among the person with a similar fullname
+    person ||= pick_similar_person mandature_hash
+  end
+
   desc "Download mandatures from masterfile"
   task :sync do
-    person_created = 0
-    person_updated = 0
+    # Counter
+    person_created = person_updated = 0
     # Select a legislature spreadsheet and gets it as a hash
     legislature_hash = pick_legislature_hash
     # Output the choice's URL
@@ -157,51 +210,33 @@ namespace :jquest_pg do
       # We may set the legislature fields
       legislature.update legislature_hash.slice(*legislature_fields)
     end
+    # Create a progress bar
+    bar_tt = legislature_worksheet.rows.length - 1
+    bar = TTY::ProgressBar.new("#{check_mark} Syncronizing the database [:bar]", total: bar_tt, width: 50)
     # A mandature is an association between a person and a legislature.
-    legislature_worksheet.rows.drop(1).each do |mandature_row|
-      # The person is not identified yet
-      person = nil
+    legislature_worksheet.rows.drop(1).each do |row|
+      # next step
+      bar.advance 1
       # Generate a hash for this row according to the first line of the worksheet
-      mandature_hash = build_worksheet_hash(legislature_worksheet, mandature_row)
-      # Get all person with a similar fullname
-      # (we use an offline method to compare fingerprint)
-      if (similars = persons_similar_by( mandature_hash.slice(:fullname) ) ).length > 0
-        # Those persons migth already be related to the current legislature
-        similar_mandatures = JquestPg::Mandature.where(person_id: similars.map(&:id) )
-        # The legislature is related to a similar mandature
-        if mandature = similar_mandatures.select{ |m| m.legislature_id == legislature.id }.first
-          # So we found the person!
-          person = mandature.person
-        # They have the same name, we must find a way to differenciate them.
-        # We check the birthdate.
-        elsif mandature_hash[:birthdate].present?
-          # The same person is the one with the same birthdate
-          person = similars.select{ |s| s.birthdate == mandature_hash[:birthdate] }.first
-        end
-        # We didn't find anyone using the birthdate
-        if person.nil?
-          # Ask the user to choose what we shoul do
-          person = pick_similar_person(mandature_hash, similars)
-        end
-      end
-      # No one is similar
-      if person.nil? and mandature_hash[:fullname].present?
-        # We create the person!
-        person = JquestPg::Person.create! mandature_hash.slice(*person_fields)
-        # Count person created
-        person_created += 1
-      # Merge values
-      else
-        # We use the person object we found
-        person.update! mandature_hash.slice(*person_fields)
-        # Count person updated
-        person_updated += 1
-      end
+      mandature_hash = build_worksheet_hash(legislature_worksheet, row)
+      # Skip persons with no fullname
+      break if mandature_hash[:fullname].blank?
+      # Find the person for this legislature (if any)
+      person = find_person legislature, mandature_hash
+      # Count person created
+      person_created += person.nil? ? 1 : 0
+      person_updated += person.nil? ? 0 : 1
+      # We use the person object we found
+      person.update! mandature_hash.slice(*person_fields) unless person.nil?
+      # Or we create the person!
+      person ||= JquestPg::Person.create! mandature_hash.slice(*person_fields)
       # We may now create the mandature to join the person to the legislature
       mandature = JquestPg::Mandature.find_or_create_by(legislature: legislature, person: person)
       # And we update its attributes
       mandature.update! mandature_hash.slice(*mandature_fields)
     end
+    # Finish the bar
+    bar.finish
     # Finally, output the result
     puts "#{check_mark} #{person_created} person(s) created, #{person_updated} updated."
   end

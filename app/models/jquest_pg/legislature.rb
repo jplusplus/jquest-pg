@@ -3,9 +3,9 @@ module JquestPg
 
     include CsvAttributes
 
-    has_many :mandatures
+    has_many :mandatures, :dependent => :delete_all
     has_many :persons, through: :mandatures
-    
+
     def self.csv_attributes
       %w{id name territory country start_date end_date number_of_members languages}
     end
@@ -51,8 +51,22 @@ module JquestPg
       end
     end
 
+    def name_simplified
+      name.gsub(/-\s(\d+)-(\d+)$/, '').strip
+    end
+
     def name_bounds
       @name_bounds ||= /(\d+)-(\d+)/.match(name).to_a[1..-1]
+    end
+
+    def similars
+      Legislature.
+        # Exclude this legislature
+        where.not(id: id).
+        # Look for legislature with a similar name
+        search(name_start: name_simplified, m: 'or', name_english_eq: name_english).
+        # Returns the ActiveRecord relation
+        result
     end
 
     def self.assignable_to(user)

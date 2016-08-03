@@ -3,7 +3,7 @@ module JquestPg
     include CsvAttributes
 
     has_paper_trail
-    has_many :mandatures
+    has_many :mandatures, :dependent => :delete_all
     has_many :sources, foreign_key: :resource_id
     after_update :track_activities
 
@@ -22,7 +22,7 @@ module JquestPg
         description << (fullname || '').strip + ','
         description << "was born" if birthdate? or birthplace?
         description << "in #{birthplace.strip}" if birthplace?
-        description << "the #{birthdate.strip}" if birthdate?
+        description << "the #{birthdate}" if birthdate?
         description << "member of" if mandatures.length > 0
         # Add each mandatures to the description
         mandatures.each_with_index.map do |mandature, i|
