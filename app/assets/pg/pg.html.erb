@@ -46,7 +46,7 @@
                     <div class="pg__categories__item__level__assignments"
                          ng-class="{ 'pg__categories__item__level__assignments--locked': !level.done() }">
                       <div class="row">
-                        <div ng-repeat="assignment in (pg.assignmentsByLevel[level.index])"
+                        <div ng-repeat="assignment in pg.assignmentsByLevel[level.index]"
                            class="col-xs-2">
                           <div class="pg__categories__item__level__assignments__person ">
                             <span ng-if="!level.done()">
@@ -72,6 +72,16 @@
                                 duration="300"
                                 responsive="true"></round-progress>
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row" ng-if="!pg.assignmentsByLevel[level.index]">
+                        <div class="col-xs-2" ng-repeat="i in [0,1,2,3,4,5]">
+                          <div uib-tooltip="Finish level {{ level.index - 1 }} to unlock more representative"
+                               tooltip-append-to-body="true"
+                               tooltip-class="tooltip-warning"
+                               class="pg__categories__item__level__assignments__person
+                                      pg__categories__item__level__assignments__person--empty">
                           </div>
                         </div>
                       </div>

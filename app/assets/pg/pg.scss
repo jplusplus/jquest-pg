@@ -131,6 +131,23 @@
             overflow: visible;
             width:100%;
 
+            &--empty {
+              height:0;
+              padding-top:100%;
+              background:rgba($body-color, .1);
+              border-radius:50%;
+              position: relative;
+
+              &:after {
+                top:50%;
+                left:50%;
+                position: absolute;
+                content:"?";
+                color:rgba($body-color, .5);
+                @include vendor-prefix(transform, translate(-50%, -50%));
+              }
+            }
+
             &__progress {
               position: absolute !important;
               left:50%;

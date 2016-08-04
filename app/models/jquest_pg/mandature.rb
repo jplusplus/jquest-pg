@@ -107,13 +107,14 @@ module JquestPg
           end
         end
       end
-      # Now our assigned mandatures list must be populated, it is time to save it
-      # as assignments for the given user.
-      assignments = assigned_mandatures.map do |mandature|
-        Assignment.new user: user, resource: mandature, season: season
+      # Insert within a transaction
+      Assignment.transaction do
+        # Now our assigned mandatures list must be populated, it is time to save it
+        # as assignments for the given user.
+        assigned_mandatures.each do |mandature|
+          Assignment.create! user: user, resource: mandature, season: season
+        end
       end
-      # Batch import of all assignments
-      Assignment.import assignments
       # Returns the mandatures
       assigned_mandatures
     end
