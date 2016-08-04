@@ -7,7 +7,9 @@
       </p>
     </div>
     <div>
-      <table infinite-scroll="representatives.all.next()" infinite-scroll-disabled='representatives.all.busy' class="pg__representatives small table table-striped">
+      <table ng-repeat="level in representatives.levels"
+             class="pg__representatives small table table-striped">
+        <caption class="text-xs-center">Level {{ level[0] || 'unkown' }}</caption>
         <thead>
           <tr>
             <th></th>
@@ -17,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="assignment in representatives.all.objects" class="pg__representatives__item">
+          <tr ng-repeat="assignment in level[1]" class="pg__representatives__item">
             <td>
               <span class="label label-pill label-success" ng-show="assignment.status == 'done'" uib-tooltip="Done">
                 <i class="fa fa-fw fa-check"></i>

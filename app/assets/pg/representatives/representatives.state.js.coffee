@@ -12,4 +12,4 @@ angular.module 'jquest'
             'My representatives'
           assignments: (Restangular)->
             'ngInject'
-            Restangular.all('assignments').getList()
+            Restangular.all('assignments').getList(limit: 100)
