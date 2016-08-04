@@ -19,22 +19,63 @@
                     <p class="pg__categories__item__level__description">
                       {{ :: level.description }}
                     </p>
-                    <button ui-sref="main.season.pg.level({ level: level.index })"
-                            class="btn btn-sm pg__categories__item__level__begin"
-                            ng-class="{ 'btn-success': level.done(), 'btn-primary': !level.done() }"
-                            ng-disabled="level.locked() || level.done()">
-                      <span ng-if="!level.locked() && !level.done()">
-                        Begin
-                      </span>
-                      <span ng-if="level.locked()">
-                        <i class="fa fa-lock"></i>
-                        Locked
-                      </span>
-                      <span ng-if="level.done()">
-                        <i class="fa fa-check"></i>
-                        Done
-                      </span>
-                    </button>
+                    <p>
+                      <button ui-sref="main.season.pg.level({ level: level.index })"
+                              class="btn btn-sm pg__categories__item__level__begin"
+                              ng-class="{ 'btn-success': level.done(), 'btn-primary': !level.done() }"
+                              ng-disabled="level.locked() || level.done()">
+                        <span ng-if="!level.locked() && !level.done()">
+                          <span ng-if="!level.started()">
+                            Begin
+                          </span>
+                          <span ng-if="level.started()">
+                            Continue
+                            <span class="text-muted">to round {{ pg.progression().round }}</span>
+                          </span>
+                        </span>
+                        <span ng-if="level.locked()">
+                          <i class="fa fa-lock"></i>
+                          Locked
+                        </span>
+                        <span ng-if="level.done()">
+                          <i class="fa fa-check"></i>
+                          Done
+                        </span>
+                      </button>
+                    </p>
+                    <div class="pg__categories__item__level__assignments"
+                         ng-class="{ 'pg__categories__item__level__assignments--locked': !level.done() }">
+                      <div class="row">
+                        <div ng-repeat="assignment in (pg.assignmentsByLevel[level.index])"
+                           class="col-xs-2">
+                          <div class="pg__categories__item__level__assignments__person ">
+                            <span ng-if="!level.done()">
+                              <div class="pg__person-cover" uib-tooltip="{{ assignment.resource.person.fullname }}" tooltip-append-to-body="true">
+                                <img ng-src="{{ assignment.resource.person.image }}" alt="" src="" />
+                              </div>
+                            </span>
+                            <a ui-sref="main.season.pg.representatives.edit(assignment.resource)" ng-if="level.done()">
+                              <div class="pg__person-cover" uib-tooltip="{{ assignment.resource.person.fullname }}" tooltip-append-to-body="true">
+                                <img ng-src="{{ assignment.resource.person.image }}" alt="" src="" />
+                              </div>
+                            </a>
+                            <div class="pg__categories__item__level__assignments__person__progress">
+                              <round-progress
+                                max="100"
+                                current="assignment.resource.completion"
+                                color="#3D1C3D"
+                                bgcolor="transparent"
+                                radius="100"
+                                stroke="25"
+                                semi="false"
+                                rounded="false"
+                                duration="300"
+                                responsive="true"></round-progress>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

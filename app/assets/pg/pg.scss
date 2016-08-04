@@ -51,7 +51,7 @@
         padding: .5em 0;
       }
 
-      .row {
+      & > .row {
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
@@ -65,7 +65,7 @@
       &__level {
         position: relative;
         padding:1em;
-        padding-bottom:3rem * $line-height;
+        padding-bottom:5.5em;
         background: $card-border-color;
         flex:1;
         height:100%;
@@ -76,7 +76,7 @@
         }
 
         &__heading {
-          margin-bottom:1em * $line-height;
+          margin-bottom:.5em * $line-height;
         }
 
         &__begin {
@@ -91,6 +91,11 @@
           @include vendor-prefix(border-radius, 2em);
           @include box-shadow(none);
 
+          &.btn .text-muted {
+            color:inherit !important;
+            opacity: .6;
+          }
+
           &.btn-primary:disabled {
             @include vendor-prefix(filter, grayscale(1));
             opacity: .2;
@@ -98,7 +103,63 @@
             color: $link-color;
             border-color: $link-color;
           }
+        }
 
+        &__assignments {;
+          font-size:.7em;
+          text-align: center;
+          padding:0 .9em;
+          position: absolute;
+          bottom:5em;
+          left:1.4em;
+          right:1.4em;
+
+          .col-xs-2, .col-xs-4 {
+            padding:.2em;
+          }
+
+          &--locked &__person {
+            opacity: .6;
+            &:hover {
+              opacity: 1;
+            }
+          }
+
+          &__person {
+            padding:.1em;
+            position: relative;
+            overflow: visible;
+            width:100%;
+
+            &__progress {
+              position: absolute !important;
+              left:50%;
+              top:50%;
+              width:100%;
+              z-index:0;
+              pointer-events: none;
+              @include vendor-prefix(transform-origin, top center);
+              @include vendor-prefix(transform, scale(1.2) translate(-50%, -50%) );
+            }
+
+            .pg__person-cover {
+              display: block;
+              padding-top:100%;
+              width:100%;
+
+              border-radius: 100%;
+              border:0;
+              overflow: hidden;
+
+              img {
+                width:120%;
+
+                &:after {
+                  font-size:0em;
+                }
+              }
+            }
+          }
         }
       }
 

@@ -61,7 +61,7 @@ namespace :jquest_pg do
   def person_fields
     [:fullname,  :firstname,  :lastname,  :email,  :education,
      :profession_category,  :profession,  :image,  :twitter,  :facebook,
-     :gender, :birthdate, :birthplace; :phone]
+     :gender, :birthdate, :birthplace, :phone]
   end
 
   def mandature_fields
