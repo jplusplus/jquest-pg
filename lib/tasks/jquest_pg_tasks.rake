@@ -91,7 +91,7 @@ namespace :jquest_pg do
   end
 
   def persons
-    @persons ||= JquestPg::Person.all
+    @persons ||= JquestPg::Person.all.to_a
   end
 
   def pastel
