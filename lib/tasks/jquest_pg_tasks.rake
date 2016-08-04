@@ -54,17 +54,18 @@ namespace :jquest_pg do
   end
 
   def legislature_fields
-    [:name_english, :name_local, :territory, :languages,
+    [:name, :name_english, :name_local, :territory, :languages, :list, :source,
      :difficulty_level, :country, :start_date, :end_date, :number_of_members]
   end
 
   def person_fields
-    [:firstname, :lastname, :fullname,
-     :birthdate, :birthplace, :profession, :phone, :gender]
+    [:fullname,  :firstname,  :lastname,  :email,  :education,
+     :profession_category,  :profession,  :image,  :twitter,  :facebook,
+     :gender, :birthdate, :birthplace; :phone]
   end
 
   def mandature_fields
-    [:role, :group]
+    [:political_leaning, :role, :group, :area, :chamber]
   end
 
   def mandature_as_table(mandature)
