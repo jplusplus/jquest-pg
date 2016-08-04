@@ -26,7 +26,7 @@ module JquestPg
       module HasAssignments
         extend ActiveSupport::Concern
         included do
-          after_find :create_assignements
+          after_initialize :create_assignements
         end
 
         protected

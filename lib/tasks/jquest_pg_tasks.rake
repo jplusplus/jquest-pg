@@ -216,6 +216,11 @@ namespace :jquest_pg do
     legislature_worksheet = download_worksheet_by_url legislature_hash[:list], 'data'
     # Add the legislature to the database
     legislature = JquestPg::Legislature.find_or_create_by! legislature_hash.slice(:name) do |legislature|
+      # Some key must be converted to DateTime to be understand by the db
+      [:start_date, :end_date].each do |k|
+        # Convert within the hash
+        legislature_hash[k] = DateTime.new legislature_hash[k].to_i
+      end
       # We may set the legislature fields
       legislature.update legislature_hash.slice(*legislature_fields)
     end
