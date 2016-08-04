@@ -4,7 +4,7 @@ module JquestPg
     include Filterable
     include CsvAttributes
 
-    has_paper_trail
+    has_paper_trail :on => [:update]
     belongs_to :legislature
     belongs_to :person
     has_many :sources, foreign_key: :resource_id, :dependent => :delete_all

@@ -2,7 +2,7 @@ module JquestPg
   class Person < ActiveRecord::Base
     include CsvAttributes
 
-    has_paper_trail
+    has_paper_trail :on => [:update]
     has_many :mandatures, :dependent => :delete_all
     has_many :sources, foreign_key: :resource_id
     after_update :track_activities
