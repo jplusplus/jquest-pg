@@ -2,7 +2,7 @@ angular.module 'jquest'
   .controller 'MainSeasonPgLevelRoundCtrl', (seasons, mandature, $state)->
     'ngInject'
     new class MainSeasonPgLevelRoundCtrl
-      title: "Round #{seasons.current().progression.round}"
+      title: "Round #{seasons.current().progression.round}/3"
       mandature: mandature
       # Find the currency assignment according to the user activity
       isCurrentAssignment: (manddature)->
