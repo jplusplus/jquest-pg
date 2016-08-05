@@ -4,7 +4,7 @@ module JquestPg
 
     initializer :active_admin do |app|
       if defined?(ActiveAdmin)
-        dir = root.join('lib/jquest_pg/admin/').to_s
+        dir = root.join('app/admin/').to_s
         ActiveAdmin.application.load_paths << dir
       end
     end
