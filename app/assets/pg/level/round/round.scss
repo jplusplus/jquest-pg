@@ -26,6 +26,22 @@
       &__heading {
         padding-top:.5em;
         padding-bottom:.5em;
+        position: relative;
+
+        &:before {
+          content:"";
+          position: absolute;
+          top:100%;
+          left:50%;
+          border:6px solid transparent;
+          border-top-color:$brand-primary;
+          z-index:100;
+          @include vendor-prefix(transform, translateX(-50%));
+        }
+
+        .text-muted {
+          color:rgba(white, .5) !important;
+        }
       }
 
       &__frame {
@@ -67,17 +83,6 @@
 
         p:last-child {
           margin:0;
-        }
-
-        &:before {
-          content:"";
-          position: absolute;
-          bottom:100%;
-          left:50%;
-          border:6px solid transparent;
-          border-bottom-color:white;
-          z-index:100;
-          @include vendor-prefix(transform, translateX(-50%));
         }
       }
 

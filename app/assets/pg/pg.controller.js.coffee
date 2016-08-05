@@ -15,7 +15,7 @@ angular.module 'jquest'
           started: => @progression().round > 1 or @progression().remaining_assignments < 6
           # True if we should display assignements of this level
           displayAssignements: ->
-            @pg.assignmentsByLevel[level.index] and ( @started() or @done() )
+            @pg.assignmentsByLevel?[level.index]? and ( @started() or @done() )
         }, level
       category: SETTINGS.CATEGORIES
       seeksAttentionOnLevel: (level)=>
