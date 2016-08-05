@@ -179,7 +179,15 @@
           }
         }
       }
+    }
+  }
 
+  &__skills {
+
+    &__btn, &__btn:hover {
+      margin-top: $spacer-y * $line-height;
+      border:2px $link-color solid;
+      border-radius: $line-height * 1em;
     }
   }
 }

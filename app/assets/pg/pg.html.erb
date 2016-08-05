@@ -93,7 +93,20 @@
           </ul>
         </div>
       </div>
-      <div class="col-md-4" sticky course-materials></div>
+      <div class="col-md-4" sticky>
+        <div course-materials></div>
+        <div class="card pg__skills" ng-if="main.season.progression.level > 1">
+          <div class="card-block">
+            <h4 class="card-title">
+              <i class="fa fa-puzzle-piece fa-fw"></i>&nbsp;Improve your skills
+            </h4>
+            <p>Every representatives assigned to you during the previous levels can now be completed to earn you more points.</p>
+            <a class="btn btn-link btn-block pg__skills__btn" ui-sref="main.season.pg.representatives">
+              See all representatives
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
