@@ -1,8 +1,7 @@
 if defined?(ActiveAdmin)
   ActiveAdmin.register JquestPg::Legislature, :as => 'pg_legislature' do
     menu label: 'Legislatures', parent: 'Political Gaps'
-    active_admin_import validate: false
-
+    
     index title: 'Legislatures' do
       selectable_column
       id_column
