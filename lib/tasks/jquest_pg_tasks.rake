@@ -52,15 +52,15 @@ namespace :jquest_pg do
   end
 
   def legislature_fields
-    JquestPg::Legislature.columns.map(&:name)
+    JquestPg::Legislature.columns.map(&:name).map(&:to_sym).select{|f| f != :id}
   end
 
   def person_fields
-    JquestPg::Person.columns.map(&:name)
+    JquestPg::Person.columns.map(&:name).map(&:to_sym).select{|f| f != :id}
   end
 
   def mandature_fields
-    JquestPg::Mandature.columns.map(&:name)
+    JquestPg::Mandature.columns.map(&:name).map(&:to_sym).select{|f| f != :id}
   end
 
   def mandature_as_table(mandature)
@@ -267,7 +267,7 @@ namespace :jquest_pg do
   end
 
   def pick_next_index(index)
-    index = prompt.select("What should be do next") do |menu|
+    index = prompt.select("What should be do next?") do |menu|
       # Find the next legislature (if any)
       if next_row = legislatures.rows.drop(1).slice(index + 1)
         # Find its name
@@ -276,7 +276,7 @@ namespace :jquest_pg do
         menu.choice "Import #{next_name}", index + 1
       end
       menu.choice "Import another legislature", -1
-      menu.choice "Stop the import", nil
+      menu.choice "Stop", nil
     end
     # Return the index or pick one!
     index == -1 ? pick_legislature : index
