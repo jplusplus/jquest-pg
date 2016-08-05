@@ -1,5 +1,6 @@
 <div class="pg__level__round container">
-  <div class="row">
+  <div ui-view ng-if="'main.season.pg.level.round.intro' | isState"></div>
+  <div class="row" ng-if="!('main.season.pg.level.round.intro' | isState)">
     <div class="col-lg-8">
       <div class="card pg__level__round__heading">
         <div class="card-block">

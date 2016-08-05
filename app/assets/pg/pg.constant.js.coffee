@@ -40,7 +40,7 @@ angular.module 'jquest'
         {
           title: 'Round 1/3'
           index: 1
-          description: 'In this round, we ask you to indicate the gender for each of your representatives.'
+          description: 'In this first round, we ask you to indicate the gender for each of your representatives.'
         }
         {
           title: 'Round 2/3'
@@ -50,7 +50,7 @@ angular.module 'jquest'
         {
           title: 'Round 3/3'
           index: 3
-          description: 'In this round, we ask you to tell us how stereotypical is the outlook of your representatives.'
+          description: 'In this last round, we ask you to tell us how stereotypical is the outlook of your representatives.'
         }
       ]
     LEVELS:

@@ -7,7 +7,7 @@ angular.module 'jquest'
         angular.extend @, angular.copy(INTRO)
         # Bind keyboard shortcuts
         hotkeys.add
-          combo: ['right', 'space']
+          combo: ['right', 'space', 'enter']
           description: "Go to the next slide."
           callback: =>
             # Can go to the next slide durring
