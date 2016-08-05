@@ -40,32 +40,27 @@ namespace :jquest_pg do
     worksheet.rows[0].index { |value| value == name }
   end
 
-  def pick_legislature_hash
+  def pick_legislature
     # Question to ask
     question = "Which legislature should we import?"
-    # Pick a row!
-    row = prompt.enum_select question do |menu|
-      legislatures.rows.drop(1).each do |row|
-        menu.choice row[ worksheet_col_idx(legislatures, 'name') ], row
+    # Pick a row index
+    prompt.enum_select question do |menu|
+      legislatures.rows.drop(1).each_with_index do |row, index|
+        menu.choice row[ worksheet_col_idx(legislatures, 'name') ], index
       end
     end
-    # Build a hash
-    build_worksheet_hash legislatures, row
   end
 
   def legislature_fields
-    [:name, :name_english, :name_local, :territory, :languages, :list, :source,
-     :difficulty_level, :country, :start_date, :end_date, :number_of_members]
+    JquestPg::Legislature.columns.map(&:name)
   end
 
   def person_fields
-    [:fullname,  :firstname,  :lastname,  :email,  :education,
-     :profession_category,  :profession,  :image,  :twitter,  :facebook,
-     :gender, :birthdate, :birthplace, :phone]
+    JquestPg::Person.columns.map(&:name)
   end
 
   def mandature_fields
-    [:political_leaning, :role, :group, :area, :chamber]
+    JquestPg::Mandature.columns.map(&:name)
   end
 
   def mandature_as_table(mandature)
@@ -140,7 +135,9 @@ namespace :jquest_pg do
     end
   end
 
-  def build_worksheet_hash(worksheet, row)
+  def build_worksheet_hash(worksheet, row=nil)
+    # Nothing to create
+    return nil if row.nil?
     # Get worksheet's headers
     headers = worksheet.rows[0]
     Hash[*headers.each_with_index.map { |h, idx| [ h.to_sym, row[idx] ] }.flatten]
@@ -205,12 +202,9 @@ namespace :jquest_pg do
     person ||= pick_similar_person mandature_hash
   end
 
-  desc "Download mandatures from masterfile"
-  task :sync do
-    # Counter
+  def create_legislature(legislature_hash)
+    # Counters
     person_created = person_updated = 0
-    # Select a legislature spreadsheet and gets it as a hash
-    legislature_hash = pick_legislature_hash
     # Output the choice's URL
     puts "#{check_mark} Getting legislature data from #{pastel.bold(legislature_hash[:list])}"
     # Get the selected legislature spreadsheet and the worksheet named 'data'
@@ -254,5 +248,52 @@ namespace :jquest_pg do
     bar.finish
     # Finally, output the result
     puts "#{check_mark} #{person_created} person(s) created, #{person_updated} merged."
+  end
+
+  def sync!(index=nil)
+    if index.nil?
+      # Pick a legislature and get its index
+      index = pick_legislature
+    end
+    # Get row by index
+    row = legislatures.rows.drop(1).slice(index)
+    # Build a hash
+    if legislature_hash = build_worksheet_hash(legislatures, row)
+      # Insert or update the legislature
+      create_legislature legislature_hash
+      # Return the legislature index for continuing
+      index
+    end
+  end
+
+  def pick_next_index(index)
+    index = prompt.select("What should be do next") do |menu|
+      # Find the next legislature (if any)
+      if next_row = legislatures.rows.drop(1).slice(index + 1)
+        # Find its name
+        next_name = next_row[ worksheet_col_idx(legislatures, 'name') ]
+        # Add a menu entry
+        menu.choice "Import #{next_name}", index + 1
+      end
+      menu.choice "Import another legislature", -1
+      menu.choice "Stop the import", nil
+    end
+    # Return the index or pick one!
+    index == -1 ? pick_legislature : index
+  end
+
+  desc "Download mandatures from masterfile"
+  task :sync do
+    # We start with no selected legislature
+    index = nil
+    # We sync again and again until the user stop
+    loop do
+      # Sync legislature and person at the given index or pick one
+      index = sync!(index)
+      # Pick a next index
+      index = pick_next_index index unless index.nil?
+      # We stop if the user ask to stop
+      break if index.nil?
+    end
   end
 end
