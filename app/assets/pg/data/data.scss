@@ -1,5 +1,9 @@
 .pg__data {
 
+  .sticky {
+    top: $card-spacer-y;    
+  }
+
   &__no-results {
     text-align: left;
     border-top:1px dashed $card-border-color;
@@ -10,7 +14,7 @@
     right: $card-spacer-x;
     top: $card-spacer-y;
 
-    a.btn {
+    body .main & a.btn {
       color: $link-color;
       border:2px solid $link-color;
       border-radius: $nav-pills-border-radius;
