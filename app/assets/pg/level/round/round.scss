@@ -18,6 +18,10 @@
 
   &__overview {
 
+    position: -webkit-sticky;
+    position: sticky;
+    top:0;
+
      &__assignments {
       background:$brand-primary;
       border-color:$brand-primary;

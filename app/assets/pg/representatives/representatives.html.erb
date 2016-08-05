@@ -32,7 +32,7 @@
               <a ui-sref="main.season.pg.representatives.edit(assignment.resource)" ng-show="assignment.status == 'done'">
                 {{ assignment.resource.person.fullname }}
               </a>
-              <span ng-show="assignment.status == 'pending'" uib-tooltip="You must finish level {{ main.season.progression.level }} to be able to edit this representative">
+              <span ng-show="assignment.status == 'pending'" uib-tooltip="You must finish level {{ main.season.progression.level }} to be able to add infos to this representative">
                 {{ assignment.resource.person.fullname }}
               </span>
             </td>
