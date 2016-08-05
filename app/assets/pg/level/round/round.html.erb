@@ -15,19 +15,43 @@
     <div class="col-lg-4 pg__level__round__overview">
       <div class="row">
         <div class="col-xs-6 col-lg-12">
-          <div class="pg__level__round__overview__progress card">
-            <div class="card-block">
-              {{ pg.progression().remaining_assignments }} tasks remaining before next round.
-              <progress class="progress pg__level__round__overview__progress__bar" value="{{ pg.progress() }}" max="100">
-                <div class="progress">
-                  <span class="progress-bar" ng-style="{ width: pg.progress() + '%' }">
-                    {{ pg.progress() }}%
-                  </span>
+          <div class="pg__level__round__overview__assignments card">
+            <div class="card-block pg__level__round__overview__assignments__heading">
+              <h5 class="card-title">
+                Your 6 representatives
+              </h5>
+              <div class="">
+                {{ pg.progression().remaining_assignments }} to complete before next round
+              </div>
+            </div>
+            <div class="pg__level__round__overview__assignments__frame" ng-init="active = 1">
+              <div class="container-fluid pg__level__round__overview__assignments__wrapper"
+                   ng-style="round.getAssignmentWrapperStyle()">
+                <div class="row" ng-init="active = pg.progression().assignment.id">
+                  <div ng-repeat="assignment in pg.assignmentsByLevel[pg.progression().level]"
+                       class="pg__level__round__overview__assignments__wrapper__item col-xs-2"
+                       ng-class="{ 'pg__level__round__overview__assignments__wrapper__item--active': round.isCurrentAssignment(assignment) }">
+                    <div class="pg__person-cover"
+                         uib-tooltip="{{ assignment.resource.person.fullname }}"
+                         tooltip-append-to-body="true">
+                      <img ng-src="{{ assignment.resource.person.image }}" alt="" src="" />
+                    </div>
+                  </div>
                 </div>
-              </progress>
+              </div>
+            </div>
+            <div class="pg__level__round__overview__assignments__description">
+              <p>
+                {{ round.description }}
+              </p>
+              <p class="small text-muted">
+                You will be allowed to add more information about {{ round.getCurrentAssignment().resource.person.fullname }}
+                <strong>once you finish level {{ pg.progression().level }}</strong>.
+              </p>
             </div>
           </div>
         </div>
+
         <div class="col-xs-6 col-lg-12" course-materials></div>
       </div>
     </div>

@@ -27,7 +27,7 @@ module JquestPg
       # Find the user finished assignements for the current round's taxonomy
       fids = activities.where(taxonomy: round_taxonomy).distinct.pluck(:assignment_id)
       # Get the remaining assignments
-      remaining_assignments = user.assignments.pending.where.not(id: fids).order(:id)      
+      remaining_assignments = user.assignments.order(:resource_id).pending.where.not(id: fids).order(:id)      
       # Current assignment is the first of the remaining
       assignment = remaining_assignments.first
       # Return a simple hash

@@ -35,6 +35,24 @@ angular.module 'jquest'
         'Regionalist'
         'Other'
       ]
+    ROUNDS:
+      [
+        {
+          title: 'Round 1/3'
+          index: 1
+          description: 'In this round, we ask you to indicate the gender for each of your representatives.'
+        }
+        {
+          title: 'Round 2/3'
+          index: 2
+          description: 'In this round, we ask you to find at least one piece of information for each of your representatives.'
+        }
+        {
+          title: 'Round 3/3'
+          index: 3
+          description: 'In this round, we ask you to tell us how stereotypical is the outlook of your representatives.'
+        }
+      ]
     LEVELS:
       [
         {

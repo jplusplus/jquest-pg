@@ -6,12 +6,16 @@ angular.module 'jquest'
       progress: => (6 - @progression().remaining_assignments)/6 * 100
       buildLevel: (level, index)=>
         angular.extend {
+          pg: @
           # Level is not unlocked yet
           locked: => (index + 1) > @progression().level
           # Level is done, congrats!
           done: => (index + 1) < @progression().level
           # Has the level start?
           started: => @progression().round > 1 or @progression().remaining_assignments < 6
+          # True if we should display assignements of this level
+          displayAssignements: ->
+            @pg.assignmentsByLevel[level.index] and ( @started() or @done() )
         }, level
       category: SETTINGS.CATEGORIES
       seeksAttentionOnLevel: (level)=>
@@ -19,7 +23,7 @@ angular.module 'jquest'
       getAssignments: =>
         Restangular.all('assignments').getList(limit: 100).then (assignments)=>
           # Group all assignments by level
-          @assignmentsByLevel = _.groupBy assignments, 'level'          
+          @assignmentsByLevel = _.groupBy assignments, 'level'
       constructor: ->
         # Get all assignments
         do @getAssignments

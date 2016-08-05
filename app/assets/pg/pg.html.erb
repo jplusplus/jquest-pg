@@ -45,7 +45,7 @@
                     </p>
                     <div class="pg__categories__item__level__assignments"
                          ng-class="{ 'pg__categories__item__level__assignments--locked': !level.done() }">
-                      <div class="row">
+                      <div class="row" ng-if="level.displayAssignements()">
                         <div ng-repeat="assignment in pg.assignmentsByLevel[level.index]"
                            class="col-xs-2">
                           <div class="pg__categories__item__level__assignments__person ">
@@ -75,7 +75,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="row" ng-if="!pg.assignmentsByLevel[level.index]">
+                      <div class="row" ng-if="!level.displayAssignements()">
                         <div class="col-xs-2" ng-repeat="i in [0,1,2,3,4,5]">
                           <div uib-tooltip="Finish level {{ level.index - 1 }} to unlock more representative"
                                tooltip-append-to-body="true"

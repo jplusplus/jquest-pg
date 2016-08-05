@@ -19,6 +19,8 @@ module JquestPg
               # Join to related tables
               includes(:person).
               includes(:legislature).
+              # Sort by id
+              order(:id).
               # Paginates results
               page(params[:page]).
               # Default limit is 25
@@ -66,6 +68,8 @@ module JquestPg
                 # Join to related tables
                 includes(:person).
                 includes(:legislature).
+                # Sort by id
+                order(:id).
                 # Paginates results
                 page(params[:page]).
                 # Default limit is 25
@@ -80,6 +84,8 @@ module JquestPg
                 # Join to related tables
                 includes(:person).
                 includes(:legislature).
+                # Sort by id
+                order(:id).
                 # Paginates results
                 page(params[:page]).
                 # Default limit is 25
@@ -95,6 +101,8 @@ module JquestPg
                 # Join to related tables
                 includes(:person).
                 includes(:legislature).
+                # Sort by id
+                order(:id).
                 # Paginates results
                 page(params[:page]).
                 # Default limit is 25

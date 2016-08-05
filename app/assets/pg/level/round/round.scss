@@ -18,55 +18,90 @@
 
   &__overview {
 
-    &__progress, &__representative {
+     &__assignments {
       background:$brand-primary;
       border-color:$brand-primary;
       color:white;
-    }
 
-    &__progress {
-      &__bar {
-        margin-top:1rem;
-        background:mix($brand-primary, white);
-        @include progress-variant(white);
-
-        &[value] {
-          .progress-bar,
-          &::progress-value,
-          &::-moz-progress-value,
-          &::-webkit-progress-value {
-            @include transition(.6s);
-          }
-        }
+      &__heading {
+        padding-top:.5em;
+        padding-bottom:.5em;
       }
-    }
 
-    &__representative {
+      &__frame {
+        $frame-bg: darken($brand-primary, 10);
+        background: $frame-bg;
+        position: relative;
+        width:100%;
+        overflow: hidden;
+        z-index:50;
+        @include box-shadow(0 0 6px 6px rgba(black, .2) inset );
 
-      &__cover {
-        padding-top:75%;
-        background:white center center no-repeat;
-        background-size: cover;
-
-        &__caption {
-          text-align: left;
+        &:after, &:before {
+          content:"";
           position: absolute;
+          top:0;
           bottom:0;
+          width:20%;
+          z-index:100;
+          pointer-events: none;
+          opacity:.7;
+        }
+
+        &:after {
           left:0;
+          @include gradient-x($frame-bg, rgba($frame-bg, 0) );
+        }
 
-          &__fullname, &__legislature {
-            padding:0 .5rem;
-            font-weight: bold;
-          }
-
-          &__legislature {
-            padding:0 .5rem;
-            font-weight: lighter;
-            font-size:.9em;
-          }
+        &:before {
+          right:0;
+          @include gradient-x(rgba($frame-bg, 0), $frame-bg);
         }
       }
 
+      &__description {
+        padding:$card-spacer-y $card-spacer-x;
+        color:$body-color;
+        background:white;
+        position: relative;
+
+        p:last-child {
+          margin:0;
+        }
+
+        &:before {
+          content:"";
+          position: absolute;
+          bottom:100%;
+          left:50%;
+          border:6px solid transparent;
+          border-bottom-color:white;
+          z-index:100;
+          @include vendor-prefix(transform, translateX(-50%));
+        }
+      }
+
+      &__wrapper {
+        width: 165%;
+        position: relative;
+        @include transition(left .4s);
+
+        &__item {
+          padding:.8em;
+          opacity: .4;
+          @include transition(opacity .4s);
+
+          &--active {
+            opacity: 1;
+          }
+
+          .pg__person-cover {
+            padding-top:100%;
+            border-radius: 50%;
+            @include box-shadow(0 0 6px 6px rgba(black, .2) );
+          }
+        }
+      }
     }
   }
 }

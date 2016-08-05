@@ -28,7 +28,7 @@ module JquestPg
             unassigned = Assignment.none
             person = nil
             # Pick a person among the user assignments
-            current_user.assignments.where(status: :pending).each do |assignment|
+            current_user.assignments.order(:resource_id).where(status: :pending).each do |assignment|
               if Diversity.occurrences(assignment.resource.person) < 1
                 person ||= assignment.resource.person
               end
