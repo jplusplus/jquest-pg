@@ -85,7 +85,7 @@
     <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.role">
       <div class="col-xs-8">
         <label class="mandature-form__group__label" for="input-role">
-          Role in {{ form.mandature.legislature.name }}
+          Role <em>in {{ form.mandature.legislature.name }}</em>
         </label>
         <div class="input-group">
           <input class="form-control"
@@ -168,7 +168,7 @@
     <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.political_leaning">
       <div class="col-xs-8">
         <label class="mandature-form__group__label" for="input-political-leaning">
-          Political leaning
+          Political leaning <em>in {{ form.mandature.legislature.name }}</em>
         </label>
         <div class="input-group">
           <select class="form-control"
