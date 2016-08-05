@@ -11,12 +11,19 @@ module JquestPg
     has_many :assignments, foreign_key: :resource_id, :dependent => :delete_all
     after_update :track_activities
 
+    validates :person, presence: true
+    validates :legislature, presence: true
+
     def self.csv_attributes
       %w{id legislature person political_leaning role group area chamber}
     end
 
     def to_s
-      "#{person.fullname} in #{legislature.name}"
+      if person
+        "#{person.fullname} in #{legislature.name}"
+      else
+        id
+      end
     end
 
     def track_activities

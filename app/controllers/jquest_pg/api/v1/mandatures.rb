@@ -39,7 +39,7 @@ module JquestPg
             # Create a hash of values for the two subsets
             { global: global, assigned: assigned }.map do |key, mandatures|
               # Count by gender
-              gender = mandatures.select { |m| not m.person.gender.blank? }
+              gender = mandatures.select { |m| m.person and not m.person.gender.blank? }
               gender = gender.group_by { |m| m.person.gender }
               gender = gender.map { |k,v| [k, v.length] }.to_h
               # Age values
