@@ -8,6 +8,16 @@ mandature-form {
 
   &__group {
     position: relative;
+    margin-bottom: $spacer-y * 1.5;
+
+    &[disabled] label {
+      font-style: italic;
+
+      sup {
+        text-decoration: underline;
+        cursor: help;
+      }
+    }
 
     &:hover &__helper {
       opacity:1;

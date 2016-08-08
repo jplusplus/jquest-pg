@@ -38,8 +38,11 @@ angular.module 'jquest'
       saveSourceFn: (field, resource)=>
         (value)=>
           @setSource field, resource, value
-      getSource: (field, resource)=>
-        _.find(resource.sources or [], field: field)
+      getSource: (field, resource, fallback=null)=>
+        # Use a fallback from legislature source
+        fallback = { value: @mandature.legislature.source } if fallback
+        # Find the source for this field
+        _.find(resource.sources or [], field: field) or fallback
       requiresSource: (field)=>
         # Some field don't require source
         -1 is ['image'].indexOf field

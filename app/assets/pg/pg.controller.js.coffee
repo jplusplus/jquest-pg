@@ -31,7 +31,6 @@ angular.module 'jquest'
         @categories = _.chain(SETTINGS.LEVELS).map(@buildLevel).groupBy('category').value()
         # Get activities for the current season
         seasons.activities().then (activities)->
-          console.log activities
           # Look for the 'intro'
           unless _.find(activities, taxonomy: 'intro')
             # Redirect to the tutorial for this season

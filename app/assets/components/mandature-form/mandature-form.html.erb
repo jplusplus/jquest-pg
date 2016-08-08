@@ -3,10 +3,18 @@
   <div class="mandature-form card-block">
 
     <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.person.image">
-        <div class="col-xs-8">
-          <label class="mandature-form__group__label" for="input-image">
+        <label class="mandature-form__group__label col-xs-12" for="input-image" ng-switch=":: !!form.mandature.person.image">
+          <span ng-switch-when="false">
             Picture
-          </label>
+          </span>
+          <span ng-switch-when="true">
+            <strong>Picture</strong> already known
+            <sup uib-popover-html="form.getSource('picture', form.mandature.person, true).value | autolink" popover-trigger="{ 'outsideClick': 'outsideClick' }">
+              source
+            </sup>
+          </span>
+        </label>
+        <div class="col-xs-8">
           <input class="form-control"
                  type="url"
                  placeholder="Enter an URL to the image"
@@ -21,10 +29,20 @@
     </fieldset>
 
     <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.person.birthdate">
-      <div class="col-xs-8">
-        <label class="mandature-form__group__label" for="input-birthdate">
+
+      <label class="mandature-form__group__label col-xs-12" for="input-birthdate" ng-switch=":: !!form.mandature.person.birthdate">
+        <span ng-switch-when="false">
           Date of birth
-        </label>
+        </span>
+        <span ng-switch-when="true">
+          <strong>Date of birth</strong> already known
+          <sup uib-popover-html="form.getSource('birthdate', form.mandature.person, true).value | autolink" popover-trigger="{ 'outsideClick': 'outsideClick' }">
+            source
+          </sup>
+        </span>
+      </label>
+
+      <div class="col-xs-8">
         <div class="input-group">
           <input class="form-control"
                  flatpickr
@@ -36,7 +54,7 @@
                  name="birthdate"
                  id="input-birthdate" />
           <span class="input-group-btn">
-            <button class="btn btn-secondary" ng-click="form.editSource('birthdate', form.mandature.person)" type="button">
+            <button class="btn btn-secondary" ng-click="form.editSource('birthdate', form.mandature.person)" type="button" ng-if=":: !form.mandature.person.birthdate">
               <span ng-hide="form.hasSource('birthdate', form.mandature.person)">
                 Add source
               </span>
@@ -51,22 +69,32 @@
           Not a valid date format (use YYYY-MM-DD).
         </div>
       </div>
-      <div class="col-xs-4 mandature-form__group__helper">
+      <div class="col-xs-4 mandature-form__group__helper" ng-if=":: !form.mandature.person.birthdate">
         If you can only find a year, set the birthdate to January 1<sup>st</sup> of that year.
       </div>
     </fieldset>
     <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.person.birthplace">
-      <div class="col-xs-8">
-        <label class="mandature-form__group__label" for="input-birthplace">
+
+      <label class="mandature-form__group__label col-xs-12" for="input-birthplace" ng-switch=":: !!form.mandature.person.birthplace">
+        <span ng-switch-when="false">
           Place of birth
-        </label>
+        </span>
+        <span ng-switch-when="true">
+          <strong>Place of birth</strong> already known
+          <sup uib-popover-html="form.getSource('birthplace', form.mandature.person, true).value | autolink" popover-trigger="{ 'outsideClick': 'outsideClick' }">
+            source
+          </sup>
+        </span>
+      </label>
+
+      <div class="col-xs-8">
         <div class="input-group">
           <input class="form-control"
                  type="text"
                  ng-model="form.mandature.person.birthplace"
                  id="input-birthplace" />
           <span class="input-group-btn">
-            <button class="btn btn-secondary" ng-click="form.editSource('birthplace', form.mandature.person)" type="button">
+            <button class="btn btn-secondary" ng-click="form.editSource('birthplace', form.mandature.person)" type="button" ng-if=":: !form.mandature.person.birthplace">
               <span ng-hide="form.hasSource('birthplace', form.mandature.person)">
                 Add source
               </span>
@@ -78,22 +106,32 @@
           </span>
         </div>
       </div>
-      <div class="col-xs-4 mandature-form__group__helper">
+      <div class="col-xs-4 mandature-form__group__helper" ng-if=":: !form.mandature.person.birthplace">
         Or the country only if you only have this piece of information.
       </div>
     </fieldset>
     <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.role">
+
+      <label class="mandature-form__group__label col-xs-12" for="input-role" ng-switch=":: !!form.mandature.role">
+        <span ng-switch-when="false">
+          Role <em>in {{ form.mandature.legislature.name }}</em> already known
+        </span>
+        <span ng-switch-when="true">
+          <strong>Role</strong> <em>in {{ form.mandature.legislature.name }}</em> already known
+          <sup uib-popover-html="form.getSource('role', form.mandature, true).value | autolink" popover-trigger="{ 'outsideClick': 'outsideClick' }">
+            source
+          </sup>
+        </span>
+      </label>
+
       <div class="col-xs-8">
-        <label class="mandature-form__group__label" for="input-role">
-          Role <em>in {{ form.mandature.legislature.name }}</em>
-        </label>
         <div class="input-group">
           <input class="form-control"
                  type="text"
                  ng-model="form.mandature.role"
                  id="input-role" />
           <span class="input-group-btn">
-            <button class="btn btn-secondary" ng-click="form.editSource('role', mandature)" type="button">
+            <button class="btn btn-secondary" ng-click="form.editSource('role', mandature)" type="button" ng-if=":: !form.mandature.role">
               <span ng-hide="form.hasSource('role', mandature)">
                 Add source
               </span>
@@ -105,22 +143,32 @@
           </span>
         </div>
       </div>
-      <div class="col-xs-4 mandature-form__group__helper">
+      <div class="col-xs-4 mandature-form__group__helper" ng-if=":: !form.mandature.role">
         Is this representative a plain member or does s/he hold a more senior position, like president of the assembly?
       </div>
     </fieldset>
     <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.person.education">
-      <div class="col-xs-8">
-        <label class="mandature-form__group__label" for="input-education">
+
+      <label class="mandature-form__group__label col-xs-12" for="input-education" ng-switch=":: !!form.mandature.person.education">
+        <span ng-switch-when="false">
           Education
-        </label>
+        </span>
+        <span ng-switch-when="true">
+          <strong>Education</strong> already known
+          <sup uib-popover-html="form.getSource('education', form.mandature.person, true).value | autolink" popover-trigger="{ 'outsideClick': 'outsideClick' }">
+            source
+          </sup>
+        </span>
+      </label>
+
+      <div class="col-xs-8">
         <div class="input-group">
           <input class="form-control"
                  type="text"
                  ng-model="form.mandature.person.education"
                  id="input-education" />
           <span class="input-group-btn">
-            <button class="btn btn-secondary" ng-click="form.editSource('education', form.mandature.person)" type="button">
+            <button class="btn btn-secondary" ng-click="form.editSource('education', form.mandature.person)" type="button" ng-if=":: !form.mandature.person.education">
               <span ng-hide="form.hasSource('education', form.mandature.person)">
                 Add source
               </span>
@@ -132,15 +180,25 @@
           </span>
         </div>
       </div>
-      <div class="col-xs-4 mandature-form__group__helper">
+      <div class="col-xs-4 mandature-form__group__helper" ng-if=":: !form.mandature.person.education">
         Where was this person educated? Which university or school?
       </div>
     </fieldset>
     <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.person.profession_category">
-      <div class="col-xs-8">
-        <label class="mandature-form__group__label" for="input-profession-category">
+
+      <label class="mandature-form__group__label col-xs-12" for="input-profession-category" ng-switch=":: !!form.mandature.person.profession_category">
+        <span ng-switch-when="false">
           Occupation
-        </label>
+        </span>
+        <span ng-switch-when="true">
+          <strong>Occupation</strong> already known
+          <sup uib-popover-html="form.getSource('profession_category', form.mandature.person, true).value | autolink" popover-trigger="{ 'outsideClick': 'outsideClick' }">
+            source
+          </sup>
+        </span>
+      </label>
+
+      <div class="col-xs-8">
         <div class="input-group">
           <select class="form-control"
                  ng-options="pl for pl in form.professionCategories"
@@ -149,7 +207,7 @@
             <option value="">—</option>
           </select>
           <span class="input-group-btn">
-            <button class="btn btn-secondary" ng-click="form.editSource('profession_category', form.mandature.person)" type="button">
+            <button class="btn btn-secondary" ng-click="form.editSource('profession_category', form.mandature.person)" type="button" ng-if=":: !form.mandature.person.profession_category">
               <span ng-hide="form.hasSource('profession_category', form.mandature.person)">
                 Add source
               </span>
@@ -161,15 +219,25 @@
           </span>
         </div>
       </div>
-      <div class="col-xs-4 mandature-form__group__helper">
+      <div class="col-xs-4 mandature-form__group__helper" ng-if=":: !form.mandature.person.profession_category">
         Select the occupation that's closest to the job of this representative.
       </div>
     </fieldset>
     <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.political_leaning">
-      <div class="col-xs-8">
-        <label class="mandature-form__group__label" for="input-political-leaning">
+
+      <label class="mandature-form__group__label col-xs-12" for="input-political-leaning" ng-switch=":: !!form.mandature.political_leaning">
+        <span ng-switch-when="false">
           Political leaning <em>in {{ form.mandature.legislature.name }}</em>
-        </label>
+        </span>
+        <span ng-switch-when="true">
+          <strong>Political leaning</strong> <em>in {{ form.mandature.legislature.name }}</em> already known
+          <sup uib-popover-html="form.getSource('political_leaning', form.mandature, true).value | autolink" popover-trigger="{ 'outsideClick': 'outsideClick' }">
+            source
+          </sup>
+        </span>
+      </label>
+
+      <div class="col-xs-8">
         <div class="input-group">
           <select class="form-control"
                  ng-options="pl for pl in form.politicalLeanings"
@@ -178,7 +246,7 @@
             <option value="">—</option>
           </select>
           <span class="input-group-btn">
-            <button class="btn btn-secondary" ng-click="form.editSource('political_leaning', form.mandature)" type="button">
+            <button class="btn btn-secondary" ng-click="form.editSource('political_leaning', form.mandature)" type="button" ng-if=":: !form.mandature.political_leaning">
               <span ng-hide="form.hasSource('political_leaning', form.mandature)">
                 Add source
               </span>
@@ -190,7 +258,7 @@
           </span>
         </div>
       </div>
-      <div class="col-xs-4 mandature-form__group__helper">
+      <div class="col-xs-4 mandature-form__group__helper" ng-if=":: !form.mandature.political_leaning">
         Select the political leaning that best describes this representative.
       </div>
     </fieldset>
