@@ -29,14 +29,14 @@ module JquestPg
             person = nil
             # Pick a person among the user assignments
             current_user.assignments.order(:resource_id).where(status: :pending).each do |assignment|
-              if Diversity.occurrences(assignment.resource.person) < 1
+              unless current_user.activities.exists? assignment: assignment, taxonomy: 'diversity'
                 person ||= assignment.resource.person
               end
             end
             # Stop if no one has been found
             return nil if person.nil?
             # Loop until a diversity request can be created with this unassigned person
-            5.times.each do
+            10.times.each do
               # Get other users' assignments
               other_users_assignments = Assignment.unassigned_to(current_user).
                 # ...joins through the mandatures table using the assignment's resource_id

@@ -17,8 +17,11 @@ module JquestPg
               search(declared params).
               result.
               # Join to related tables
-              includes(:person).
-              includes(:legislature).
+              eager_load(:person).
+              eager_load(:legislature).
+              # Load sources
+              includes(person: :sources).
+              includes(:sources).
               # Sort by id
               order(:id).
               # Paginates results
@@ -70,8 +73,11 @@ module JquestPg
               # Collect mandature assigned to this user
               Mandature.assigned_to(current_user, current_user.member_of, false).
                 # Join to related tables
-                includes(:person).
-                includes(:legislature).
+                eager_load(:person).
+                eager_load(:legislature).
+                # Load sources
+                includes(person: :sources).
+                includes(:sources).
                 # Sort by id
                 order(:id).
                 # Paginates results
@@ -86,8 +92,11 @@ module JquestPg
               # Collect mandature assigned to this user
               Mandature.assigned_to(current_user, current_user.member_of, false, :pending).
                 # Join to related tables
-                includes(:person).
-                includes(:legislature).
+                eager_load(:person).
+                eager_load(:legislature).
+                # Load sources
+                includes(person: :sources).
+                includes(:sources).
                 # Sort by id
                 order(:id).
                 # Paginates results
@@ -103,8 +112,11 @@ module JquestPg
               # Collect mandature assigned to this user
               Mandature.assigned_to(current_user, current_user.member_of, false, :done).
                 # Join to related tables
-                includes(:person).
-                includes(:legislature).
+                eager_load(:person).
+                eager_load(:legislature).
+                # Load sources
+                includes(person: :sources).
+                includes(:sources).
                 # Sort by id
                 order(:id).
                 # Paginates results

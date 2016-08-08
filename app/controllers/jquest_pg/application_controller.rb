@@ -18,7 +18,7 @@ module JquestPg
     end
 
     def progression(user, season=user.member_of)
-      activities = user.activities.where(season: season).where.not(assignment: nil)
+      activities = season.activities.where(user: user).where.not(assignment: nil)
       # Find or create Point instance for this season
       point = user.points.find_or_create_by(season: season)
       # Determine the current taxonomy according to the round
@@ -27,7 +27,7 @@ module JquestPg
       # Find the user finished assignements for the current round's taxonomy
       fids = activities.where(taxonomy: round_taxonomy).distinct.pluck(:assignment_id)
       # Get the remaining assignments
-      remaining_assignments = user.assignments.order(:resource_id).pending.where.not(id: fids).order(:id)      
+      remaining_assignments = user.assignments.order(:resource_id).pending.where.not(id: fids).order(:id)
       # Current assignment is the first of the remaining
       assignment = remaining_assignments.first
       # Return a simple hash
