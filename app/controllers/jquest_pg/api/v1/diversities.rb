@@ -37,7 +37,6 @@ module JquestPg
             return nil if person.nil?
             # Loop until a diversity request can be created with this unassigned person
             5.times.each do
-              remaining_loops = remaining_loops - 1
               # Get other users' assignments
               other_users_assignments = Assignment.unassigned_to(current_user).
                 # ...joins through the mandatures table using the assignment's resource_id
