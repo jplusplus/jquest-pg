@@ -35,10 +35,8 @@ module JquestPg
             end
             # Stop if no one has been found
             return nil if person.nil?
-            # To calculate remaining allowed iteration
-            remaining_loops = 5
             # Loop until a diversity request can be created with this unassigned person
-            loop do
+            5.times.each do
               remaining_loops = remaining_loops - 1
               # Get other users' assignments
               other_users_assignments = Assignment.unassigned_to(current_user).
@@ -53,8 +51,6 @@ module JquestPg
               break if unassigned.nil?
               # Break if the people have not been compared yet
               break unless Diversity.both_exists?(unassigned.resource.person, person)
-              # Avoid infinite loop
-              break if remaining_loops < 1
             end
             # Nothing to propose
             return nil if unassigned.nil?

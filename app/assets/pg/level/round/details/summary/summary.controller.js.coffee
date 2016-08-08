@@ -8,5 +8,5 @@ angular.module 'jquest'
         # Bounds
         min = 0 # Math.min(@global.age.min, @assigned.age.min)
         max = Math.max(@global.age.max, @assigned.age.max)
-        # Get top position
+        # Get bar position
         top: 100 - (median - min)/(max - min) * 100 + '%'

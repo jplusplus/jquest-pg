@@ -97,23 +97,20 @@ module JquestPg
       assignable_legislatures.each do |legislature|
         # Pick enough mandature!
         per_legislatures.times.each do
-          mandature = nil
           # Attempts available to find a mandature (no more than 10)
-          attempts = 10
-          loop do
+          10.times.each do
             # Rick a random mandature not already assigned
             mandature = legislature.mandatures.where.not(id: assigned_mandatures).order("RANDOM()").first
             # Ensure no one else is assigned to that mandature
-            already_assigned = Assignment.exists? resource: mandature
-            # Save the attempt
-            attempts -= 1
-            break if not already_assigned or attempts == 0
-          end
-          if not mandature.nil? and assigned_mandatures.length < 6
-            assigned_mandatures << mandature
+            if not mandature.nil? and not Assignment.exists? resource: mandature
+              assigned_mandatures << mandature
+              break
+            end
           end
         end
       end
+      # Ensure we haven't een too greedy
+      assigned_mandatures = assigned_mandatures.slice(0, 6)
       # Insert within a transaction
       Assignment.transaction do
         # Now our assigned mandatures list must be populated, it is time to save it
