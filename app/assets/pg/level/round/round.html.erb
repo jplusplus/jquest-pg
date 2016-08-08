@@ -16,7 +16,7 @@
     <div class="col-lg-4 pg__level__round__overview" sticky>
       <div class="row">
         <div class="col-xs-6 col-lg-12">
-          <div class="pg__level__round__overview__assignments card">
+          <div class="pg__level__round__overview__assignments card" ng-hide=" '^.summary' | includedByState ">
             <div class="card-block pg__level__round__overview__assignments__heading">
               <h5 class="card-title">
                 Your 6 representatives
@@ -55,7 +55,6 @@
             </div>
           </div>
         </div>
-
         <div class="col-xs-6 col-lg-12" course-materials></div>
       </div>
     </div>

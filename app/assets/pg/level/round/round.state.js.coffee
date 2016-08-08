@@ -12,7 +12,6 @@ angular.module 'jquest'
             'Round ' + seasons.current().progression.round
           mandature: (seasons, mandatures, Restangular)->
             'ngInject'
-            console.log seasons.current().progression
             midx = mandatures.length - seasons.current().progression.remaining
             # Find the mandature that match with this idx
             mandature = Restangular.copy mandatures[midx]
