@@ -22,16 +22,16 @@
                 Your 6 representatives
               </h5>
               <div class="text-muted" ng-if="pg.progression().round < 3">
-                {{ pg.progression().remaining_assignments }} to investigate before next round.
+                {{ pg.progression().remaining }} to investigate before next round.
               </div>
               <div class="text-muted" ng-if="pg.progression().round == 3">
-                {{ pg.progression().remaining_assignments }} to investigate before next level.
+                {{ pg.progression().remaining }} to investigate before next level.
               </div>
             </div>
             <div class="pg__level__round__overview__assignments__frame" ng-init="active = 1">
               <div class="container-fluid pg__level__round__overview__assignments__wrapper"
                    ng-style="round.getAssignmentWrapperStyle()">
-                <div class="row" ng-init="active = pg.progression().assignment.id">
+                <div class="row">
                   <div ng-repeat="assignment in pg.assignmentsByLevel[pg.progression().level]"
                        class="pg__level__round__overview__assignments__wrapper__item col-xs-2"
                        ng-class="{ 'pg__level__round__overview__assignments__wrapper__item--active': round.isCurrentAssignment(assignment) }">
@@ -49,7 +49,7 @@
                 {{ round.description }}
               </p>
               <p class="small text-muted">
-                You will be allowed to add more information about {{ round.getCurrentAssignment().resource.person.fullname }}
+                You will be allowed to add more information about {{ round.mandature.person.fullname }}
                 <strong>once you finish level {{ pg.progression().level }}</strong>.
               </p>
             </div>

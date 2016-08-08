@@ -71,7 +71,7 @@ module JquestPg
             get do
               authenticate!
               # Collect mandature assigned to this user
-              Mandature.assigned_to(current_user, current_user.member_of, false).
+              Mandature.assigned_to(current_user, current_user.member_of, true).
                 # Join to related tables
                 eager_load(:person).
                 eager_load(:legislature).
@@ -90,7 +90,7 @@ module JquestPg
             get :pending do
               authenticate!
               # Collect mandature assigned to this user
-              Mandature.assigned_to(current_user, current_user.member_of, false, :pending).
+              Mandature.assigned_to(current_user, current_user.member_of, true, :pending).
                 # Join to related tables
                 eager_load(:person).
                 eager_load(:legislature).
@@ -110,7 +110,7 @@ module JquestPg
             get :done do
               authenticate!
               # Collect mandature assigned to this user
-              Mandature.assigned_to(current_user, current_user.member_of, false, :done).
+              Mandature.assigned_to(current_user, current_user.member_of, true, :done).
                 # Join to related tables
                 eager_load(:person).
                 eager_load(:legislature).
@@ -149,7 +149,7 @@ module JquestPg
               end
               mandature.update_attributes permitted_params(mandature, params)
               # Go to the next round
-              current_user_point.next_round unless progression.remaining_assignments > 0
+              current_user_point.next_round unless progression.remaining > 0
               # Return a mandature
               mandature
             end

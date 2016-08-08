@@ -21,24 +21,23 @@ module JquestPg
       activities = season.activities.where(user: user).where.not(assignment: nil)
       # Find or create Point instance for this season
       point = user.points.find_or_create_by(season: season)
+      # Ensure user has mandature assigned to her
+      Mandature.assigned_to(user, season, true, :pending)
       # Determine the current taxonomy according to the round
       round_taxonomies = { 1 => 'genderize', 2 => 'details', 3 => 'diversity' }
       round_taxonomy = round_taxonomies[point.round]
       # Find the user finished assignements for the current round's taxonomy
       fids = activities.where(taxonomy: round_taxonomy).distinct.pluck(:assignment_id)
-      # Get the remaining assignments
-      remaining_assignments = user.assignments.order(:resource_id).pending.where.not(id: fids).order(:id)
-      # Current assignment is the first of the remaining
-      assignment = remaining_assignments.first
+      # Get the remaining assignments.
+      # Reamaing assignment are the one that have no activity yet.
+      remaining = user.assignments.order(:resource_id).pending.where.not(id: fids).order(:id)
       # Return a simple hash
       OpenStruct.new level: point.level,
                      round: point.round,
                      points: point.value,
                      position: point.position,
                      # Remaining assignments count
-                     remaining_assignments: remaining_assignments.length,
-                     # Return it as JSON resolving the nested resources
-                     assignment: assignment
+                     remaining: remaining.length
     end
 
     def progression_legacy(user, season=user.member_of)
@@ -55,9 +54,9 @@ module JquestPg
       # Find the user finished assignements for the current round's taxonomy
       fids = activities.where(taxonomy: round_taxonomy).distinct.pluck(:assignment_id)
       # Get the remaining assignments
-      remaining_assignments = user.assignments.where.not(id: fids).order(:id)
+      remaining = user.assignments.where.not(id: fids).order(:id)
       # Current assignment is the first of the remaining
-      assignment = remaining_assignments.first
+      assignment = remaining.first
       # Get user points
       points = user.points.find_or_create_by season: season
       # Return a simple hash
@@ -66,7 +65,7 @@ module JquestPg
                      points: points.value,
                      position: points.position,
                      # Remaining assignments count
-                     remaining_assignments: remaining_assignments.length,
+                     remaining: remaining.length,
                      # Return it as JSON resolving the nested resources
                      assignment: assignment
     end

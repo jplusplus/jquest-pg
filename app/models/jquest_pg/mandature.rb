@@ -138,7 +138,7 @@ module JquestPg
         # Assign mandature to the user
         Mandature.assign_to! user, season
         # Recursive call, without forcing assignments this time
-        assigned_to user, season, false
+        assigned_to user, season, false, status
       else
         # None assigned
         none

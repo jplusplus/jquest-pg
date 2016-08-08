@@ -3,7 +3,7 @@ angular.module 'jquest'
     'ngInject'
     new class MainSeasonPgCtrl
       progression: => seasons.current().progression
-      progress: => (6 - @progression().remaining_assignments)/6 * 100
+      progress: => (6 - @progression().remaining)/6 * 100
       buildLevel: (level, index)=>
         angular.extend {
           pg: @
@@ -12,7 +12,7 @@ angular.module 'jquest'
           # Level is done, congrats!
           done: => (index + 1) < @progression().level
           # Has the level start?
-          started: => @progression().round > 1 or @progression().remaining_assignments < 6
+          started: => @progression().round > 1 or @progression().remaining < 6
           # True if we should display assignements of this level
           displayAssignements: ->
             @pg.assignmentsByLevel?[level.index]? and ( @started() or @done() )
@@ -31,6 +31,7 @@ angular.module 'jquest'
         @categories = _.chain(SETTINGS.LEVELS).map(@buildLevel).groupBy('category').value()
         # Get activities for the current season
         seasons.activities().then (activities)->
+          console.log activities
           # Look for the 'intro'
           unless _.find(activities, taxonomy: 'intro')
             # Redirect to the tutorial for this season

@@ -7,6 +7,10 @@ angular.module 'jquest'
         controllerAs: 'level'
         templateUrl: 'level/level.html'
         url: "play"
+        params:
+          level:     null
+          round:     null
+          remaining: null
         resolve:
           $title: (seasons)->
             'ngInject'
@@ -14,6 +18,6 @@ angular.module 'jquest'
           mandatures: (seasonRestangular)->
             'ngInject'
             seasonRestangular.one('mandatures').one('assigned').one('pending').getList()
-          people: (seasonRestangular)->
+          people: (mandatures, Restangular)->
             'ngInject'
-            seasonRestangular.one('people').one('assigned').one('pending').getList()
+            _.chain(mandatures).clone().map('person').map(Restangular.restangularizeElement).value()

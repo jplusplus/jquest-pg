@@ -12,41 +12,6 @@ module JquestPg
               per(params[:limit])
           end
 
-          route_param :assigned do
-            desc "Return list of people assigned to the user"
-            get do
-              authenticate!
-              # Collect person assigned to this user
-              Person.assigned_to(current_user, season).
-                # Paginates results
-                page(params[:page]).
-                # Default limit is 25
-                per(params[:limit])
-            end
-
-            desc "Return list of people assigned to the user and still pending"
-            get :pending do
-              authenticate!
-              # Collect person assigned to this user
-              Person.assigned_to(current_user, season, true, :pending).
-                # Paginates results
-                page(params[:page]).
-                # Default limit is 25
-                per(params[:limit])
-            end
-          end
-
-          desc "Return list of people not assigned to the user"
-          get :unassigned do
-            authenticate!
-            # Collect person unassigned to this user
-            Person.unassigned_to(current_user, true).
-                   order("RANDOM()").
-                   page(params[:page]).
-                   # Default limit is 25
-                   per(params[:limit])
-          end
-
           params do
             requires :id, type: Integer, desc: 'person id'
           end
@@ -70,7 +35,7 @@ module JquestPg
               end
               person.update_attributes permitted_params(person, params)
               # Go to the next round
-              current_user_point.next_round unless progression.remaining_assignments > 0
+              current_user_point.next_round unless progression.remaining > 0
               # Return a person
               person
             end
@@ -90,7 +55,7 @@ module JquestPg
               person.touch_with_version unless person.gender_changed?
               person.save!
               # Go to the next round
-              current_user_point.next_round unless progression.remaining_assignments > 0
+              current_user_point.next_round unless progression.remaining > 0
               # Return a person
               person
             end

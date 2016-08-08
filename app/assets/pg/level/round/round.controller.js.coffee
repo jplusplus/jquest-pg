@@ -7,11 +7,9 @@ angular.module 'jquest'
       mandature: mandature
       # Find the currency assignment according to the user activity
       isCurrentAssignment: (assignment)->
-        seasons.current().progression.assignment?.id is assignment.id
-      getCurrentAssignment: ->
-        angular.extend resource: mandature, seasons.current().progression.assignment
+        mandature.id is assignment.resource.id
       indexOfCurrentAssignment: =>
-        _.indexOf _.map(mandatures, 'id'), @getCurrentAssignment().resource_id
+        _.indexOf _.map(mandatures, 'id'), mandature.id
       getAssignmentWrapperStyle: (index)->
         # Get index of the current assignement to deduce the offset
         index = do @indexOfCurrentAssignment
@@ -24,7 +22,7 @@ angular.module 'jquest'
         marginLeft: 50 - (1/6*width)/2 + '%'
       # Redirect to a child state according to the current round
       constructor: ->
-        if seasons.current().progression.remaining_assignments >= 6
+        if seasons.current().progression.remaining >= 6
           $state.go 'main.season.pg.level.round.intro'
         else
           switch seasons.current().progression.round
