@@ -10,12 +10,15 @@ mandature-form {
     position: relative;
     margin-bottom: $spacer-y * 1.5;
 
-    &[disabled] label {
-      font-style: italic;
+    &[disabled] {
 
-      sup {
-        text-decoration: underline;
-        cursor: help;
+      label {
+        font-style: italic;
+
+        sup {
+          text-decoration: underline;
+          cursor: help;
+        }
       }
     }
 

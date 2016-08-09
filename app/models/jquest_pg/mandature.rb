@@ -18,9 +18,9 @@ module JquestPg
       %w{id legislature person political_leaning role group area chamber}
     end
 
-    def to_s
+    def name
       if person
-        "#{person.fullname} in #{legislature.name}"
+        "Term of #{person.fullname} in #{legislature.name}"
       else
         id
       end

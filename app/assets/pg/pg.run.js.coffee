@@ -1,11 +1,17 @@
 #= require_tree .
 angular.module 'jquest'
-  .run (Menu, $rootScope, $state)->
+  .run (Menu, $rootScope, $state, Seasons)->
       'ngInject'
       # Redirect to the right state
       $rootScope.$on '$stateChangeSuccess', (ev, state)->
         if -1 isnt ['main', 'main.season'].indexOf state.name
           $state.transitionTo 'main.season.pg'
+      # Add taxonomy human translation
+      Seasons.addHumanTaxonomy 'seen', 'You consulted the course material <strong>{{ resource.title }}</strong>.'
+      Seasons.addHumanTaxonomy 'intro', 'You watched the introduction.'
+      Seasons.addHumanTaxonomy 'genderize', 'You assigned a gender to <strong>{{ resource.fullname }}</strong>.'
+      Seasons.addHumanTaxonomy 'details', 'You updated information about <strong>{{ resource.fullname || resource.name }}</strong>.'
+      Seasons.addHumanTaxonomy 'diversity', 'You compared <strong>{{ resource.resource_b.fullname }}</strong> with someone else.'
       # Set search function
       Menu.setSearchFn (q)->
         $state.go 'main.season.pg.data', person_fullname_or_legislature_name_cont: q

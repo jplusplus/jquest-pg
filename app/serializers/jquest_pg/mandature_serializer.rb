@@ -2,7 +2,7 @@ module JquestPg
   class MandatureSerializer < ActiveModel::Serializer
     include Rails.application.routes.url_helpers
 
-    attributes :id, :legislature, :person, :political_leaning,
+    attributes :id, :name, :legislature, :person, :political_leaning,
                :role, :group, :area, :chamber, :sources, :completion
     # Use associated resources' serializers
     has_one :legislature
