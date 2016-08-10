@@ -13,7 +13,7 @@
       line-height:1.2em;
       white-space: nowrap;
       color: #455666;
-      border: 1px #455666 solid;
+      border: 1px #455666 dashed;
       border-top:0;
       border-bottom:0;
       background: $card-bg;
@@ -41,9 +41,9 @@
     }
 
     &__europe {
-      background: #455666;
-      height:1px;
-      width:300%;
+      border-top: #455666 dashed 1px;
+      height:0;
+      width:250%;
       position: absolute;
       top:0;
     }
