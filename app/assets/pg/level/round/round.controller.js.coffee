@@ -22,7 +22,6 @@ angular.module 'jquest'
         marginLeft: 50 - (1/6*width)/2 + '%'
       # Redirect to a child state according to the current round
       constructor: ->
-        return $state.go 'main.season.pg.level.round.details.summary'
         if seasons.current().progression.remaining >= 6
           $state.go 'main.season.pg.level.round.intro'
         else

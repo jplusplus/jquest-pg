@@ -1,7 +1,12 @@
 .pg__data {
 
-  .sticky {
-    top: $card-spacer-y;    
+  @include media-breakpoint-down(md) {
+    .sticky {
+      position: relative !important;
+    }
+    .sticky + div {
+      display: none !important;
+    }
   }
 
   &__no-results {
@@ -31,4 +36,5 @@
   table th {
     white-space: nowrap;
   }
+
 }
