@@ -2,15 +2,23 @@
 
   &__legend {
     height:30vh;
+    position: relative;
+    z-index:100;
 
     &__europe {
-      color: $text-muted;
       position: absolute;
       top:0;
       left:50%;
       font-size:.9em;
       line-height:1.2em;
       white-space: nowrap;
+      color: #455666;
+      border: 1px #455666 solid;
+      border-top:0;
+      border-bottom:0;
+      background: $card-bg;
+      padding:$spacer-y/2 $spacer-x;
+      z-index:100;
       @include vendor-prefix(transform, translate(-50%, -50%));
     }
   }
@@ -33,12 +41,20 @@
     }
 
     &__europe {
-      background: $brand-primary;
+      background: #455666;
       height:1px;
-      width:150%;
+      width:300%;
       position: absolute;
       top:0;
-      left:-25%;
+    }
+
+
+    &--left &__europe {
+      left: -25%;
+    }
+
+    &--right &__europe {
+      right: -25%;
     }
   }
 }
