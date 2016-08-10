@@ -110,43 +110,6 @@
         Or the country only if you only have this piece of information.
       </div>
     </fieldset>
-    <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.role">
-
-      <label class="mandature-form__group__label col-xs-12" for="input-role" ng-switch=":: !!form.mandature.role">
-        <span ng-switch-when="false">
-          Role <em>in {{ form.mandature.legislature.name }}</em>
-        </span>
-        <span ng-switch-when="true">
-          <strong>Role</strong> <em>in {{ form.mandature.legislature.name }}</em> already known
-          <sup uib-popover-html="form.getSource('role', form.mandature, true).value | autolink" popover-trigger="{ 'outsideClick': 'outsideClick' }">
-            source
-          </sup>
-        </span>
-      </label>
-
-      <div class="col-xs-8">
-        <div class="input-group">
-          <input class="form-control"
-                 type="text"
-                 ng-model="form.mandature.role"
-                 id="input-role" />
-          <span class="input-group-btn">
-            <button class="btn btn-secondary" ng-click="form.editSource('role', mandature)" type="button" ng-if=":: !form.mandature.role">
-              <span ng-hide="form.hasSource('role', mandature)">
-                Add source
-              </span>
-              <span ng-show="form.hasSource('role', mandature)">
-                <i class="fa fa-check-circle-o text-success"></i>
-                Sourced
-              </span>
-            </button>
-          </span>
-        </div>
-      </div>
-      <div class="col-xs-4 mandature-form__group__helper" ng-if=":: !form.mandature.role">
-        Is this representative a plain member or does s/he hold a more senior position, like president of the assembly?
-      </div>
-    </fieldset>
     <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.person.education">
 
       <label class="mandature-form__group__label col-xs-12" for="input-education" ng-switch=":: !!form.mandature.person.education">
@@ -223,6 +186,45 @@
         Select the occupation that's closest to the job of this representative.
       </div>
     </fieldset>
+
+    <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.role">
+
+      <label class="mandature-form__group__label col-xs-12" for="input-role" ng-switch=":: !!form.mandature.role">
+        <span ng-switch-when="false">
+          Role <em>in {{ form.mandature.legislature.name }}</em>
+        </span>
+        <span ng-switch-when="true">
+          <strong>Role</strong> <em>in {{ form.mandature.legislature.name }}</em> already known
+          <sup uib-popover-html="form.getSource('role', form.mandature, true).value | autolink" popover-trigger="{ 'outsideClick': 'outsideClick' }">
+            source
+          </sup>
+        </span>
+      </label>
+
+      <div class="col-xs-8">
+        <div class="input-group">
+          <input class="form-control"
+                 type="text"
+                 ng-model="form.mandature.role"
+                 id="input-role" />
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" ng-click="form.editSource('role', mandature)" type="button" ng-if=":: !form.mandature.role">
+              <span ng-hide="form.hasSource('role', mandature)">
+                Add source
+              </span>
+              <span ng-show="form.hasSource('role', mandature)">
+                <i class="fa fa-check-circle-o text-success"></i>
+                Sourced
+              </span>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div class="col-xs-4 mandature-form__group__helper" ng-if=":: !form.mandature.role">
+        Is this representative a plain member or does s/he hold a more senior position, like president of the assembly?
+      </div>
+    </fieldset>
+    
     <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.political_leaning">
 
       <label class="mandature-form__group__label col-xs-12" for="input-political-leaning" ng-switch=":: !!form.mandature.political_leaning">
