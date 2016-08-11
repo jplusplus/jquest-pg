@@ -1,5 +1,6 @@
 module JquestPg
   class Mandature < ActiveRecord::Base
+    MAX_ASSIGNABLE = 6.freeze
     # Add a filter method to the scope
     include Filterable
     include CsvAttributes
@@ -92,7 +93,7 @@ module JquestPg
       # Stop here if no mandatures is assignable
       return assigned_mandatures if assignable_legislatures.length == 0
       # Number of mandature picked from each legislatures depends of the number of legislature
-      per_legislatures = [(6.0 / assignable_legislatures.length).ceil, 1].max
+      per_legislatures = [(MAX_ASSIGNABLE.to_f / assignable_legislatures.length).ceil, 1].max
       # For each legislature...
       assignable_legislatures.each do |legislature|
         # Pick enough mandature!
@@ -109,8 +110,10 @@ module JquestPg
           end
         end
       end
+      # Maximum number of person to assign
+      max = [0, MAX_ASSIGNABLE - user.assignment.pending.count() ].max
       # Ensure we haven't een too greedy
-      assigned_mandatures = assigned_mandatures.slice(0, 6)
+      assigned_mandatures = assigned_mandatures.slice 0, max
       # Insert within a transaction
       Assignment.transaction do
         # Now our assigned mandatures list must be populated, it is time to save it
