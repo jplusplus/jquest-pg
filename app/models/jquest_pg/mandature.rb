@@ -111,7 +111,7 @@ module JquestPg
         end
       end
       # Maximum number of person to assign
-      max = [0, MAX_ASSIGNABLE - user.assignment.pending.count() ].max
+      max = [0, MAX_ASSIGNABLE - user.assignments.pending.count() ].max
       # Ensure we haven't een too greedy
       assigned_mandatures = assigned_mandatures.slice 0, max
       # Insert within a transaction
