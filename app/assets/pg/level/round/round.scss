@@ -49,7 +49,7 @@
       }
 
       &__frame {
-        $frame-bg: darken($brand-primary, 10);
+        $frame-bg: darken($brand-primary, 5);
         background: $frame-bg;
         position: relative;
         width:100%;
