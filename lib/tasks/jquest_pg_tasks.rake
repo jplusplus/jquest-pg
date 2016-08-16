@@ -2,6 +2,7 @@ require "google_drive"
 require 'tty'
 require 'tty-prompt'
 require 'unicode_utils/downcase'
+require 'jquest_pg'
 
 class String
   # Normalize spaces and fingerprint.
@@ -32,7 +33,7 @@ namespace :jquest_pg do
       # Inform the user
       puts "#{check_mark} Getting all legislatures from #{pastel.bold(MASTERFILE_URL)}"
       # Download the list from the master file
-      download_worksheet_by_url(MASTERFILE_URL, 'legislature')
+      download_worksheet_by_url(MASTERFILE_URL, 'legislature', false)
     end
   end
 
@@ -153,13 +154,13 @@ namespace :jquest_pg do
     Hash[*headers.each_with_index.map { |h, idx| [ h.to_sym, row[idx] ] }.flatten]
   end
 
-  def download_worksheet_by_url(url, worksheet)
+  def download_worksheet_by_url(url, worksheet, spin=true)
     # Start a spinner
-    spinner.start
+    spinner.start if spin
     # Get the selected legislature spreadsheet and the worksheet named 'data'
     ws = session.spreadsheet_by_url(url).worksheet_by_title(worksheet)
     # Start a spinner
-    spinner.stop
+    spinner.stop if spin
     # Return the worksheet
     ws
   end
