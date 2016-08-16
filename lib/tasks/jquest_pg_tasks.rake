@@ -31,8 +31,13 @@ namespace :jquest_pg do
     @legislatures ||=begin
       # Inform the user
       puts "#{check_mark} Getting all legislatures from #{pastel.bold(MASTERFILE_URL)}"
+      # Download the list from the master file
       download_worksheet_by_url(MASTERFILE_URL, 'legislature')
     end
+  end
+
+  def legislatures_rows
+    @legislatures_rows ||= legislatures.rows.drop(1).sort { |i, j| i[0]  <=> j[0] }
   end
 
   def worksheet_col_idx(worksheet, name)
@@ -45,8 +50,13 @@ namespace :jquest_pg do
     question = "Which legislature should we import?"
     # Pick a row index
     prompt.enum_select question do |menu|
-      legislatures.rows.drop(1).each_with_index do |row, index|
-        menu.choice row[ worksheet_col_idx(legislatures, 'name') ], index
+      # For each element
+      legislatures_rows.each_with_index do |row, index|
+        legislature_name = row[ worksheet_col_idx(legislatures, 'name') ]
+        # Add a tick to the name for existing legislature
+        legislature_name += ' (✔)' if JquestPg::Legislature.exists? name: legislature_name
+        # Add the legislature to the menu
+        menu.choice legislature_name, index
       end
     end
   end
@@ -256,7 +266,7 @@ namespace :jquest_pg do
       index = pick_legislature
     end
     # Get row by index
-    row = legislatures.rows.drop(1).slice(index)
+    row = legislatures_rows.slice(index)
     # Build a hash
     if legislature_hash = build_worksheet_hash(legislatures, row)
       # Insert or update the legislature
@@ -269,9 +279,11 @@ namespace :jquest_pg do
   def pick_next_index(index)
     index = prompt.select("What should be do next?") do |menu|
       # Find the next legislature (if any)
-      if next_row = legislatures.rows.drop(1).slice(index + 1)
+      if next_row = legislatures_rows.slice(index + 1)
         # Find its name
         next_name = next_row[ worksheet_col_idx(legislatures, 'name') ]
+        # Add a tick to the name for existing legislature
+        next_name += ' (✔)' if JquestPg::Legislature.exists? name: next_name
         # Add a menu entry
         menu.choice "Import #{next_name}", index + 1
       end
