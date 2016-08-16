@@ -1,3 +1,5 @@
+#!/usr/bin/env rake
+
 require "google_drive"
 require 'tty'
 require 'tty-prompt'
