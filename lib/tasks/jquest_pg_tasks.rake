@@ -1,5 +1,3 @@
-#!/usr/bin/env rake
-
 require "google_drive"
 require 'tty'
 require 'tty-prompt'
@@ -298,7 +296,7 @@ namespace :jquest_pg do
   end
 
   desc "Download mandatures from masterfile"
-  task :sync do
+  task :sync => :environment do
     # We start with no selected legislature
     index = nil
     # We sync again and again until the user stop
