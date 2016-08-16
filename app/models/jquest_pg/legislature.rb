@@ -110,24 +110,10 @@ module JquestPg
         end
       # LEVEL 5
       #   * legislature.difficulty_level is 1
-      #   * legislature.end_date before the current year
-      #   * legislature.country is user.home_country
-      #   * legislature.languages includes user.spoken_language
-      when 5
-        # Some Filtering can be performed
-        legislatures = legislatures.where difficulty_level: 1
-        legislatures = legislatures.where 'end_date <= ?', Date.today
-        legislatures = legislatures.where country: user.home_country
-        # Filter legislature that use the same language than the user
-        legislatures = legislatures.select do |legislature|
-          legislature.languages.split(',').map(&:strip).include? user.spoken_language
-        end
-      # LEVEL 6
-      #   * legislature.difficulty_level is 1
       #   * legislature.end_date after the current year
       #   * legislature.country is not user.home_country
       #   * legislature.languages is not user.spoken_language and not 'en'
-      when 6
+      when 5
         # Some Filtering can be performed
         legislatures = legislatures.where difficulty_level: 1
         legislatures = legislatures.where 'end_date >= ?', Date.today
@@ -137,16 +123,30 @@ module JquestPg
           languages = legislature.languages.split(',').map(&:strip)
           not languages.include? 'en' and not languages.include? user.spoken_language
         end
+      # LEVEL 6
+      #   * legislature.difficulty_level is 1
+      #   * legislature.end_date before the current year
+      #   * legislature.end_date after 50 years ago
+      #   * legislature.country is user.home_country
+      #   * legislature.languages includes user.spoken_language
+      when 6
+        # Some Filtering can be performed
+        legislatures = legislatures.where difficulty_level: 1
+        legislatures = legislatures.where 'end_date <= ?', Date.today
+        legislatures = legislatures.where 'end_date >= ?',  30.years.ago
+        legislatures = legislatures.where country: user.home_country
+        # Filter legislature that use the same language than the user
+        legislatures = legislatures.select do |legislature|
+          legislature.languages.split(',').map(&:strip).include? user.spoken_language
+        end
       # LEVEL 7
       #   * legislature.difficulty_level is 1
       #   * legislature.end_date before 50 years ago
-      #   * legislature.country of user.home_country
       #   * legislature.languages is user.spoken_language or 'en'
       when 7
         # Some Filtering can be performed
         legislatures = legislatures.where difficulty_level: 1
-        legislatures = legislatures.where 'end_date <= ?', 50.years.ago
-        legislatures = legislatures.where.not country: user.home_country
+        legislatures = legislatures.where 'end_date < ?', 30.years.ago
         # Filter legislature that use the same language than the user or 'en'
         legislatures = legislatures.select do |legislature|
           languages = legislature.languages.split(',').map(&:strip)

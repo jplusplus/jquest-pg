@@ -82,14 +82,14 @@ angular.module 'jquest'
         {
           title: 'Level 5',
           index: 5,
-          description: 'Older parliament of home country'
+          description: 'Very foreign parliament'
           category: 1
         }
         {
           title: 'Level 6',
           index: 6,
-          description: 'Very foreign parliament'
-          category: 1
+          description: 'Older parliament of home country'
+          category: 2
         }
         {
           title: 'Level 7',
