@@ -6,3 +6,7 @@ angular.module 'jquest'
         controller: 'MainSeasonPgLevelRoundDetailsCtrl'
         controllerAs: 'details'
         templateUrl: 'level/round/details/details.html'
+        resolve:
+          $title: (mandature)->
+            'ngInject'
+            mandature.person.fullname

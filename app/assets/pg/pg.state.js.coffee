@@ -6,3 +6,5 @@ angular.module 'jquest'
         controller: 'MainSeasonPgCtrl'
         controllerAs: 'pg'
         templateUrl: 'pg.html'
+        resolve:
+          $title: -> 'Your missions'
