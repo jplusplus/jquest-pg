@@ -6,13 +6,13 @@ angular.module 'jquest'
       description: SETTINGS.ROUNDS[seasons.current().progression.round - 1].description
       mandature: mandature
       # Find the currency assignment according to the user activity
-      isCurrentAssignment: (assignment)->
-        mandature.id is assignment.resource.id
-      indexOfCurrentAssignment: =>
+      isCurrentMandature: (mandature)->
+        @mandature.id is mandature.id
+      indexOfCurrentMandature: =>
         _.indexOf _.map(mandatures, 'id'), mandature.id
       getAssignmentWrapperStyle: (index)->
         # Get index of the current assignement to deduce the offset
-        index = do @indexOfCurrentAssignment
+        index = do @indexOfCurrentMandature
         # 175 is the width (in percentage of the wrapper)
         width = 165
         # Calculate the ratio of one entity according to the width of the wrapper

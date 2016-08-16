@@ -132,7 +132,7 @@ module JquestPg
       when 6
         # Some Filtering can be performed
         legislatures = legislatures.where difficulty_level: 1
-        legislatures = legislatures.where 'end_date <= ?', Date.today
+        legislatures = legislatures.where 'end_date <  ?', Date.today
         legislatures = legislatures.where 'end_date >= ?',  30.years.ago
         legislatures = legislatures.where country: user.home_country
         # Filter legislature that use the same language than the user

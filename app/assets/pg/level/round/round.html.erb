@@ -32,13 +32,13 @@
               <div class="container-fluid pg__level__round__overview__assignments__wrapper"
                    ng-style="round.getAssignmentWrapperStyle()">
                 <div class="row">
-                  <div ng-repeat="assignment in pg.assignmentsByLevel[pg.progression().level]"
+                  <div ng-repeat="mandature in level.mandatures"
                        class="pg__level__round__overview__assignments__wrapper__item col-xs-2"
-                       ng-class="{ 'pg__level__round__overview__assignments__wrapper__item--active': round.isCurrentAssignment(assignment) }">
+                       ng-class="{ 'pg__level__round__overview__assignments__wrapper__item--active': round.isCurrentMandature(mandature) }">
                     <div class="pg__person-cover"
-                         uib-tooltip="{{ assignment.resource.person.fullname }}"
+                         uib-tooltip="{{ mandature.person.fullname }}"
                          tooltip-append-to-body="true">
-                      <img ng-src="{{ assignment.resource.person.image }}" alt="" src="" />
+                      <img ng-src="{{ mandature.person.image }}" alt="" src="" />
                     </div>
                   </div>
                 </div>

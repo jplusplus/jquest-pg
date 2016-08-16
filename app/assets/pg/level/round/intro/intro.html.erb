@@ -12,12 +12,12 @@
       During this level, you will investigate on those 6&nbsp;elected&nbsp;representatives:
     </p>
     <div class="row">
-      <div ng-repeat="assignment in pg.assignmentsByLevel[pg.progression().level]"
+      <div ng-repeat="mandature in level.mandatures"
            class="col-xs-2">
         <div class="pg__person-cover img-thumbnail"
-            uib-tooltip="{{ assignment.resource.person.fullname }}"
+            uib-tooltip="{{ mandature.person.fullname }}"
             tooltip-append-to-body="true">
-          <img ng-src="{{ assignment.resource.person.image }}" alt="" src="" />
+          <img ng-src="{{ mandature.person.image }}" alt="" src="" />
         </div>
       </div>
     </div>

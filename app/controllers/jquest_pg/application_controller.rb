@@ -9,9 +9,7 @@ module JquestPg
       # Get user progression
       @progression = progression user, season
       # Did we have enought assignments for this level
-      if user.assignments.count() < @progression.level * Mandature::MAX_ASSIGNABLE
-        # Mark all pending assignments as done
-        user.assignments.pending.where(season: season).update_all status: :done
+      if user.assignments.where(level: @progression.level).count() < Mandature::MAX_ASSIGNABLE
         # Find new assignments
         Mandature::assigned_to user, season, true, :pending
       end

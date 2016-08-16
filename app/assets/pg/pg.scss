@@ -21,11 +21,11 @@
 
       &:after {
         content: "\f118";
-        font-size: 10vh;
+        font-size:5em;
         font-family: FontAwesome;
         color: lighten(#455666, 10);
         background: inherit;
-        width:100%;
+        width:auto;
         padding:50% 0;
 
         display: block;
