@@ -17,14 +17,17 @@ if defined?(ActiveAdmin)
     filter :birthdate
     filter :birthplace
 
-
-
     form :as => :pg_person do |f|
       f.semantic_errors
       f.inputs
       f.actions
     end
 
+    sidebar "Shortcuts", only: [:show, :edit] do
+      ul do
+        li link_to "Mandatures",  admin_pg_mandatures_path(q: { person_id_eq: pg_person.id })
+      end
+    end
 
     controller do
       def permitted_params

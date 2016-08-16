@@ -1,7 +1,7 @@
 if defined?(ActiveAdmin)
   ActiveAdmin.register JquestPg::Legislature, :as => 'pg_legislature' do
     menu label: 'Legislatures', parent: 'Political Gaps'
-    
+
     index title: 'Legislatures' do
       selectable_column
       id_column
@@ -26,6 +26,12 @@ if defined?(ActiveAdmin)
       f.semantic_errors
       f.inputs
       f.actions
+    end
+
+    sidebar "Shortcuts", only: [:show, :edit] do
+      ul do
+        li link_to "Mandatures",  admin_pg_mandatures_path(q: { legislature_id_eq: pg_legislature.id })
+      end
     end
 
     controller do

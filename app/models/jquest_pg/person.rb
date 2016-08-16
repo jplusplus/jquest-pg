@@ -7,6 +7,8 @@ module JquestPg
     has_many :sources, foreign_key: :resource_id
     after_update :track_activities
 
+    alias_method :pg_mandatures, :mandatures
+
     def self.csv_attributes
       %w{fullname email education profession_category profession
         image twitter facebook gender birthdate birthplace phone}
