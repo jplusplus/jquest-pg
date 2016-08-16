@@ -62,13 +62,13 @@ module JquestPg
       # Does the gender have been touch (even if it didn't changed)
       if gender_touched?
         # And save the activity
-        Activity.find_or_create_by **activity.merge!(taxonomy: 'genderize', points: 1)
+        Activity.find_or_create_by **activity.merge!(taxonomy: 'genderize', points: 100)
       end
       # Multiple value may have changed
       [:birthdate, :birthplace, :education, :profession_category, :image].each do |n|
         # Did it changed?
         if method("#{n}_changed?").call and not read_attribute(n).blank?
-          activity.merge! points: 2, taxonomy: 'details', value: n
+          activity.merge! points: 200, taxonomy: 'details', value: n
           # And save the activity
           Activity.find_or_create_by **activity
         end

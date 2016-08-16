@@ -28,7 +28,7 @@ module JquestPg
         user: user,
         resource: self,
         assignment: assignment,
-        points: 1,
+        points: 100,
         taxonomy: 'diversity'
       }
       # And save the activity
