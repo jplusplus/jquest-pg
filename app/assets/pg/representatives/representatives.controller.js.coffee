@@ -7,4 +7,4 @@ angular.module 'jquest'
         @levels = _.groupBy assignments, 'level'
         @levels = _.toPairs @levels
         # Sort levels by their number
-        @levels = _.sortBy @levels, (l)=> l[1]
+        @levels = _.sortBy @levels, (l)=> l[0]
