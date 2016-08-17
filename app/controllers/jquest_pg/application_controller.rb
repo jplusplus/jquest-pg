@@ -5,11 +5,15 @@ module JquestPg
       render 'jquest_pg/index', :layout => 'layouts/application'
     end
 
-    def new_assignments!(user, season=user.member_of)
+    def season
+      @season ||= Season.find_or_create_by engine_name: JquestPg.name
+    end
+
+    def new_assignments!(user)
       # Get user progression
       @progression = progression user, season
       # Did we have enought assignments for this level
-      if user.assignments.where(level: @progression.level).count() < Mandature::MAX_ASSIGNABLE
+      if user.assignments.where(level: @progression.level, season: season).count() < Mandature::MAX_ASSIGNABLE
         # Find new assignments
         Mandature::assigned_to user, season, true, :pending
       end
