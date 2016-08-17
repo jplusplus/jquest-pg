@@ -10,7 +10,9 @@ module JquestPg
     end
 
     def new_assignments!(user)
+      # Get user level
       level = user.points.find_or_create_by(season: season).level
+      # Get the number of missing assignments
       missing_assignments = Mandature::missing_assignments user, season, level
       # Did we have enought assignments for this level?
       if missing_assignments > 0

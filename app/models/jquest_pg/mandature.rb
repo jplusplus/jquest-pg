@@ -115,15 +115,8 @@ module JquestPg
       # Now our assigned mandatures list must be populated, it is time to save it
       # as assignments for the given user.
       assigned_mandatures.each do |mandature|
-        # Only if the user needs more assignments
-        if missing_assignments(user, season) > 0
-          # Create an assignment.
-          # An exception will interupt the loop.
-          Assignment.create!(user: user, resource: mandature, season: season) rescue break
-        else
-          # Ends the loop
-          break
-        end
+        # Create an assignment (may fail)
+        Assignment.create user: user, resource: mandature, season: season
       end
       # Returns the mandatures
       assigned_mandatures
