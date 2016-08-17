@@ -224,7 +224,7 @@
         Is this representative a plain member or does s/he hold a more senior position, like president of the assembly?
       </div>
     </fieldset>
-    
+
     <fieldset class="form-group mandature-form__group" ng-disabled=":: form.mandature.political_leaning">
 
       <label class="mandature-form__group__label col-xs-12" for="input-political-leaning" ng-switch=":: !!form.mandature.political_leaning">
@@ -266,7 +266,7 @@
     </fieldset>
   </div>
   <div class="card-footer text-xs-right">
-    <div uib-tooltip="Data points without a source are not accepted"
+    <span uib-tooltip="Data points without a source are not accepted"
          tooltip-append-to-body="true"
          tooltip-is-open="form.changes(false) > form.changes(true)"
          tooltip-trigger="'none'"
@@ -275,6 +275,6 @@
       <button class="btn btn-primary" type="submit" ng-disabled="form.changes(true) < 1">
         Save
       </button>
-    </div>
+    </span>
   </div>
 </form>

@@ -113,7 +113,7 @@ module JquestPg
       # Current user level
       level = user.points.find_or_create_by(season: season).level
       # Maximum number of person to assign
-      max = [0, MAX_ASSIGNABLE - user.assignments.where(level: level).count() ].max
+      max = [0, MAX_ASSIGNABLE - user.assignments.where(level: level, season: season).count() ].max
       # Insert within a transaction
       Assignment.transaction do
         # Ensure we haven't een too greedy

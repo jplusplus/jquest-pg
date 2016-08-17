@@ -3,6 +3,7 @@ angular.module 'jquest'
     templateUrl: 'mandature-form/mandature-form.html'
     scope:
       mandature: "="
+      allowSkipping: "="
       finally: "&"
     restrict: 'AE'
     controller: 'MandatureFormCtrl'
