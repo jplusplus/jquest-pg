@@ -9,7 +9,7 @@ angular.module 'jquest'
         controllerAs: 'edit'
         resolve:
           $title: ->
-            'Edit'
+            'Edit '
           done: (seasonRestangular)->
             seasonRestangular.all('mandatures').one('assigned').getList('done', limit: 100)
           mandature: (seasonRestangular, $stateParams, done, unauthorized)->

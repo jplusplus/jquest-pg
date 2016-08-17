@@ -7,6 +7,7 @@ angular.module 'jquest'
         controllerAs: 'summary'
         templateUrl: 'level/round/details/summary/summary.html'
         resolve:
+          $title: -> 'Summary'
           summary: (seasonRestangular)->
             'ngInject'
             seasonRestangular.one('mandatures').one('summary').get()
