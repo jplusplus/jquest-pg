@@ -110,22 +110,31 @@ module JquestPg
           end
         end
       end
-      # Current user level
-      level = user.points.find_or_create_by(season: season).level
-      # Maximum number of person to assign
-      max = [0, MAX_ASSIGNABLE - user.assignments.where(level: level, season: season).count() ].max
-      # Insert within a transaction
-      Assignment.transaction do
-        # Ensure we haven't een too greedy
-        assigned_mandatures = assigned_mandatures.slice 0, max
-        # Now our assigned mandatures list must be populated, it is time to save it
-        # as assignments for the given user.
-        assigned_mandatures.each do |mandature|
+      # Ensure we haven't een too greedy
+      assigned_mandatures = assigned_mandatures.slice 0, MAX_ASSIGNABLE
+      # Now our assigned mandatures list must be populated, it is time to save it
+      # as assignments for the given user.
+      assigned_mandatures.each do |mandature|
+        # Only if the user needs more assignments
+        if missing_assignments(user, season) > 0
+          # Create an assignment
           Assignment.create! user: user, resource: mandature, season: season
+        else
+          # Ends the loop
+          break
         end
       end
       # Returns the mandatures
       assigned_mandatures
+    end
+
+    def self.missing_assignments(user, season, level=nil)
+      # Get level if unspecified
+      level ||= user.points.find_or_create_by(season: season).level
+      # Return the uncached result of the count query
+      uncached do
+        MAX_ASSIGNABLE - user.assignments.where(level: level, season: season).count()
+      end
     end
 
     def self.assigned_to(user, season=user.member_of, force=true, status=nil)
