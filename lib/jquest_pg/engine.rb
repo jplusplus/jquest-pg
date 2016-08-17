@@ -22,6 +22,24 @@ module JquestPg
       end
     end
 
+    initializer :limit_assignments do |app|
+      module ValidateUserAssignments
+        extend ActiveSupport::Concern
+        included do
+          before_create :limit_assignments
+        end
+        protected
+          def limit_assignments
+            # Stop here if the season if not using this engine
+            return true if season.engine != JquestPg::Engine
+            # Returns true if the maximum hasn't been reached
+            return user.assignments(season: season, level: level).count() < Mandature::MAX_ASSIGNABLE
+          end
+      end
+      # include the extension
+      Assignment.send(:include, ValidateUserAssignments)
+    end
+
     initializer :create_assignements do |app|
       module HasAssignments
         extend ActiveSupport::Concern
@@ -32,7 +50,7 @@ module JquestPg
         protected
           def create_assignements
             # Assign only if the user is member of this season (using its engine)
-            if not self.member_of.nil? and self.member_of.engine == JquestPg::Engine
+            if not member_of.nil? and member_of.engine == JquestPg::Engine
               # Set new assignments for this user
               JquestPg::ApplicationController.new.new_assignments! self
             end

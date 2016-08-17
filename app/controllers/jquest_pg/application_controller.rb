@@ -10,12 +10,18 @@ module JquestPg
     end
 
     def new_assignments!(user)
-      # Get user progression
-      @progression = progression user, season
-      # Did we have enought assignments for this level?      
-      if user.assignments.where(level: @progression.level, season: season).count() < Mandature::MAX_ASSIGNABLE
+      missing_assignments = Mandature::missing_assignments user, season
+      # Did we have enought assignments for this level?
+      if missing_assignments > 0
         # Find new assignments
         Mandature::assign_to! user, season
+      # Too many assignments?
+      elsif missing_assignments < 0
+        # Targes assignments to remove, beyond the maximum we can assign
+        user.assignments.pending.where(season: season).offset(Mandature::MAX_ASSIGNABLE).each do |assignment|
+          # Delete the assignment!
+          assignment.delete
+        end
       end
     end
 
