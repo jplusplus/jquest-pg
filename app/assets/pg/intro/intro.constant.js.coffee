@@ -88,5 +88,5 @@ angular.module 'jquest'
         caption: "",
         image: "http://static.jquestapp.com/images/intro/slack.png",
         type: "image"
-      },
+      }
     ]
