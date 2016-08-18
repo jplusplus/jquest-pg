@@ -9,13 +9,13 @@ angular.module 'jquest'
     PROFESSION_CATEGORIES:
       [
         'Armed forces'
-        'Businessman/woman'
+        'Private sector professional'
         'Civil servant'
         'Farmer'
         'Journalist, public relations'
         'Lawyer'
         'Manual worker, craftsman/woman'
-        'Medical doctor, dentist, optician '
+        'Medical doctor, dentist, optician'
         'Miner'
         'Teacher'
         'University professor'
@@ -25,32 +25,30 @@ angular.module 'jquest'
       ]
     POLITICAL_LEANINGS:
       [
-        'Communist'
-        'Left (non-communist)'
+        'Left wing'
         'Center-left (social democrat)'
         'Green'
-        'Liberal'
+        'Center (liberal)'
         'Conservative'
-        'Nationalist'
-        'Regionalist'
+        'Far-right'
         'Other'
       ]
     ROUNDS:
       [
         {
-          title: 'Round 1/3'
+          title: 'Round 1 out of 3'
           index: 1
-          description: 'In this first round, we ask you to indicate the gender for each of your representatives.'
+          description: 'In this first round, you have to collect data on the gender of each of your representatives.'
         }
         {
-          title: 'Round 2/3'
+          title: 'Round 2 out of 3'
           index: 2
-          description: 'In this round, we ask you to find at least one piece of information for each of your representatives.'
+          description: 'In this round, you have to find at least one piece of information for each representative.'
         }
         {
-          title: 'Round 3/3'
+          title: 'Round 3 out of 3'
           index: 3
-          description: 'In this last round, we ask you to tell us how stereotypical is the outlook of your representatives.'
+          description: 'In this last round, you have to judge which representative fits most the stereotype of a politician.'
         }
       ]
     LEVELS:
