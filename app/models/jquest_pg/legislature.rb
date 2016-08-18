@@ -103,7 +103,7 @@ module JquestPg
       #   * legislature.difficulty_level is 1
       #   * legislature.end_date after the current year
       #   * legislature.country ISNT user.home_country
-      #   * legislature.languages is 'en' (or 'fr' if user.spoken_language if 'en')
+      #   * legislature.languages is 'en' or user.spoken_language
       when 4
         # Some Filtering can be performed
         legislatures = legislatures.where difficulty_level: 1
@@ -111,11 +111,9 @@ module JquestPg
         legislatures = legislatures.where.not country: user.home_country
         # Filter legislature that use a different language than the user
         legislatures = legislatures.select do |legislature|
-          if user.spoken_language == 'en'
-            legislature.languages.split(',').map(&:strip).include? 'fr'
-          else
-            legislature.languages.split(',').map(&:strip).include? 'en'
-          end
+          languages = legislature.languages.split(',').map(&:strip).to_set
+          # True if 'en' or user.spoken_language are in languages
+          languages.intersect? [user.spoken_language, 'en'].to_set
         end
       # LEVEL 5
       #   * legislature.difficulty_level is 1
