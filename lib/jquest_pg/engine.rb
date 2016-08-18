@@ -33,7 +33,7 @@ module JquestPg
             # Stop here if the season if not using this engine
             return true if season.engine != JquestPg::Engine
             # Debug output
-            logger.debug "Checking assignment for #{user} on level #{level}"
+            logger.debug "Checking assignments for #{user} on level #{level}"
             # Returns true if the maximum hasn't been reached
             return user.assignments.where(season: season, level: level).count() < Mandature::MAX_ASSIGNABLE
           end

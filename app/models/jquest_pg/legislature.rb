@@ -76,12 +76,21 @@ module JquestPg
       legislatures = all
       # Different assignements according the level
       case level
-      # LEVEL 1, 2, 3
+      # LEVEL 1
+      #   * legislature.difficulty_level is current level
+      #   * legislature.end_date after the current year
+      #   * legislature.country is user.home_country
+      when 1
+        # Some Filtering can be performed
+        legislatures = legislatures.where difficulty_level: level
+        legislatures = legislatures.where 'end_date >= ?', Date.today
+        legislatures = legislatures.where country: user.home_country
+      # LEVEL 2, 3
       #   * legislature.difficulty_level is current level
       #   * legislature.end_date after the current year
       #   * legislature.country is user.home_country
       #   * legislature.languages includes user.spoken_language
-      when 1, 2, 3
+      when 2, 3
         # Some Filtering can be performed
         legislatures = legislatures.where difficulty_level: level
         legislatures = legislatures.where 'end_date >= ?', Date.today
