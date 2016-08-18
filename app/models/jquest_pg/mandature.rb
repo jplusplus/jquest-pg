@@ -81,6 +81,10 @@ module JquestPg
       end
     end
 
+    def age
+      person.age legislature.start_date
+    end
+
     def self.some_are_assigned_to?(user, season=user.member_of)
       self.assigned_to(user, season, true).length > 0
     end

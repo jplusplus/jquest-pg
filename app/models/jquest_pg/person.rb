@@ -85,9 +85,9 @@ module JquestPg
       end
     end
 
-    def age
+    def age(ref=Time.now)
       unless birthdate.blank?
-        Time.now.year - birthdate.year
+        ref.year - birthdate.year
       end
     end
 

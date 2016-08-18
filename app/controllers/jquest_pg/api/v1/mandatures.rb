@@ -38,9 +38,10 @@ module JquestPg
             # Mandatures assigned to the user
             assigned = Mandature.assigned_to(current_user, current_user.member_of, false, :pending)
             # All unfinished mandatures
-            global = Mandature.eager_load(:person).
-              # Joins to nested resources
-              joins('INNER JOIN jquest_pg_legislatures ON jquest_pg_legislatures.id = jquest_pg_mandatures.legislature_id').
+            global = Mandature.
+              # Join to related tables
+              eager_load(:person).
+              eager_load(:legislature).
               # Only current legislature
               where('jquest_pg_legislatures.end_date > ?', Time.now)
             # Create a hash of values for the two subsets
@@ -49,8 +50,8 @@ module JquestPg
               gender = mandatures.select { |m| m.person and not m.person.gender.blank? }
               gender = gender.group_by { |m| m.person.gender }
               gender = gender.map { |k,v| [k, v.length] }.to_h
-              # Age values
-              ages = mandatures.map(&:person).map(&:age).compact
+              # Age values at tehe begin of the legislature
+              ages = mandatures.map(&:age).compact
               # Returns a hash
               result[key] = {
                 total: mandatures.length,
