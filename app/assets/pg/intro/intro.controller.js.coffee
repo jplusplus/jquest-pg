@@ -27,9 +27,11 @@ angular.module 'jquest'
           seasons.reload().then =>
             # Redirect to homepage of this season
             $state.go 'main.season'
+      isLast: =>
+        @_indexSlide + 1 >= @slides.length
       # Next slide!
       next: =>
-        if @_indexSlide + 1 >= @slides.length
+        if @isLast()
           # End the introduction!
           do @end
         # Not finished yet

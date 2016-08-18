@@ -1,41 +1,25 @@
-<div class="pg__intro">
+<div class="pg__intro"  ng-click="intro.next()">
   <div ng-repeat="slide in intro.slides track by $index"
        class="pg__intro__slide pg__intro__slide--{{ slide.type }}"
        ng-show="intro.filterSlide(slide, $index)">
-    <fieldset ng-switch="slide.type" ng-disabled="slide.choice">
-      <div ng-switch-when="question">
-        <div class="pg__intro__slide__stack">
-          <img class="pg__intro__slide__stack__image pg__intro__slide__stack__image--{{ slide.choice }} img-thumbnail" ng-src="{{ slide.image }}" />
-        </div>
-        <h3 class="pg__intro__slide__body" ng-bind-html="slide.body"></h3>
-        <div>
-          <button class="pg__intro__slide__btn btn btn-danger btn-lg" ng-click="intro.no(slide)">
-            No
-          </button>
-          <button class="pg__intro__slide__btn btn btn-success btn-lg" ng-click="intro.yes(slide)">
-            Yes
-          </button>
-        </div>
-      </div>
-      <div ng-switch-default>
-        <div ng-click="intro.next()">
-          <div class="pg__intro__slide__body" ng-bind-html="slide.body"></div>
-          <div class="pg__intro__slide__stack" ng-if="slide.image">
-            <img class="pg__intro__slide__stack__image img-thumbnail" ng-src="{{ slide.image }}" />
-            <div class="pg__intro__slide__stack__caption" ng-f="slide.caption">
-              <span ng-bind-html="slide.caption"></span>
-              <span ng-if="slide.caption && slide.source">&nbsp;—&nbsp;</span>
-              <span ng-bind-html="slide.source"></span>
-            </div>
+    <div>
+      <div class="pg__intro__slide__body" ng-bind-html="slide.body"></div>
+      <div class="pg__intro__slide__stack" ng-if="slide.image">
+        <div class="pg__intro__slide__stack__image">
+          <img class="img-thumbnail" ng-src="{{ slide.image }}" />
+          <div class="pg__intro__slide__stack__image__caption" ng-f="slide.caption">
+            <span ng-bind-html="slide.caption"></span>
+            <span ng-if="slide.caption && slide.source">&nbsp;—&nbsp;</span>
+            <span ng-bind-html="slide.source"></span>
           </div>
-          <p class="lead pg__intro__slide__instruction" ng-if="!$last">Press <kbd>enter</kbd> or touch to continue.</p>
         </div>
-        <p ng-if="$last">
-          <button ng-click="intro.end()" class="btn btn-secondary btn-lg">
-            Start the investigation
-          </button>
-        </p>
       </div>
-    </fieldset>
+    </div>
+    <p ng-if="$last">
+      <button ng-click="intro.end()" class="btn btn-secondary btn-lg">
+        Start the investigation
+      </button>
+    </p>
   </div>
+  <p class="lead pg__intro__instruction" ng-if="!intro.isLast()">Press <kbd>enter</kbd> or touch to continue.</p>
 </div>

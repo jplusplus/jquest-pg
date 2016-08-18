@@ -2,15 +2,15 @@ angular.module 'jquest'
   .constant 'INTRO',
     slides: [
       {
-        type: 'text'
-        body: 'Welcome to this season of jQuest:<br /><span class="pg__intro__slide__body__big">Diversity in Parliament</span>'
+        type: 'title'
+        body: 'Welcome to this season&nbsp;of&nbsp;jQuest:<br /><span class="pg__intro__slide__body__big">Diversity in Parliament</span>'
       },
       {
         body: "Our Parliaments are not as diverse as our societies.",
         source: "",
         caption: "",
         image: "",
-        type: "text"
+        type: "title"
       },
       {
         body: "On average, Nobel Prize winners in physics are 14 years younger than members of the French Senate.",
@@ -38,7 +38,7 @@ angular.module 'jquest'
         source: "",
         caption: "",
         image: "",
-        type: "text"
+        type: "title"
       },
       {
         body: "You know where to find them.",
@@ -52,14 +52,14 @@ angular.module 'jquest'
         source: "",
         caption: "",
         image: "",
-        type: "text"
+        type: "title"
       },
       {
         body: "Together with hundreds of journalism students from across Europe, you'll be part of an exclusive investigation.",
         source: "",
         caption: "",
         image: "",
-        type: "text"
+        type: "title"
       },
       {
         body: "",
