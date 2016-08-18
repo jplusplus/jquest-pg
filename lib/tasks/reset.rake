@@ -25,7 +25,7 @@ namespace :jquest_pg do
     # Create progressbar
     bar = TTY::ProgressBar.new("#{check_mark} Reseting the database [:bar]", total: bar_tt, width: 50)
     # Remove all sources
-    Source.where(resource_type: [JquestPg::Mandature, JquestPg::Person]).destroy_all
+    Source.where(resource_type: [JquestPg::Mandature, JquestPg::Person]).delete_all
     # Reset all users one by one
     season_users.each do |user|
       # Use the points table
@@ -39,7 +39,7 @@ namespace :jquest_pg do
       bar.advance
     end
     # Remove all versions
-    PaperTrail::Version.where(item_type: [JquestPg::Mandature, JquestPg::Person]).destroy_all
+    PaperTrail::Version.where(item_type: [JquestPg::Mandature, JquestPg::Person]).delete_all
     # Result
     puts "#{check_mark} #{ui} user(s) reset and #{um} mandatures restored."
   end
