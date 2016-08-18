@@ -42,7 +42,7 @@ module JquestPg
         if method("#{n}_changed?").call and not read_attribute(n).blank?
           # And save the activity
           Activity.find_or_create_by user: user, taxonomy: 'details', value: n,
-                                     points: 2, assignment: assignment, resource: self
+                                     points: 200, assignment: assignment, resource: self
         end
       end
     end
