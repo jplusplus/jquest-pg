@@ -43,7 +43,8 @@ module JquestPg
                 joins('INNER JOIN jquest_pg_mandatures ON jquest_pg_mandatures.id = assignments.resource_id').
                 joins('INNER JOIN jquest_pg_people ON jquest_pg_people.id = jquest_pg_mandatures.person_id').
                 # Filter other assignments to only get the one with images
-                where.not(jquest_pg_people: { image: nil })
+                where('jquest_pg_people.image IS NOT NULL').
+                where("jquest_pg_people.image != ''")
               # Collect a random assignment
               unassigned = other_users_assignments.order("RANDOM()").limit(1).first
               # Break if there is to few unassigned people
