@@ -7,6 +7,6 @@ angular.module 'jquest'
       medianStyle: (median)->
         # Bounds
         min = 0 # Math.min(@global.age.min, @assigned.age.min)
-        max = Math.max(@global.age.max, @assigned.age.max)
+        max = 90 # Math.max(@global.age.max, @assigned.age.max)
         # Get bar position
         top: 100 - (median - min)/(max - min) * 100 + '%'
