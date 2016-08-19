@@ -43,7 +43,7 @@ angular.module 'jquest'
         {
           title: 'Round 2 out of 3'
           index: 2
-          description: 'In this round, you have to find at least one piece of information for each representative.'
+          description: 'In this round, you have to find <strong>at least one</strong> piece of information for each representative.'
         }
         {
           title: 'Round 3 out of 3'
