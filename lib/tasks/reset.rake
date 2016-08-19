@@ -1,7 +1,7 @@
 namespace :jquest_pg do
 
   def mandatures_updated
-    @mandatures_updated ||= JquestPg::Mandature.joins(:versions).where(versions: { event: 'update' })
+    @mandatures_updated ||= JquestPg::Mandature.updated
   end
 
   def season
@@ -35,11 +35,14 @@ namespace :jquest_pg do
     # Reset all updated mandatures
     mandatures_updated.each do |mandature|
       # Restore the original version
-      um += mandature.restore! ? 1 : 0
+      if mandature.restore!
+        # Remove its versions
+        mandature.versions.destroy_all
+        mandature.person.versions.destroy_all
+        um += 1
+      end
       bar.advance
     end
-    # Remove all versions
-    PaperTrail::Version.where(item_type: [JquestPg::Mandature, JquestPg::Person]).delete_all
     # Result
     puts "#{check_mark} #{ui} user(s) reset and #{um} mandatures restored."
   end

@@ -163,5 +163,11 @@ module JquestPg
       # Mandatures not assigned to that user
       Mandature.where.not(id: mids)
     end
+
+    def self.updated
+      joins('INNER JOIN jquest_pg_people ON jquest_pg_people.id = jquest_pg_mandatures.person_id').
+      joins('INNER JOIN versions ON versions.item_id = jquest_pg_people.id AND versions.item_type = "JquestPg::Person"').
+      where('versions.event = ? ', 'update')
+    end
   end
 end
