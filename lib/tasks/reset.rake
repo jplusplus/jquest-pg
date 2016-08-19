@@ -24,8 +24,9 @@ namespace :jquest_pg do
     bar_tt = season_users.length + mandatures_updated.length
     # Create progressbar
     bar = TTY::ProgressBar.new("#{check_mark} Reseting the database [:bar]", total: bar_tt, width: 50)
-    # Remove all sources
+    # Remove all sources and diversities
     Source.where(resource_type: [JquestPg::Mandature, JquestPg::Person]).delete_all
+    JquestPg::Diversity.delete_all
     # Reset all users one by one
     season_users.each do |user|
       # Use the points table
