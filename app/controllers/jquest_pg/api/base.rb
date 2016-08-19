@@ -27,7 +27,7 @@ module JquestPg
 
       before do
         # Allow us to track change on model
-        PaperTrail.whodunnit = current_user.id
+        PaperTrail.whodunnit = current_user.id unless current_user.nil?
       end
 
       mount V1::Base
