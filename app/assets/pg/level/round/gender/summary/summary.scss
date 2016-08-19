@@ -1,5 +1,9 @@
 .pg__level__round__gender__summary {
 
+  h5 {
+    min-height: $line-height * 2em;
+  }
+
   &__legend {
     li {
       display: inline;
