@@ -1,7 +1,7 @@
 namespace :jquest_pg do
 
   def mandatures_updated
-    @mandatures_updated ||= JquestPg::Mandature.updated
+    @mandatures_updated ||= JquestPg::Mandature.updated_through_people
   end
 
   def season
