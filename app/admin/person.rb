@@ -19,7 +19,22 @@ if defined?(ActiveAdmin)
 
     form :as => :pg_person do |f|
       f.semantic_errors
-      f.inputs
+      f.inputs do
+        f.input :fullname
+        f.input :firstname
+        f.input :lastname
+        f.input :email
+        f.input :education
+        f.input :profession_category
+        f.input :profession
+        f.input :image
+        f.input :twitter
+        f.input :facebook
+        f.input :gender
+        f.input :birthdate, as: :datepicker
+        f.input :birthplace
+        f.input :phone
+      end
       f.actions
     end
 
