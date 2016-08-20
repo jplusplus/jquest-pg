@@ -26,6 +26,10 @@
     &.ng-hide.ng-hide-remove {
       @include vendor-prefix(transform, translate(-50%, -25%) scale(.7) );
     }
+
+    .lead strong {
+      font-weight: 700;
+    }
   }
 
   &__instruction {
