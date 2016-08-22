@@ -83,7 +83,7 @@ module JquestPg
       when 1
         # Some Filtering can be performed
         legislatures = legislatures.where difficulty_level: level
-        legislatures = legislatures.where 'end_date >= ?', Date.today
+        legislatures = legislatures.where 'end_date >= ?', Date.today.year
         legislatures = legislatures.where country: user.home_country
       # LEVEL 2, 3
       #   * legislature.difficulty_level is current level
@@ -93,7 +93,7 @@ module JquestPg
       when 2, 3
         # Some Filtering can be performed
         legislatures = legislatures.where difficulty_level: level
-        legislatures = legislatures.where 'end_date >= ?', Date.today
+        legislatures = legislatures.where 'end_date >= ?', Date.today.year
         legislatures = legislatures.where country: user.home_country
         # Filter legislature that use the same language than the user
         legislatures = legislatures.select do |legislature|
@@ -107,7 +107,7 @@ module JquestPg
       when 4
         # Some Filtering can be performed
         legislatures = legislatures.where difficulty_level: 1
-        legislatures = legislatures.where 'end_date >= ?', Date.today
+        legislatures = legislatures.where 'end_date >= ?', Date.today.year
         legislatures = legislatures.where.not country: user.home_country
         # Filter legislature that use a different language than the user
         legislatures = legislatures.select do |legislature|
@@ -123,7 +123,7 @@ module JquestPg
       when 5
         # Some Filtering can be performed
         legislatures = legislatures.where difficulty_level: 1
-        legislatures = legislatures.where 'end_date >= ?', Date.today
+        legislatures = legislatures.where 'end_date >= ?', Date.today.year
         legislatures = legislatures.where.not country: user.home_country
         # Filter legislature that use a different language than the user and not 'en'
         legislatures = legislatures.select do |legislature|
@@ -139,7 +139,7 @@ module JquestPg
       when 6
         # Some Filtering can be performed
         legislatures = legislatures.where difficulty_level: 1
-        legislatures = legislatures.where 'end_date <  ?', Date.today
+        legislatures = legislatures.where 'end_date <  ?', Date.today.year
         legislatures = legislatures.where 'end_date >= ?',  30.years.ago
         legislatures = legislatures.where country: user.home_country
         # Filter legislature that use the same language than the user
