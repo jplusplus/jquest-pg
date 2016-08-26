@@ -154,6 +154,20 @@ module JquestPg
               # Return a mandature
               mandature
             end
+
+            desc "Skip a mandature"
+            put :skip do
+              authenticate!
+              mandature = Mandature.find params[:id]
+              # The mandature must be assigned to that user's progression
+              authorize mandature, :update?
+              # Add an activity saying we skip this mandature
+              mandature.skipped_by current_user
+              # Go to the next round
+              current_user_point.next_round unless progression.remaining > 0
+              # Return a mandature
+              mandature
+            end
           end
 
         end

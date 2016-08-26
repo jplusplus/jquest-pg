@@ -35,15 +35,12 @@ module JquestPg
       # Find the user
       user = User.find uid
       # Find assignment for this user...
-      assignment = Assignment.where(user: user, resource: self).first
+      assignment = as_assignment_for user
       # Attributes that might changed
-      [:role, :political_leaning].each do |n|
-        # Did it changed?
-        if method("#{n}_changed?").call and not read_attribute(n).blank?
-          # And save the activity
-          Activity.find_or_create_by user: user, taxonomy: 'details', value: n,
-                                     points: 200, assignment: assignment, resource: self
-        end
+      fields_required_changed.each do |field|
+        # And save the activity
+        Activity.find_or_create_by user: user, taxonomy: 'details', value: field,
+                                   points: 200, assignment: assignment, resource: self
       end
     end
 
@@ -54,6 +51,12 @@ module JquestPg
     def fields_completed
       fields_required.reduce 0 do |memo, field|
         memo + ( read_attribute(field).blank? ? 0 : 1 )
+      end
+    end
+
+    def fields_required_changed
+      fields_required.select do |field|
+        method("#{field}_changed?").call and not read_attribute(field).blank?
       end
     end
 
@@ -70,6 +73,13 @@ module JquestPg
       user.assignments.exists?(resource: self)
     end
 
+    def skipped_by(user)
+      # And save the activity
+      Activity.find_or_create_by user: user, taxonomy: 'details', value: 'skipped',
+                                 points: -50, resource: self,
+                                 assignment: as_assignment_for(user)
+    end
+
     def restore!
       # Does the version exist?
       unless versions.first.nil?
@@ -83,6 +93,10 @@ module JquestPg
 
     def age
       person.age legislature.start_date
+    end
+
+    def as_assignment_for(user)
+      Assignment.find_by user: user, resource: self
     end
 
     def self.some_are_assigned_to?(user, season=user.member_of)

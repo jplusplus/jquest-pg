@@ -4,6 +4,8 @@ angular.module 'jquest'
     new class MandatureFormCtrl
       # Common attributes
       mandature: $scope.mandature
+      allowSkipping:
+        $scope.allowSkipping
       # A hash of object clones
       clones: {}
       # Available values for select
@@ -15,6 +17,25 @@ angular.module 'jquest'
         @createClone @mandature.person
       submit: (resources)=>
         $q.all([ @mandature.person.put(), @mandature.put() ]).finally $scope.finally
+      confirmSkip: =>
+        if @allowSkipping
+          # Create a modal
+          @confirmSkipModal = $uibModal.open
+            templateUrl: 'mandature-form/skip/skip.html'
+            # Inherit froom the current scope
+            scope: $scope.$new()
+            controller: ($scope, $uibModalInstance)=>
+              # Cancel the skipping
+              $scope.cancel = $uibModalInstance.close
+              # Send the value as modal's result
+              $scope.submit = =>
+                # Close the modall
+                do $uibModalInstance.close
+                # Do skip this mandature
+                do @skip
+      skip: =>
+        # Just put on the original mandature object
+        @getClone(@mandature).one('skip').put().then $scope.finally
       editSource: (field, resource)=>
         # Create a modal
         @editSourceModal = $uibModal.open

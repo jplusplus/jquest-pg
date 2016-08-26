@@ -266,6 +266,15 @@
     </fieldset>
   </div>
   <div class="card-footer text-xs-right">
+    <span ng-if="form.allowSkipping"
+        uib-tooltip="It will cost you 50 points to skip {{ form.mandature.person.fullname }}"
+        tooltip-append-to-body="true"
+        tooltip-class="tooltip-warning"
+        class="mandature-form__sources-alert">
+      <button class="btn btn-secondary" type="button" ng-click="form.confirmSkip()">
+        Skip
+      </button>
+    </span>
     <span uib-tooltip="Data points without a source are not accepted"
          tooltip-append-to-body="true"
          tooltip-is-open="form.changes(false) > form.changes(true)"

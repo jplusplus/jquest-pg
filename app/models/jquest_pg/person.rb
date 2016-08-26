@@ -65,7 +65,7 @@ module JquestPg
         Activity.find_or_create_by **activity.merge!(taxonomy: 'genderize', points: 100)
       end
       # Multiple value may have changed
-      [:birthdate, :birthplace, :education, :profession_category, :image].each do |n|
+      (fields_required_changed - [:gender]).each do |n|
         # Did it changed?
         if method("#{n}_changed?").call and not read_attribute(n).blank?
           activity.merge! points: 200, taxonomy: 'details', value: n
@@ -82,6 +82,12 @@ module JquestPg
     def fields_completed
       fields_required.reduce 0 do |memo, field|
         memo + ( read_attribute(field).blank? ? 0 : 1 )
+      end
+    end
+
+    def fields_required_changed
+      fields_required.select do |field|
+        method("#{field}_changed?").call and not read_attribute(field).blank?
       end
     end
 
