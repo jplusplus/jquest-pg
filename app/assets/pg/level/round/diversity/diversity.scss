@@ -2,28 +2,67 @@
 
   &__body {
 
+    font-size: .9em;
+
+    &__equally, &__person {
+      @include vendor-prefix(transition, .3s);
+      &:hover, &:active, &:focus {
+        @include vendor-prefix(transform, translate(0, -5%) );
+      }
+    }
+
+    &__equally {
+      position: relative;
+      padding-top:125%;
+      background: transparent;
+      display: block;
+      text-shadow: 1px 1px 0 white;
+
+      &:after {
+        color:$thumbnail-border-color;
+        content:"=";
+        font-size: 5rem;
+        position: absolute;
+        top:50%;
+        left:50%;
+        @include vendor-prefix(transform, translate(-50%, -50%));
+      }
+
+      &__legend {
+        margin: 0;
+        padding: $thumbnail-padding;
+        position: absolute;
+        left:0;
+        bottom:0;
+        width: 100%;
+        display: block;
+        text-align: center;
+      }
+    }
+
     &__person {
 
-      &__image {
+      &__image.pg__person-cover {
         position: relative;
-        overflow: hidden;;
-        width:90%;
-        margin:auto;
-        display: block;
-        padding-top:4 / 3 * 100%;
-        background:no-repeat center center #B3A2B3;
-        background-size: cover;
+        background: white;
 
-        &__legend {
-          color:white;
-          position: absolute;
-          bottom:0;
-          left:0;
-          right:0;
-          padding:.5rem;
-          font-weight: bold;
-          @include gradient-y( rgba(black, 0),  rgba(black, .3) );
+        img {
+          width:calc(100% - #{$thumbnail-padding*2});
+          min-height:calc(100% - #{$thumbnail-padding*2});
+          height:calc(100% - #{$thumbnail-padding*2});
+          z-index:50;
         }
+      }
+
+      &__image__legend {
+        position: absolute;
+        bottom:0;
+        left:0;
+        right:0;
+        z-index:100;
+        text-align: center;
+        padding:3px 6px;
+        background:white;
       }
     }
   }

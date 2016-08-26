@@ -10,9 +10,9 @@ angular.module 'jquest'
           color: '#F4CEA5'
         female:
           name: 'Female'
-          color: '#4f8258'
+          color: '#824f60'
         male:
           name: 'Male'
-          color: '#824f60'
+          color: '#4f8258'
       genderColor: (gender)=>
         @genders[ gender.toLowerCase() ].color

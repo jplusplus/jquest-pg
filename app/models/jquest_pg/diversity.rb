@@ -40,6 +40,8 @@ module JquestPg
         "#{resource_a} looks more like a politician than #{resource_b}"
       elsif value == 1
         "#{resource_b} looks more like a politician than #{resource_a}"
+      else
+        "#{resource_a} and #{resource_a} look equally like a politician"
       end
     end
 
