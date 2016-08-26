@@ -16,6 +16,6 @@ angular.module 'jquest'
       # Build CSV Download URL
       csv: mandatures.getRequestedUrl().replace(/mandatures/, 'mandatures.csv') + '&limit=' + 1e4
       # List of all countries
-      countries: Restangular.all('countries').withHttpConfig(cache: yes).getList(limit: 300).$object
+      countries: Restangular.all('countries').withHttpConfig(cache: yes, ignoreLoadingBar: yes).getList(limit: 300).$object
       # List of all legislatures
-      legislatures: seasonRestangular.all('legislatures').withHttpConfig(cache: yes).getList(limit: 300).$object
+      legislatures: seasonRestangular.all('legislatures').withHttpConfig(cache: yes, ignoreLoadingBar: yes).getList(limit: 300).$object
