@@ -1,5 +1,5 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgLevelRoundGenderCtrl', (seasons, seasonRestangular, $timeout, $state)->
+  .controller 'MainSeasonPgLevelRoundGenderCtrl', (seasons, seasonRestangular, $state)->
     'ngInject'
     new class MainSeasonPgLevelRoundGenderCtrl
       male: (person)=> @genderize person, 'male'
@@ -14,8 +14,8 @@ angular.module 'jquest'
           .all('genderize')
           .post gender: value
           .finally (r)->
-            # Reload progression after a short delay
-            $timeout(seasons.reload, 600).then =>
+            # Reload progression
+            seasons.reload().then =>
               # Still on this round
               if seasons.current().progression.round is 1
                 # Once the season is reloaded, we might refresh the current round
