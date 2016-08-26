@@ -149,11 +149,11 @@
               position: absolute !important;
               left:50%;
               top:50%;
-              width:100%;
+              width:110%;
               z-index:0;
               pointer-events: none;
-              @include vendor-prefix(transform-origin, top center);
-              @include vendor-prefix(transform, scale(1.2) translate(-50%, -50%) );
+              @include vendor-prefix(transform-origin, center center);
+              @include vendor-prefix(transform, scale(1) translate(-50%, -50%) );
             }
 
             .pg__person-cover {
