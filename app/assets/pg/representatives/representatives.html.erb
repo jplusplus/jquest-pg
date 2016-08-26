@@ -30,9 +30,15 @@
             </td>
             <td>
               <a ui-sref="main.season.pg.representatives.edit(assignment.resource)" ng-show="assignment.status == 'done'">
+                <span class="pg__person-cover">
+                  <img ng-src="{{ assignment.resource.person.image }}" alt="" src="" />
+                </span>
                 {{ assignment.resource.person.fullname }}
               </a>
               <span ng-show="assignment.status == 'pending'" uib-tooltip="You must finish level {{ main.season.progression.level }} to be able to add infos to this representative">
+                <span class="pg__person-cover">
+                  <img ng-src="{{ assignment.resource.person.image }}" alt="" src="" />
+                </span>
                 {{ assignment.resource.person.fullname }}
               </span>
             </td>

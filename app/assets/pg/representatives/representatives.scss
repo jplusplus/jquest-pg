@@ -7,8 +7,16 @@
     &__progress {
       margin:0;
     }
+
+    .pg__person-cover {
+      width:1em * $line-height;
+      padding-top:1em * $line-height;
+      float: left;
+      margin-right: 1em;
+      border-radius: .5em * $line-height;
+    }
   }
-  
+
   caption {
     caption-side: top;
   }
