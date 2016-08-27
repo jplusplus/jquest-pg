@@ -5,6 +5,7 @@ angular.module 'jquest'
         'Parliaments of {{ home_country_name }}'
         'Parliaments of foreign countries'
         'Historical parliaments'
+        'Extra parliaments'
       ]
     PROFESSION_CATEGORIES:
       [

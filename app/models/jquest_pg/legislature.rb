@@ -179,7 +179,7 @@ module JquestPg
         end
       else
         # Unkownm level, no legislatures
-        legislatures = legislatures.none
+        legislatures = legislatures.all
       end
       # Returns all assignable legislatures
       legislatures

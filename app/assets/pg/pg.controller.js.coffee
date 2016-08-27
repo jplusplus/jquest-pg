@@ -24,11 +24,26 @@ angular.module 'jquest'
         Restangular.all('assignments').getList(limit: 100).then (assignments)=>
           # Group all assignments by level
           @assignmentsByLevel = _.groupBy assignments, 'level'
+      hasExtraLevels: =>
+        SETTINGS.LEVELS.length < @progression().level
+      getLevels: =>
+        # Copy the levels list to be able to duplicate it
+        levels = angular.copy SETTINGS.LEVELS
+        # Do we have extra levels?
+        if @hasExtraLevels()
+          # From the level number to the user's level
+          for i in [levels.length + 1 .. @progression().level]
+            # Create a level with a new title description
+            levels.push
+              title: "Level #{i}", index: i, description: 'Extra level',
+              # The last category contains additional levels
+              category: SETTINGS.CATEGORIES.length - 1
+        levels
       constructor: ->
         # Get all assignments
         do @getAssignments
         # Group levels by categories
-        @categories = _.chain(SETTINGS.LEVELS).map(@buildLevel).groupBy('category').value()
+        @categories = _.chain(do @getLevels).map(@buildLevel).groupBy('category').value()
         # Get activities for the current season
         seasons.activities().then (activities)->
           # Look for the 'intro'
