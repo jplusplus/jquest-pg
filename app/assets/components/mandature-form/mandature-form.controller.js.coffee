@@ -17,6 +17,9 @@ angular.module 'jquest'
         @createClone @mandature.person
       submit: (resources)=>
         $q.all([ @mandature.person.put(), @mandature.put() ]).finally $scope.finally
+      invalid: =>
+        # At less than 1 value or an unsourced one
+        @changes(true) < 1 or @changes(false) != @changes(true)
       confirmSkip: =>
         if @allowSkipping
           # Create a modal
