@@ -19,7 +19,7 @@ angular.module 'jquest'
         $q.all([ @mandature.person.put(), @mandature.put() ]).finally $scope.finally
       invalid: =>
         # At less than 1 value or an unsourced one
-        @changes(true) < 1 or @changes(false) != @changes(true)
+        @changes(true) < 1 or @changes(false) isnt @changes(true)
       confirmSkip: =>
         if @allowSkipping
           # Create a modal
@@ -106,7 +106,7 @@ angular.module 'jquest'
         # Look into every literal field one by one
         for own key, value of clone.plain() when not (value instanceof Object)
           # Did the value value changed
-          unless clone[key] is resource[key] or resource[key] is ''
+          if clone[key] isnt resource[key] and resource[key]? and resource[key] != ''
             # Do the value must be sourced? If yes, has it got a source?
             if not sourced or not @requiresSource(key) or @hasSource key, resource
               # Add it to the list!
