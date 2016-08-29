@@ -76,7 +76,7 @@ module JquestPg
     def skipped_by(user)
       # And save the activity
       Activity.find_or_create_by user: user, taxonomy: 'details', value: 'skipped',
-                                 points: -50, resource: self,
+                                 points: -250, resource: self,
                                  assignment: as_assignment_for(user)
     end
 
