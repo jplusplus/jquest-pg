@@ -2,16 +2,16 @@ angular.module 'jquest'
   .controller 'MainSeasonPgLevelCtrl', (people, mandatures, seasons, $state, SETTINGS, $scope)->
     'ngInject'
     new class MainSeasonPgLevelCtrl
-      title: SETTINGS.LEVELS[seasons.current().progression.level - 1].title
-      description: SETTINGS.LEVELS[seasons.current().progression.level - 1].description
       # Assignements are always the same during a level
       people: people
       mandatures: mandatures
       # Method to start a round
       startRound: =>
         progression = seasons.current().progression
+        # Find the level description with the parent controller
+        level = $scope.$parent.pg.getLevels()[ progression.level - 1 ]
         # Bind level's properties to
-        angular.extend @, SETTINGS.LEVELS[progression.level - 1]
+        angular.extend @, level
         # Always redirect to the current level and round
         $state.go 'main.season.pg.level.round', progression
       constructor: ->
