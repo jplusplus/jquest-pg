@@ -12,26 +12,26 @@
       <div class="row">
         <div class="col-sm-6">
           <h5>Your representatives</h5>
-          <c3chart bindto-id="chart-gender-assignments">
+          <c3chart bindto-id="chart-gender-assignments" sort-data="null">
             <chart-legend show-legend="false" />
             <chart-tooltip show-tooltip="false" />
-            <chart-column ng-repeat="(gender, count) in summary.assigned.gender"
-                          column-id="{{ gender }}"
-                          column-values="{{ count }}"
-                          column-color="{{ summary.genderColor(gender) }}"
+            <chart-column ng-repeat="value in summary.assigned"
+                          column-id="{{ value[0] }}"
+                          column-values="{{ value[1] }}"
+                          column-color="{{ summary.genderColor(value[0]) }}"
                           column-type="pie" />
             <chart-pie expand="false" />
           </c3chart>
         </div>
         <div class="col-sm-6">
             <h5>All representatives in the database</h5>
-            <c3chart bindto-id="chart-gender-all">
+            <c3chart bindto-id="chart-gender-all" sort-data="null">
               <chart-legend show-legend="false" />
               <chart-tooltip show-tooltip="false" />
-              <chart-column ng-repeat="(gender, count) in summary.global.gender"
-                            column-id="{{ gender }}"
-                            column-values="{{ count }}"
-                            column-color="{{ summary.genderColor(gender) }}"
+              <chart-column ng-repeat="value in summary.global"
+                            column-id="{{ value[0] }}"
+                            column-values="{{ value[1] }}"
+                            column-color="{{ summary.genderColor(value[0]) }}"
                             column-type="pie" />
               <chart-pie expand="false" />
             </c3chart>
