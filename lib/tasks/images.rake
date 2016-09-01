@@ -10,11 +10,11 @@ namespace :jquest_pg do
 
   def persons_with_images
     q = '%jquestapp.com%'
-    JquestPg::Person.where.not(image: [nil, '']).where 'image NOT LIKE ?', q
+    JquestPg::Person.where.not(image: [nil, '']).where 'image NOT LIKE ?', q    
   end
 
   def copy_person_image(person)
-    uri = URI person.image
+    uri = URI URI.escape(person.image)
     # Download the image
     res = Net::HTTP.get_response uri
     # Did the download succed
