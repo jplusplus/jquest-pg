@@ -32,6 +32,10 @@ module JquestPg
 
 
           desc "Return summary about all mandatures"
+          params do
+            optional :legislature_id_eq, type: Integer
+            optional :legislature_country_eq, type: String
+          end
           get :summary do
             # Empty hash containing result
             result = {}
@@ -43,6 +47,9 @@ module JquestPg
             end
             # All unfinished mandatures
             global = policy_scope(Mandature).
+              # We allow filtering
+              search(declared params).
+              result.
               # Join to related tables
               eager_load(:person).
               eager_load(:legislature).
