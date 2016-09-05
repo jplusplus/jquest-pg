@@ -12,7 +12,7 @@ module JquestPg
             optional :person_fullname_or_legislature_name_cont, type: String
           end
           get do
-            Mandature.
+            policy_scope(Mandature).
               # We allow filtering
               search(declared params).
               result.
@@ -35,10 +35,14 @@ module JquestPg
           get :summary do
             # Empty hash containing result
             result = {}
-            # Mandatures assigned to the user
-            assigned = Mandature.assigned_to(current_user, current_user.member_of, false, :pending)
+            if current_user
+              # Mandatures assigned to the user
+              assigned = Mandature.assigned_to(current_user, season, false, :pending)
+            else
+              assigned = Mandature.none
+            end
             # All unfinished mandatures
-            global = Mandature.
+            global = policy_scope(Mandature).
               # Join to related tables
               eager_load(:person).
               eager_load(:legislature).

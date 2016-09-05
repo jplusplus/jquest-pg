@@ -6,7 +6,7 @@ module JquestPg
 
           desc "Return list of legislatures"
           get do
-            Legislature.
+            policy_scope(Legislature).
               # Sort by id
               order(:id).
               page(params[:page]).
