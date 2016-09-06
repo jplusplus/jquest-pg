@@ -23,7 +23,7 @@ namespace :jquest_pg do
       # Download the image
       res = Net::HTTP.get_response uri
     rescue OpenSSL::SSL::SSLError
-      puts "#{warning_mark} Unable to download #{person.image} over SSL"
+      # puts "#{warning_mark} Unable to download #{person.image} over SSL"
       # Trying over HTTP
       person.image[/^https/] = 'http'
       # Recursive call
