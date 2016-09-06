@@ -8,15 +8,27 @@ namespace :jquest_pg do
     '[' + Pastel.new.green('⌾') + ']'
   end
 
+  def warning_mark
+    '[' + Pastel.new.orange('⚠') + ']'
+  end
+
   def persons_with_images
     q = '%jquestapp.com%'
     JquestPg::Person.where.not(image: [nil, '']).where 'image NOT LIKE ?', q
   end
 
   def copy_person_image(person)
-    uri = URI URI.escape(person.image)
-    # Download the image
-    res = Net::HTTP.get_response uri
+    begin
+      uri = URI URI.escape(person.image)
+      # Download the image
+      res = Net::HTTP.get_response uri
+    rescue OpenSSL::SSL::SSLError
+      puts "#{warning_mark} Unable to download #{person.image} over SSL"
+      # Trying over HTTP
+      person.image[/^https/] = 'http'
+      # Recursive call
+      copy_person_image person
+    end
     # Did the download succed
     if res.is_a?(Net::HTTPSuccess) and res.header['content-type'].starts_with? 'image'
       # Create the object name
