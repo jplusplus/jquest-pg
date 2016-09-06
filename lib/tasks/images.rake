@@ -9,7 +9,7 @@ namespace :jquest_pg do
   end
 
   def warning_mark
-    '[' + Pastel.new.orange('⚠') + ']'
+    '[' + Pastel.new.yellow('⚠') + ']'
   end
 
   def persons_with_images
