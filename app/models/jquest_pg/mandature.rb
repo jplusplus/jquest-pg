@@ -95,8 +95,34 @@ module JquestPg
       person.age legislature.start_date
     end
 
+    def age_range
+      if not age.present?
+        nil
+      elsif age < 30
+        'bellow-30'
+      elsif age >= 70
+        'over-70'
+      else
+        "#{age - age%10}-#{age - age%10 + 10}"
+      end
+    end
+
     def as_assignment_for(user)
       Assignment.find_by user: user, resource: self
+    end
+
+    def self.count_by(path)
+      # Group by path
+      scope = self.all.to_a.group_by do |mandature|
+        # Split on '.' and itteraye over keys
+        path.split(".").inject(mandature) do |hash, key|
+          unless hash.nil?
+            hash.method(key).call
+          end
+        end
+      end
+      # Count items
+      scope.map { |k,v| [k, v.length] }.to_h.select { |key| key.present? }
     end
 
     def self.some_are_assigned_to?(user, season=user.member_of)

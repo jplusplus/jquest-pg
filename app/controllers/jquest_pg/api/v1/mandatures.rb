@@ -57,21 +57,20 @@ module JquestPg
               where('jquest_pg_legislatures.end_date > ?', Time.now)
             # Create a hash of values for the two subsets
             { global: global, assigned: assigned }.map do |key, mandatures|
-              # Count by gender
-              gender = mandatures.select { |m| m.person and not m.person.gender.blank? }
-              gender = gender.group_by { |m| m.person.gender }
-              gender = gender.map { |k,v| [k, v.length] }.to_h
               # Age values at tehe begin of the legislature
               ages = mandatures.map(&:age).compact
               # Returns a hash
               result[key] = {
                 total: mandatures.length,
-                gender: gender,
+                gender: mandatures.count_by('person.gender'),
+                political_leaning: mandatures.count_by('political_leaning'),
+                profession_category: mandatures.count_by('person.profession_category'),
+                age_range: mandatures.count_by('age_range'),
                 age: {
                   min: ages.empty? ? nil : ages.min,
                   max: ages.empty? ? nil : ages.max,
                   median: ages.empty? ? nil : median(ages)
-                }
+                },
               }
             end
             # Return the result hash
