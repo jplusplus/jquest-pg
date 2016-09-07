@@ -52,7 +52,7 @@ namespace :jquest_pg do
     # Create progressbar
     bar = TTY::ProgressBar.new("#{check_mark} Copying #{bar_tt} images [:bar]", total: bar_tt, width: 50)
     # Iteratre over all person
-    persons_with_images.each do |person|
+    persons_with_images.find_each do |person|
       # Copy the image on S3 and update the image url
       person.update :image => copy_person_image(person)
       bar.advance
