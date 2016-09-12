@@ -2,8 +2,19 @@ module JquestPg
   module API
     module V1
       class Mandatures < Grape::API
-        resource :mandatures do
 
+        helpers do
+          def topics_count_by
+            {
+              gender: 'person.gender',
+              political_leaning: 'political_leaning',
+              profession_category: 'person.profession_category',
+              age_range: 'age_range',
+            }
+          end
+        end
+
+        resource :mandatures do
           desc "Return list of mandatures"
           params do
             optional :legislature_id_eq, type: Integer
@@ -35,8 +46,11 @@ module JquestPg
           params do
             optional :legislature_id_eq, type: Integer
             optional :legislature_country_eq, type: String
+            optional :topic, type: String, values: ['gender', 'political_leaning', 'profession_category', 'age_range']
           end
           get :summary do
+            # Topic selected by the user
+            topic = declared(params).topic
             # Empty hash containing result
             result = {}
             if current_user
@@ -62,16 +76,22 @@ module JquestPg
               # Returns a hash
               result[key] = {
                 total: mandatures.length,
-                gender: mandatures.count_by('person.gender'),
-                political_leaning: mandatures.count_by('political_leaning'),
-                profession_category: mandatures.count_by('person.profession_category'),
-                age_range: mandatures.count_by('age_range'),
                 age: {
                   min: ages.empty? ? nil : ages.min,
                   max: ages.empty? ? nil : ages.max,
                   median: ages.empty? ? nil : median(ages)
-                },
+                }
               }
+              # Add all topic if none is specified
+              if topic.nil?
+                topics_count_by.each do |topic, count_by|
+                  result[key][topic] = mandatures.count_by count_by
+                end
+              # A topic is selected
+              else
+                # Only one topic is added to the result
+                result[key][topic] = mandatures.count_by topics_count_by[topic.to_sym]
+              end
             end
             # Return the result hash
             result

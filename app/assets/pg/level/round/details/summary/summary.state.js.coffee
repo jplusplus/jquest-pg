@@ -10,4 +10,4 @@ angular.module 'jquest'
           $title: -> 'Summary'
           summary: (seasonRestangular)->
             'ngInject'
-            seasonRestangular.one('mandatures').one('summary').get()
+            seasonRestangular.one('mandatures').one('summary').get(topic: 'gender')
