@@ -213,5 +213,15 @@ module JquestPg
       joins("INNER JOIN versions ON versions.item_id = jquest_pg_people.id AND versions.item_type = 'JquestPg::Person'").
       where('versions.event = ? ', 'update')
     end
+
+    def self.unfinished
+      Rails.cache.fetch("pg/mandatures/unfinished", expires_in: 60.minutes) do
+        # Join to related tables
+        eager_load(:person).
+        eager_load(:legislature).
+        # Only current legislature
+        where('jquest_pg_legislatures.end_date > ?', Time.now)
+      end
+    end
   end
 end

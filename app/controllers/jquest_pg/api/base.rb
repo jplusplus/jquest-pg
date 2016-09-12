@@ -1,8 +1,11 @@
+require "garner/mixins/rack"
+
 module JquestPg
   module API
     class Base < Grape::API
       # Inherit from jQuest API helpers
       helpers ::API::AuthenticableHelpers
+      helpers Garner::Mixins::Rack
 
       helpers do
         def progression

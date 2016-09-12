@@ -12,6 +12,32 @@ module JquestPg
               age_range: 'age_range',
             }
           end
+
+          def summary_by_topic(mandatures, topic)
+            # Age values at tehe begin of the legislature
+            ages = mandatures.map(&:age).compact
+            # Returns a hash
+            summary = {
+              total: mandatures.length,
+              age: {
+                min: ages.empty? ? nil : ages.min,
+                max: ages.empty? ? nil : ages.max,
+                median: ages.empty? ? nil : median(ages)
+              }
+            }
+            # Add all topic if none is specified
+            if topic.nil?
+              topics_count_by.each do |topic, count_by|
+                summary[topic] = mandatures.count_by count_by
+              end
+            # A topic is selected
+            else
+              # Only one topic is added to the result
+              summary[topic] = mandatures.count_by topics_count_by[topic.to_sym]
+            end
+            # Return the new summary
+            summary
+          end
         end
 
         resource :mandatures do
@@ -23,22 +49,23 @@ module JquestPg
             optional :person_fullname_or_legislature_name_cont, type: String
           end
           get do
-            policy_scope(Mandature).
-              # We allow filtering
-              search(declared params).
-              result.
-              # Join to related tables
-              eager_load(:person).
-              eager_load(:legislature).
-              # Load sources
-              includes(person: :sources).
-              includes(:sources).
-              # Sort by id
-              order(:id).
-              # Paginates results
-              page(params[:page]).
-              # Default limit is 25
-              per(params[:limit])
+            garner.options(expires_in: 10.minutes) do
+              policy_scope(Mandature).
+                # We allow filtering
+                search(declared params).
+                result.
+                # Join to related tables
+                eager_load(:person).
+                eager_load(:legislature).
+                # Sort by id
+                order(:id).
+                # Paginates results
+                page(params[:page]).
+                # Default limit is 25
+                per(params[:limit]).
+                # To allow caching
+                to_a
+            end
           end
 
 
@@ -51,8 +78,7 @@ module JquestPg
           get :summary do
             # Topic selected by the user
             topic = declared(params).topic
-            # Empty hash containing result
-            result = {}
+            # Is current user authenticated?
             if current_user
               # Mandatures assigned to the user
               assigned = Mandature.assigned_to(current_user, season, false, :pending)
@@ -60,41 +86,16 @@ module JquestPg
               assigned = Mandature.none
             end
             # All unfinished mandatures
-            global = policy_scope(Mandature).
-              # We allow filtering
-              search(declared params).
-              result.
-              # Join to related tables
-              eager_load(:person).
-              eager_load(:legislature).
-              # Only current legislature
-              where('jquest_pg_legislatures.end_date > ?', Time.now)
+            global = policy_scope(Mandature).search(declared params).result.unfinished
             # Create a hash of values for the two subsets
-            { global: global, assigned: assigned }.map do |key, mandatures|
-              # Age values at tehe begin of the legislature
-              ages = mandatures.map(&:age).compact
-              # Returns a hash
-              result[key] = {
-                total: mandatures.length,
-                age: {
-                  min: ages.empty? ? nil : ages.min,
-                  max: ages.empty? ? nil : ages.max,
-                  median: ages.empty? ? nil : median(ages)
-                }
-              }
-              # Add all topic if none is specified
-              if topic.nil?
-                topics_count_by.each do |topic, count_by|
-                  result[key][topic] = mandatures.count_by count_by
-                end
-              # A topic is selected
-              else
-                # Only one topic is added to the result
-                result[key][topic] = mandatures.count_by topics_count_by[topic.to_sym]
-              end
-            end
-            # Return the result hash
-            result
+            {
+              # The 'global' summary might be cached
+              global: Rails.cache.fetch('mandatures/summary/global', expires_in: 60.minutes) do
+                summary_by_topic(global, topic)
+              end,
+              # The 'assgined' isn't
+              assigned: summary_by_topic(assigned, topic)
+            }
           end
 
           resource :assigned do
