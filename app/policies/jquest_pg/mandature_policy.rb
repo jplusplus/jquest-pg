@@ -44,5 +44,9 @@ module JquestPg
       restore?
     end
 
+    def round_up?
+      @model.pending_and_assigned_to?(@user) and progression.remaining <= 0
+    end
+
   end
 end

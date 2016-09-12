@@ -159,8 +159,11 @@ module JquestPg
                 Source.update_or_create source
               end
               mandature.update_attributes permitted_params(mandature, params)
-              # Go to the next round
-              current_user_point.next_round unless progression.remaining > 0
+              # Could this mandature lead us to the next round?
+              if MandaturePolicy.new(current_user, mandature).round_up?
+                # Go to the next round
+                current_user_point.next_round
+              end
               # Return a mandature
               mandature
             end
@@ -173,8 +176,11 @@ module JquestPg
               authorize mandature, :update?
               # Add an activity saying we skip this mandature
               mandature.skipped_by current_user
-              # Go to the next round
-              current_user_point.next_round unless progression.remaining > 0
+              # Could this mandature lead us to the next round?
+              if MandaturePolicy.new(current_user, mandature).round_up?
+                # Go to the next round
+                current_user_point.next_round
+              end
               # Return a mandature
               mandature
             end

@@ -16,8 +16,11 @@ module JquestPg
             diversity = Diversity.create value: params.value,
                                          resource_a: Person.find(params.resource_a.id),
                                          resource_b: Person.find(params.resource_b.id)
-            # Go to the next level
-            current_user_point.next_level unless progression.remaining > 0
+            # Could this diversity lead us to the next level?
+            if DiversityPolicy.new(current_user, diversity).level_up?
+              # Go to the next level
+              current_user_point.next_level
+            end
             # Returns the new diversity
             diversity
           end

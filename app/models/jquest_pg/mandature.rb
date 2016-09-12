@@ -73,6 +73,10 @@ module JquestPg
       user.assignments.exists?(resource: self)
     end
 
+    def pending_and_assigned_to?(user)
+      user.assignments.pending.exists?(resource: self)
+    end
+
     def skipped_by(user)
       # And save the activity
       Activity.find_or_create_by user: user, taxonomy: 'details', value: 'skipped',

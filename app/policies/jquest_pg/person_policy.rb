@@ -39,5 +39,9 @@ module JquestPg
     def update?
       create? or @model.assigned_to? @user
     end
+
+    def round_up?
+      @model.pending_and_assigned_to?(@user) and progression.remaining <= 0
+    end
   end
 end

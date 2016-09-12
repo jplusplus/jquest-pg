@@ -119,6 +119,10 @@ module JquestPg
       as_assignments.exists? user: user
     end
 
+    def pending_and_assigned_to?(user)
+      as_assignments.pending.exists? user: user
+    end
+
     def self.assigned_to(user, season=user.member_of, force=true, status=nil)
       ids = Mandature.
                 assigned_to(user, season, force, status).
