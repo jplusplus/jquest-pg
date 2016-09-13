@@ -57,13 +57,16 @@ module JquestPg
                 # Join to related tables
                 eager_load(:person).
                 eager_load(:legislature).
+                # Load sources
+                includes(person: :sources).
+                includes(:sources).
                 # Sort by id
                 order(:id).
                 # Paginates results
                 page(params[:page]).
                 # Default limit is 25
                 per(params[:limit]).
-                # To allow caching
+                # Allow caching
                 to_a
             end
           end
@@ -80,8 +83,9 @@ module JquestPg
             topic = declared(params).topic
             # Is current user authenticated?
             if current_user
-              # Mandatures assigned to the user
-              assigned = Mandature.assigned_to(current_user, season, false, :pending)
+              assigned = Mandature.includes(:legislature).includes(:person).
+                # Mandatures assigned to the user
+                assigned_to(current_user, season, false, :pending)
             else
               assigned = Mandature.none
             end
