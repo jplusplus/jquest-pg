@@ -43,6 +43,7 @@ module JquestPg
         resource :mandatures do
           desc "Return list of mandatures"
           params do
+            optional :limit, type: Integer, default: 25
             optional :legislature_id_eq, type: Integer
             optional :legislature_country_eq, type: String
             optional :legislature_territory_cont, type: String
@@ -61,7 +62,7 @@ module JquestPg
               # Paginates results
               page(params[:page]).
               # Default limit is 25, max 5000
-              per([5000, params[:limit] || 25].min)
+              per([5000, params[:limit] ].min)
           end
 
 
