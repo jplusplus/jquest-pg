@@ -1,5 +1,5 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgCtrl', (seasons, $state, SETTINGS, Restangular)->
+  .controller 'MainSeasonPgCtrl', (seasons, $state, $scope, SETTINGS, Restangular)->
     'ngInject'
     new class MainSeasonPgCtrl
       progression: => seasons.current().progression
@@ -21,7 +21,7 @@ angular.module 'jquest'
       seeksAttentionOnLevel: (level)=>
         @progression().level is level.index and @progression().round is 1
       getAssignments: =>
-        Restangular.all('assignments').getList(limit: 100).then (assignments)=>
+        Restangular.all('assignments').getList(limit: 1000).then (assignments)=>
           # Group all assignments by level
           @assignmentsByLevel = _.groupBy assignments, 'level'
       hasExtraLevels: =>
@@ -40,6 +40,7 @@ angular.module 'jquest'
               category: SETTINGS.CATEGORIES.length - 1
         levels
       constructor: ->
+        $scope.$on '$stateChangeSuccess', @init
         # Get all assignments
         do @getAssignments
         # Group levels by categories

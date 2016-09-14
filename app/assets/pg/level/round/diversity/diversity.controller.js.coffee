@@ -19,4 +19,4 @@ angular.module 'jquest'
             # A new level started!
             else
               # Go back to the welcome screen
-              $state.go 'main.season.pg'
+              $state.go 'main.season', {}, reload: yes
