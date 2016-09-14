@@ -49,26 +49,19 @@ module JquestPg
             optional :person_fullname_or_legislature_name_cont, type: String
           end
           get do
-            garner.options(expires_in: 10.minutes) do
-              policy_scope(Mandature).
-                # We allow filtering
-                search(declared params).
-                result.
-                # Join to related tables
-                eager_load(:person).
-                eager_load(:legislature).
-                # Load sources
-                includes(person: :sources).
-                includes(:sources).
-                # Sort by id
-                order(:id).
-                # Paginates results
-                page(params[:page]).
-                # Default limit is 25
-                per(params[:limit]).
-                # Allow caching
-                to_a
-            end
+            policy_scope(Mandature).
+              # We allow filtering
+              search(declared params).
+              result.
+              # Join to related tables
+              eager_load(:person).
+              eager_load(:legislature).
+              # Sort by id
+              order(:id).
+              # Paginates results
+              page(params[:page]).
+              # Default limit is 25
+              per(params[:limit])
           end
 
 
@@ -104,7 +97,7 @@ module JquestPg
 
           resource :assigned do
             desc "Return list of mandatures assigned to the user"
-            get do
+            get each_serializer: MandatureSerializer, include_sources: true do
               authenticate!
               # Collect mandature assigned to this user
               Mandature.assigned_to(current_user, current_user.member_of, true).
@@ -123,7 +116,7 @@ module JquestPg
             end
 
             desc "Return list of mandatures assigned to the user and still pending"
-            get :pending do
+            get :pending, each_serializer: MandatureSerializer, include_sources: true do
               authenticate!
               # Collect mandature assigned to this user
               Mandature.assigned_to(current_user, current_user.member_of, true, :pending).
@@ -143,7 +136,7 @@ module JquestPg
 
 
             desc "Return list of mandatures assigned to the user and done"
-            get :done do
+            get :done, each_serializer: MandatureSerializer, include_sources: true  do
               authenticate!
               # Collect mandature assigned to this user
               Mandature.assigned_to(current_user, current_user.member_of, true, :done).

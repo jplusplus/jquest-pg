@@ -3,8 +3,8 @@ module JquestPg
     module V1
 
       module CsvFormatter
-        def self.call(object, env)
-          object.to_csv
+        def self.call(objects, env)
+          objects.to_csv
         end
       end
 

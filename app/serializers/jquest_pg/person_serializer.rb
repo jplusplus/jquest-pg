@@ -5,6 +5,14 @@ module JquestPg
                :profession_category, :profession, :image,
                :twitter, :facebook, :gender, :birthdate, :birthplace, :phone,
                :sources
+
+    def attributes(*args)
+      if instance_options[:include_sources]
+        super
+      else
+        super.except(:sources)
+      end
+    end
     # JSON Linked Data Identifier
     # see https://www.w3.org/TR/json-ld/#node-identifiers
     attribute :@id do
