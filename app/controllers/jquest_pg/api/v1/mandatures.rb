@@ -49,8 +49,10 @@ module JquestPg
             optional :legislature_territory_cont, type: String
             optional :person_fullname_or_legislature_name_cont, type: String
           end
+          paginate max_per_page: 5000
           get do
-            policy_scope(Mandature).
+            # Paginate result
+            paginate policy_scope(Mandature).
               # We allow filtering
               search(declared params).
               result.
@@ -58,13 +60,8 @@ module JquestPg
               eager_load(:person).
               eager_load(:legislature).
               # Sort by id
-              order(:id).
-              # Paginates results
-              page(params[:page]).
-              # Default limit is 25, max 5000
-              per([5000, params[:limit] ].min)
+              order(:id)
           end
-
 
           desc "Return summary about all mandatures"
           params do
@@ -98,10 +95,11 @@ module JquestPg
 
           resource :assigned do
             desc "Return list of mandatures assigned to the user"
+            paginate
             get each_serializer: MandatureSerializer, include_sources: true do
               authenticate!
               # Collect mandature assigned to this user
-              Mandature.assigned_to(current_user, current_user.member_of, true).
+              paginate Mandature.assigned_to(current_user, current_user.member_of, true).
                 # Join to related tables
                 eager_load(:person).
                 eager_load(:legislature).
@@ -109,18 +107,15 @@ module JquestPg
                 includes(person: :sources).
                 includes(:sources).
                 # Sort by id
-                order(:id).
-                # Paginates results
-                page(params[:page]).
-                # Default limit is 25
-                per(params[:limit])
+                order(:id)
             end
 
             desc "Return list of mandatures assigned to the user and still pending"
+            paginate
             get :pending, each_serializer: MandatureSerializer, include_sources: true do
               authenticate!
               # Collect mandature assigned to this user
-              Mandature.assigned_to(current_user, current_user.member_of, true, :pending).
+              paginate Mandature.assigned_to(current_user, current_user.member_of, true, :pending).
                 # Join to related tables
                 eager_load(:person).
                 eager_load(:legislature).
@@ -128,19 +123,16 @@ module JquestPg
                 includes(person: :sources).
                 includes(:sources).
                 # Sort by id
-                order(:id).
-                # Paginates results
-                page(params[:page]).
-                # Default limit is 25
-                per(params[:limit])
+                order(:id)
             end
 
 
             desc "Return list of mandatures assigned to the user and done"
+            paginate
             get :done, each_serializer: MandatureSerializer, include_sources: true  do
               authenticate!
               # Collect mandature assigned to this user
-              Mandature.assigned_to(current_user, current_user.member_of, true, :done).
+              paginate Mandature.assigned_to(current_user, current_user.member_of, true, :done).
                 # Join to related tables
                 eager_load(:person).
                 eager_load(:legislature).
@@ -148,11 +140,7 @@ module JquestPg
                 includes(person: :sources).
                 includes(:sources).
                 # Sort by id
-                order(:id).
-                # Paginates results
-                page(params[:page]).
-                # Default limit is 25
-                per(params[:limit])
+                order(:id)
             end
           end
 

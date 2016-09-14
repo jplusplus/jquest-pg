@@ -9,16 +9,20 @@ angular.module 'jquest'
         templateUrl: 'data/data.html'
         params:
           person_fullname_or_legislature_name_cont:
-            value:null
+            value: null
           legislature_country_eq:
-            value:null
+            value: null
           legislature_territory_cont:
-            value:null
+            value: null
           legislature_id_eq:
-            value:null
+            value: null
         resolve:
           $title: ->
             'Collected Data'
-          mandatures: (seasons, seasonRestangular, $stateParams)->
+          response: (seasons, seasonRestangular, $stateParams)->
             'ngInject'
-            seasonRestangular.all('mandatures').getList($stateParams)
+            # Add full reponse to the result to extract header info
+            seasonRestangular.withConfig( (RestangularConfigurer)->
+              RestangularConfigurer.setFullResponse yes
+            # Then get the list
+            ).all('mandatures').getList($stateParams)
