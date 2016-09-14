@@ -21,3 +21,5 @@ angular.module 'jquest'
           people: (mandatures, Restangular)->
             'ngInject'
             _.chain(mandatures).clone().map('person').map(Restangular.restangularizeElement).value()
+          hascontent: (mandatures, nocontent)->
+            do nocontent unless mandatures.length

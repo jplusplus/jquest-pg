@@ -1,0 +1,32 @@
+.pg__204 {
+  $main-204-bg: darken($brand-primary, 10);
+  padding:5vh;
+  margin-bottom:-1.5rem * $line-height;
+  min-height: calc(100vh - #{$navbar-height} - #{1.35rem * $line-height} - 2px);
+  background: $main-204-bg image-url('stardust.png');
+  color:$card-bg;
+
+  &__body {
+    max-width:660px;
+    padding:10vh 10vh;
+    margin:auto;
+
+    h2 {
+      margin-bottom:$spacer;
+    }
+
+    a {
+      color:white;
+      white-space: nowrap;
+    }
+
+    &__btn {
+      margin-top:2em;
+      font-weight: bolder;
+      border:2px white solid;
+      color:white;
+      background: none;
+      border-radius: 1em * $line-height;
+    }
+  }
+}

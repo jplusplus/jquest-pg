@@ -8,3 +8,9 @@ angular.module 'jquest'
         templateUrl: 'pg.html'
         resolve:
           $title: -> 'Your missions'
+          nocontent: ($state)->
+            'ngInject'
+            # Closure function that redirect to the 403 state
+            ->
+              # Redirect to error 204 page
+              $state.go 'main.season.pg.204'

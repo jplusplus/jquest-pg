@@ -1,4 +1,5 @@
 .pg__data {
+  padding-top:1rem * $line-height;
 
   @include media-breakpoint-down(md) {
     .sticky {

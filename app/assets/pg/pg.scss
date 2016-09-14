@@ -1,5 +1,8 @@
 .pg {
-  padding-top:1rem * $line-height;
+
+  .container {
+    padding-top:1rem * $line-height;
+  }
 
   &__person-cover {
     position: relative;
