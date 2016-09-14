@@ -61,7 +61,7 @@ module JquestPg
               # Paginates results
               page(params[:page]).
               # Default limit is 25, max 5000
-              per([5000, params[:limit] or 25].min)
+              per([5000, params[:limit] || 25].min)
           end
 
 
