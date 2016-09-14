@@ -21,7 +21,7 @@ module JquestPg
             end
             # Returns a hash
             summary = {
-              total: mandatures.length,
+              total: mandatures.count,
               age: {
                 min: ages.empty? ? nil : ages.min,
                 max: ages.empty? ? nil : ages.max,
