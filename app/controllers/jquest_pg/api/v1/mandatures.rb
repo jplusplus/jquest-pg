@@ -14,8 +14,11 @@ module JquestPg
           end
 
           def summary_by_topic(mandatures, topic)
-            # Age values at tehe begin of the legislature
-            ages = mandatures.map(&:age).compact
+            ages = []
+            # Age values in batch queries
+            mandatures.find_each do |mandature|
+              ages << mandature.age unless mandature.age.blank?
+            end
             # Returns a hash
             summary = {
               total: mandatures.length,
@@ -26,7 +29,7 @@ module JquestPg
               }
             }
             # Add all topic if none is specified
-            if topic.nil?
+            if topic == 'all'
               topics_count_by.each do |topic, count_by|
                 summary[topic] = mandatures.count_by count_by
               end
@@ -67,7 +70,7 @@ module JquestPg
           params do
             optional :legislature_id_eq, type: Integer
             optional :legislature_country_eq, type: String
-            optional :topic, type: String, values: ['gender', 'political_leaning', 'profession_category', 'age_range']
+            optional :topic, type: String, default: 'gender', values: ['all', 'gender', 'political_leaning', 'profession_category', 'age_range']
           end
           get :summary do
             # Topic selected by the user
@@ -85,7 +88,7 @@ module JquestPg
             # Create a hash of values for the two subsets
             {
               # The 'global' summary might be cached
-              global: Rails.cache.fetch('mandatures/summary/global', expires_in: 60.minutes) do
+              global: Rails.cache.fetch("mandatures/summary/#{topic}", expires_in: 2.days) do
                 summary_by_topic(global, topic)
               end,
               # The 'assgined' isn't
