@@ -4,14 +4,16 @@ module JquestPg
       class Legislatures < Grape::API
         resource :legislatures do
 
+          paginate
           desc "Return list of legislatures"
           get do
-            policy_scope(Legislature).
-              # Sort by id
-              order(:id).
-              page(params[:page]).
-              # Default limit is 25
-              per(params[:limit])
+            garner do
+              paginate policy_scope(Legislature).
+                # Sort by id
+                order(:id).
+                # For caching
+                to_a
+            end
           end
 
         end

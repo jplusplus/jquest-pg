@@ -10,6 +10,6 @@ angular.module 'jquest'
         resolve:
           $title: ->
             'My representatives'
-          assignments: (Restangular)->
+          assignments: (assignmentsFn)->
             'ngInject'
-            Restangular.all('assignments').getList(limit: 1000)
+            assignmentsFn()

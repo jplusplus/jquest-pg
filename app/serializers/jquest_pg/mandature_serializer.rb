@@ -15,7 +15,7 @@ module JquestPg
         super.except(:sources)
       end
     end
-    
+
     # JSON Linked Data Identifier
     # see https://www.w3.org/TR/json-ld/#node-identifiers
     attribute :@id do

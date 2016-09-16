@@ -11,6 +11,7 @@ angular.module 'jquest'
           $title: ->
             'Edit'
           done: (seasonRestangular)->
+            'ngInject'
             seasonRestangular.all('mandatures').one('assigned').getList('done', limit: 100)
           mandature: (seasonRestangular, $stateParams, done, unauthorized)->
             'ngInject'
