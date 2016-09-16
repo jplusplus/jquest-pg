@@ -1,5 +1,5 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgLevelRoundGenderCtrl', (seasons, seasonRestangular, $state)->
+  .controller 'MainSeasonPgLevelRoundGenderCtrl', (seasons, seasonRestangular, $state, $stateParams)->
     'ngInject'
     new class MainSeasonPgLevelRoundGenderCtrl
       male: (person)=> @genderize person, 'male'
@@ -19,7 +19,7 @@ angular.module 'jquest'
               # Still on this round
               if seasons.current().progression.round is 1
                 # Once the season is reloaded, we might refresh the current round
-                $state.go 'main.season.pg.level.round', seasons.current().progression
+                $state.go 'main.season.pg.level.round', $stateParams, reload: 'main.season.pg.level.round'
               # A new level started!
               else
                 # Go back to the summary screen

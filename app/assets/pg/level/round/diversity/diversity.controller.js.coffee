@@ -1,5 +1,5 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgLevelRoundDiversityCtrl', (seasons, $state, diversity)->
+  .controller 'MainSeasonPgLevelRoundDiversityCtrl', (seasons, $state, $stateParams, diversity)->
     'ngInject'
     new class MainSeasonPgLevelRoundDiversityCtrl
       constructor: ->
@@ -15,7 +15,7 @@ angular.module 'jquest'
             # Still on this round
             if seasons.current().progression.round is 3
               # Once the season is reloaded, we might refresh the current round
-              $state.go 'main.season.pg.level.round', seasons.current().progression
+              $state.go 'main.season.pg.level.round', $stateParams, reload: 'main.season.pg.level.round'
             # A new level started!
             else
               # Go back to the welcome screen

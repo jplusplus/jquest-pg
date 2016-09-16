@@ -5,7 +5,7 @@ angular.module 'jquest'
       # Redirect to the right state
       $rootScope.$on '$stateChangeSuccess', (ev, state)->
         if -1 isnt ['main', 'main.season'].indexOf state.name
-          $state.transitionTo 'main.season.pg'
+          $state.go 'main.season.pg'
       # Add taxonomy human translation
       Seasons.addHumanTaxonomy 'seen', 'You consulted the course material <strong>{{ resource.title }}</strong>.'
       Seasons.addHumanTaxonomy 'intro', 'You watched the introduction.'

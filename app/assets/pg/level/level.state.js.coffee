@@ -7,10 +7,6 @@ angular.module 'jquest'
         controllerAs: 'level'
         templateUrl: 'level/level.html'
         url: "play"
-        params:
-          level:     null
-          round:     null
-          remaining: null
         resolve:
           $title: (seasons)->
             'ngInject'

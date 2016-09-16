@@ -40,7 +40,6 @@ angular.module 'jquest'
               category: SETTINGS.CATEGORIES.length - 1
         levels
       constructor: ->
-        $scope.$on '$stateChangeSuccess', @init
         # Get all assignments
         do @getAssignments
         # Group levels by categories

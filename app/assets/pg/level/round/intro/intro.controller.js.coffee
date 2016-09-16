@@ -1,8 +1,8 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgLevelRoundIntroCtrl', (hotkeys, $state, $stateParams)->
+  .controller 'MainSeasonPgLevelRoundIntroCtrl', (hotkeys, $state, seasons)->
     'ngInject'
     new class MainSeasonPgLevelRoundIntroCtrl
-      _indexSlide: if $stateParams.round is 1 then 0 else 2
+      _indexSlide: if seasons.current().progression.round is 1 then 0 else 2
       _slides: ['level', 'representatives', 'round']
       _states: [
         'main.season.pg.level.round.gender'
@@ -48,4 +48,4 @@ angular.module 'jquest'
       # Current slide
       current: => @_slides[@_indexSlide]
       # Get next state according to the progression
-      getNextState: => @_states[$stateParams.round - 1]
+      getNextState: => @_states[ seasons.current().progression.round - 1 ]

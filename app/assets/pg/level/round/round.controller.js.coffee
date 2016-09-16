@@ -23,7 +23,7 @@ angular.module 'jquest'
       # Redirect to a child state according to the current round
       constructor: ->
         if seasons.current().progression.remaining >= 6
-          $state.go 'main.season.pg.level.round.intro'
+          $state.go 'main.season.pg.level.round.gender.summary'
         else
           switch seasons.current().progression.round
             when 1 then $state.go 'main.season.pg.level.round.gender'
