@@ -7,7 +7,6 @@ angular.module 'jquest'
       mandatures: mandatures
       # Method to start a round
       startRound: =>
-        console.log $stateParams
         progression = seasons.current().progression
         # Find the level description with the parent controller
         level = $scope.$parent.pg.getLevels()[ progression.level - 1 ]
