@@ -153,7 +153,7 @@ module JquestPg
           route_param :id do
 
             desc "Get a mandature"
-            get do
+            get serializer: MandatureSerializer, include_sources: true do
               Mandature.find(params[:id])
             end
 
