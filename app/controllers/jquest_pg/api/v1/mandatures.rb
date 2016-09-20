@@ -8,7 +8,8 @@ module JquestPg
             {
               gender:              "#{Person.table_name}.gender",
               political_leaning:   "#{Mandature.table_name}.political_leaning",
-              profession_category: "#{Person.table_name}.profession_category"
+              profession_category: "#{Person.table_name}.profession_category",
+              age_range:           "#{Mandature.table_name}.age_range",
             }
           end
 
@@ -43,7 +44,7 @@ module JquestPg
                 summary[topic] = mandatures.count_by count_by
               end
             # A topic is selected
-          elsif not topic.nil? and not topics_count_by[topic.to_sym].nil?
+            elsif not topic.nil? and not topics_count_by[topic.to_sym].nil?
               # Only one topic is added to the result
               summary[topic] = mandatures.count_by topics_count_by[topic.to_sym]
             end
