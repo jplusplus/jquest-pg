@@ -6,19 +6,28 @@ module JquestPg
         helpers do
           def topics_count_by
             {
-              gender: 'person.gender',
-              political_leaning: 'political_leaning',
-              profession_category: 'person.profession_category',
-              age_range: 'age_range',
+              gender:              "#{Person.table_name}.gender",
+              political_leaning:   "#{Mandature.table_name}.political_leaning",
+              profession_category: "#{Person.table_name}.profession_category"
             }
           end
 
           def summary_by_topic(mandatures, topic)
             ages = []
-            # Age values in batch queries
-            mandatures.find_each do |mandature|
-              ages << mandature.age unless mandature.age.blank?
-            end
+            # Joined to legislature and person
+            mandatures.joined.
+              # We need the birthdate
+              where("#{Person.table_name}.birthdate IS NOT NULL").
+              # Select only some fields
+              select(["#{Mandature.table_name}.id",
+                      "#{Mandature.table_name}.legislature_id",
+                      "#{Mandature.table_name}.person_id",
+                      "#{Legislature.table_name}.start_date AS lsd",
+                      "#{Person.table_name}.birthdate AS pbd"]).
+              # Avoid loading every activerecord in  memory
+              find_each do |mandature|
+                ages << mandature.lsd.to_date.year - mandature.pbd.to_date.year
+              end
             # Returns a hash
             summary = {
               total: mandatures.count,
@@ -34,7 +43,7 @@ module JquestPg
                 summary[topic] = mandatures.count_by count_by
               end
             # A topic is selected
-            else
+          elsif not topic.nil? and not topics_count_by[topic.to_sym].nil?
               # Only one topic is added to the result
               summary[topic] = mandatures.count_by topics_count_by[topic.to_sym]
             end
@@ -70,7 +79,7 @@ module JquestPg
           params do
             optional :legislature_id_eq, type: Integer
             optional :legislature_country_eq, type: String
-            optional :topic, type: String, default: 'gender', values: ['all', 'gender', 'political_leaning', 'profession_category', 'age_range']
+            optional :topic, type: String, default: 'none', values: ['all', 'gender', 'political_leaning', 'profession_category', 'age_range', 'none']
           end
           get :summary do
             # Topic selected by the user
@@ -88,7 +97,7 @@ module JquestPg
             # Create a hash of values for the two subsets
             {
               # The 'global' summary might be cached
-              global: Rails.cache.fetch("mandatures/summary/#{topic}", expires_in: 2.days) do
+              global: Rails.cache.fetch("mandatures/summary/#{topic}/yolo", expires_in: 0.seconds) do
                 summary_by_topic(global, topic)
               end,
               # The 'assgined' isn't

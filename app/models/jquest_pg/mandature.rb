@@ -115,18 +115,8 @@ module JquestPg
       Assignment.find_by user: user, resource: self
     end
 
-    def self.count_by(path)
-      # Group by path
-      scope = self.all.to_a.group_by do |mandature|
-        # Split on '.' and itteraye over keys
-        path.split(".").inject(mandature) do |hash, key|
-          unless hash.nil?
-            hash.method(key).call
-          end
-        end
-      end
-      # Count items
-      scope.map { |k,v| [k, v.length] }.to_h.select { |key| key.present? }
+    def self.count_by(field)
+      scope = self.joined.group(field).count
     end
 
     def self.some_are_assigned_to?(user, season=user.member_of)
@@ -214,14 +204,18 @@ module JquestPg
       where('versions.event = ? ', 'update')
     end
 
+    def self.joined
+      # Inner join on Person table
+      joins("LEFT JOIN #{Person.table_name} ON #{Person.table_name}.id = #{Mandature.table_name}.person_id").
+      # Inner join on Legislature table
+      joins("LEFT JOIN #{Legislature.table_name} ON #{Legislature.table_name}.id = #{Mandature.table_name}.legislature_id")
+    end
+
     def self.unfinished
-      Rails.cache.fetch("pg/mandatures/unfinished", expires_in: 60.minutes) do
-        # Join to related tables
-        eager_load(:person).
-        eager_load(:legislature).
-        # Only current legislature
-        where('jquest_pg_legislatures.end_date > ?', Time.now)
-      end
+      # Inner join on Legislature table
+      joins("LEFT JOIN #{Legislature.table_name} ON #{Legislature.table_name}.id = #{Mandature.table_name}.legislature_id").
+      # Only current legislature
+      where("#{Legislature.table_name}.end_date > ?", Time.now)
     end
   end
 end
