@@ -93,12 +93,14 @@ module JquestPg
             else
               assigned = Mandature.none
             end
+            # Create a cache key according to params
+            cache_key Digest::MD5.hexdigest declared(params).to_param
             # All unfinished mandatures
             global = policy_scope(Mandature).search(declared params).result.unfinished
             # Create a hash of values for the two subsets
             {
               # The 'global' summary might be cached
-              global: Rails.cache.fetch("mandatures/summary/#{topic}", expires_in: 1.days) do
+              global: Rails.cache.fetch("mandatures/summary/#{cache_key}", expires_in: 1.days) do
                 summary_by_topic(global, topic)
               end,
               # The 'assgined' isn't
