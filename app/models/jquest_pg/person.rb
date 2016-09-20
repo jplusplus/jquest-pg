@@ -6,6 +6,7 @@ module JquestPg
     has_many :mandatures, :dependent => :delete_all
     has_many :sources, foreign_key: :resource_id
     after_update :track_activities
+    after_save :update_mandature_age_range
 
     alias_method :pg_mandatures, :mandatures
 
@@ -105,6 +106,14 @@ module JquestPg
 
     def gender_touched?
       @gender_touched.present? and @gender_touched
+    end
+
+    def update_mandature_age_range
+      if birthdate_changed?
+        mandatures.each do |mandature|
+          mandature.update_attribute :age_range, mandature.get_age_range
+        end
+      end
     end
 
     def as_assignments

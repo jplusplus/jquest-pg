@@ -99,7 +99,7 @@ module JquestPg
       person.age legislature.start_date
     end
 
-    def age_range
+    def get_age_range
       if not age.present?
         nil
       elsif age < 30
@@ -206,14 +206,14 @@ module JquestPg
 
     def self.joined
       # Inner join on Person table
-      joins("LEFT JOIN #{Person.table_name} ON #{Person.table_name}.id = #{Mandature.table_name}.person_id").
+      joins("LEFT OUTER JOIN #{Person.table_name} ON #{Person.table_name}.id = #{Mandature.table_name}.person_id").
       # Inner join on Legislature table
-      joins("LEFT JOIN #{Legislature.table_name} ON #{Legislature.table_name}.id = #{Mandature.table_name}.legislature_id")
+      joins("LEFT OUTER JOIN #{Legislature.table_name} ON #{Legislature.table_name}.id = #{Mandature.table_name}.legislature_id")
     end
 
     def self.unfinished
       # Inner join on Legislature table
-      joins("LEFT JOIN #{Legislature.table_name} ON #{Legislature.table_name}.id = #{Mandature.table_name}.legislature_id").
+      joins("LEFT OUTER JOIN #{Legislature.table_name} ON #{Legislature.table_name}.id = #{Mandature.table_name}.legislature_id").
       # Only current legislature
       where("#{Legislature.table_name}.end_date > ?", Time.now)
     end
