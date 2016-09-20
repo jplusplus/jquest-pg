@@ -96,7 +96,9 @@ module JquestPg
             # Create a cache key according to params
             cache_key = Digest::MD5.hexdigest declared(params).to_param
             # All unfinished mandatures
-            global = policy_scope(Mandature).search(declared params).result.unfinished
+            global = policy_scope(Mandature).search(declared params).result
+            # If there is no filter on the legislature, we target only the unfinished ones
+            global = global.unfinished if declared(params)[:legislature_id_eq].nil?
             # Create a hash of values for the two subsets
             {
               # The 'global' summary might be cached
