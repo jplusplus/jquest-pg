@@ -98,7 +98,7 @@ module JquestPg
             # Create a hash of values for the two subsets
             {
               # The 'global' summary might be cached
-              global: Rails.cache.fetch("mandatures/summary/#{topic}/yolo", expires_in: 0.seconds) do
+              global: Rails.cache.fetch("mandatures/summary/#{topic}", expires_in: 1.days) do
                 summary_by_topic(global, topic)
               end,
               # The 'assgined' isn't
