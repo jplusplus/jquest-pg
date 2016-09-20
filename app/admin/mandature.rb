@@ -2,6 +2,10 @@ if defined?(ActiveAdmin)
   ActiveAdmin.register JquestPg::Mandature, :as => 'pg_mandature' do
     menu label: 'Mandatures', parent: 'Political Gaps'
 
+    filter :political_leaning
+    filter :area
+    filter :group
+
     batch_action :restore, confirm: "This restore the initial state of selected mandature(s)"  do |ids, inputs|
       JquestPg::Mandature.find(ids).each do |mandature|
         mandature.restore!
@@ -39,6 +43,10 @@ if defined?(ActiveAdmin)
     end
 
     controller do
+      def scoped_collection
+        super.includes :person, :legislature
+      end
+
       def permitted_params
         params.permit *active_admin_namespace.permitted_params,
                       :pg_mandature => [ :legislature_id, :person_id,

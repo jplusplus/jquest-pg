@@ -11,6 +11,7 @@ module JquestPg
     has_many :sources, foreign_key: :resource_id, :dependent => :delete_all
     has_many :assignments, foreign_key: :resource_id, :dependent => :delete_all
     after_update :track_activities
+    before_create :set_age_range
 
     validates :person, presence: true
     validates :legislature, presence: true
@@ -109,6 +110,10 @@ module JquestPg
       else
         "#{age - age%10}-#{age - age%10 + 10}"
       end
+    end
+
+    def set_age_range
+      write_attribute :age_range, get_age_range
     end
 
     def as_assignment_for(user)
