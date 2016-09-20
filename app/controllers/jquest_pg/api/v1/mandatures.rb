@@ -94,7 +94,7 @@ module JquestPg
               assigned = Mandature.none
             end
             # Create a cache key according to params
-            cache_key Digest::MD5.hexdigest declared(params).to_param
+            cache_key = Digest::MD5.hexdigest declared(params).to_param
             # All unfinished mandatures
             global = policy_scope(Mandature).search(declared params).result.unfinished
             # Create a hash of values for the two subsets
