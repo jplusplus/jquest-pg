@@ -121,7 +121,7 @@ module JquestPg
     end
 
     def self.count_by(field)
-      scope = self.joined.group(field).count
+      joined.group(field).count.except(:"").except(nil)
     end
 
     def self.some_are_assigned_to?(user, season=user.member_of)
