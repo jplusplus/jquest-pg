@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency 'rails', '~> 4.2.6'
+  s.add_dependency 'rails', '5.0.0'
   s.add_dependency 'pundit'
   s.add_dependency 'grape-active_model_serializers'
   s.add_dependency 'active_model_serializers', '~> 0.10.0'
