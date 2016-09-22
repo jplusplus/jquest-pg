@@ -22,13 +22,13 @@ angular.module 'jquest'
           callback: => do @end
       # Ends intro
       end: =>
-        seasons.current().one('intro').put().finally ->
+        @over ||= seasons.current().one('intro').put().finally ->
           # Reload seasons list (to get new activities)
           seasons.reload().then =>
             # Redirect to homepage of this season
             $state.go 'main.season'
       isLast: =>
-        @_indexSlide + 1 >= @slides.length
+        @_indexSlide + 1 == @slides.length
       # Next slide!
       next: =>
         if @isLast()
