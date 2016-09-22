@@ -180,7 +180,7 @@ module JquestPg
       # According to status
       assignments = assignments.where(status: status) unless status.nil?
       # Get all assignments status
-      ids = assignments.where(resource_type: Mandature).map(&:resource_id)
+      ids = assignments.where(resource_type: Mandature.name).map(&:resource_id)
       # The user may not have assigned mandature yet
       if not ids.nil? and ids.length > 0
         # Collect mandatures assigned to that user
