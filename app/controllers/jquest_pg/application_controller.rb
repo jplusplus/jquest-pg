@@ -48,7 +48,8 @@ module JquestPg
                      points: point.value,
                      position: point.position,
                      # Remaining assignments count
-                     remaining: remaining.length
+                     remaining: remaining.length,
+                     next_assignment: remaining.first
     end
   end
 end
