@@ -179,8 +179,10 @@ module JquestPg
               authorize mandature, :update?
               # Create or update sources
               params[:sources].map! do |source|
-                source.resource = mandature
-                Source.update_or_create source
+                if Mandature.columns.map(&:name).include? source.field
+                  source.resource = mandature
+                  Source.update_or_create source
+                end
               end
               mandature.update_attributes permitted_params(mandature, params)
               # Could this mandature lead us to the next round?

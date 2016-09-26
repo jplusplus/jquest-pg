@@ -4,7 +4,7 @@ module JquestPg
 
     has_paper_trail :on => [:update]
     has_many :mandatures, :dependent => :delete_all
-    has_many :sources, foreign_key: :resource_id
+    has_many :sources, :as => :resource
     after_update :track_activities
     after_save :update_mandature_age_range
 

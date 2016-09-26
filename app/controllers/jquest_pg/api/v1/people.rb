@@ -30,8 +30,10 @@ module JquestPg
               authorize person, :update?
               # Create or update sources
               params[:sources].map! do |source|
-                source.resource = person
-                Source.update_or_create source
+                if Person.columns.map(&:name).include? source.field
+                  source.resource = person
+                  Source.update_or_create source
+                end
               end
               person.update_attributes permitted_params(person, params)
               # Could this person lead us to the next round?
