@@ -2,7 +2,9 @@ module JquestPg
   class Person < ActiveRecord::Base
     include CsvAttributes
 
-    has_paper_trail :on => [:update]
+    has_paper_trail :on => [:update],
+                    :skip => [:diversity_count, :diversity_positive]
+
     has_many :mandatures, :dependent => :delete_all
     has_many :sources, :as => :resource
     after_update :track_activities
@@ -12,7 +14,8 @@ module JquestPg
 
     def self.csv_attributes
       %w{fullname email education profession_category profession
-        image twitter facebook gender birthdate birthplace phone}
+        image twitter facebook gender birthdate birthplace phone
+        diversity_count diversity_positive}
     end
 
     def display_name
@@ -114,6 +117,18 @@ module JquestPg
           mandature.update_attribute :age_range, mandature.get_age_range
         end
       end
+    end
+
+    def update_diversity_fields
+      # Get iversities occurences for this person
+      diversities = JquestPg::Diversity.for_resource(self).where.not(value: nil).to_a
+      # Count diversities
+      self.diversity_count = diversities.length
+      # Count diversities positive
+      self.diversity_positive  = diversities.select { |d| d.resource_a_id == id && d.value == 0 }.length
+      self.diversity_positive += diversities.select { |d| d.resource_b_id == id && d.value == 1 }.length
+      # Then save change
+      save
     end
 
     def as_assignments

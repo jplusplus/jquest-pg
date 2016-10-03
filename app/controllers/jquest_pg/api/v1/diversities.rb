@@ -53,7 +53,7 @@ module JquestPg
               # Break if there is to few unassigned people
               break if unassigned.nil?
               # Break if the people have not been compared yet
-              break unless Diversity.both_exists?(unassigned.resource.person, person)
+              break if unassigned.resource.person.diversity_count < 1
             end
             # Nothing to propose
             return nil if unassigned.nil?

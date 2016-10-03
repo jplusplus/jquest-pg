@@ -4,7 +4,7 @@ module JquestPg
     attributes :id, :fullname, :firstname, :lastname, :email, :education,
                :profession_category, :profession, :image,
                :twitter, :facebook, :gender, :birthdate, :birthplace, :phone,
-               :sources
+               :sources, :diversity_count, :diversity_positive
 
     def attributes(*args)
       if instance_options[:include_sources]

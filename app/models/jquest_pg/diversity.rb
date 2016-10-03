@@ -5,6 +5,7 @@ module JquestPg
     belongs_to :resource_a, polymorphic: true
     belongs_to :resource_b, polymorphic: true
     after_create :track_activities
+    after_save :update_resources_diversity_fields
 
     def track_activities
       # Find the last version of this model
@@ -33,6 +34,16 @@ module JquestPg
       }
       # And save the activity
       Activity.find_or_create_by **activity
+    end
+
+    def update_resources_diversity_fields
+      [resource_a, resource_b].each do |resource|
+        # Does the resource have a method to update diversity fields?
+        if resource.respond_to? :update_diversity_fields
+          # Update field
+          resource.update_diversity_fields
+        end
+      end
     end
 
     def display_name
@@ -85,6 +96,10 @@ module JquestPg
 
     def self.occurrences(resource)
       where(resource_a: resource).count() + where(resource_b: resource).count()
+    end
+
+    def self.for_resource(resource)
+      where(resource_a: resource).or where(resource_b: resource)
     end
   end
 end
