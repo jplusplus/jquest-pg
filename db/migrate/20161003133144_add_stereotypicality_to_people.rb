@@ -1,4 +1,6 @@
 class AddStereotypicalityToPeople < ActiveRecord::Migration[5.0]
+  disable_ddl_transaction!
+  
   def up
     # Add the new columns
     add_column :jquest_pg_people, :diversity_positive, :integer, default: 0
