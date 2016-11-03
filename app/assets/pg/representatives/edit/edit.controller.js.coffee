@@ -3,7 +3,7 @@ angular.module 'jquest'
     'ngInject'
     new class MainSeasonPgRepresentativesEditCtrl
       mandature: mandature
-      finally: ->
+      then: ->
         # Informs the user
         growl.success 'Modification saved'
         # Reload season progression (for updated points)

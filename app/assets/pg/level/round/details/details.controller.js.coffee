@@ -3,7 +3,7 @@ angular.module 'jquest'
     'ngInject'
     new class MainSeasonPgLevelRoundDetailsCtrl
       mandature: mandature
-      finally: =>
+      then: =>
         # Reload progression after both promises have be resolved
         seasons.reload().then ->
           # Still on this round

@@ -4,7 +4,7 @@ angular.module 'jquest'
     scope:
       mandature: "="
       allowSkipping: "="
-      finally: "&"
+      then: "&"
     restrict: 'AE'
     controller: 'MandatureFormCtrl'
     controllerAs: 'form'

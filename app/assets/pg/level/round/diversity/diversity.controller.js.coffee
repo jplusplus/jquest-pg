@@ -5,11 +5,16 @@ angular.module 'jquest'
       constructor: ->
         @person_a = diversity.resource_a
         @person_b = diversity.resource_b
-      value: (value)->
+      # Assertions to avoid submitting several times
+      isSubmitted: => @promise?
+      isLoading: => @isSubmitted() and @promise.$$state.status is 0
+      isLocked: => @isSubmitted() and @promise.$$state.status < 2
+      value: (value)=>
+        return if @isLocked()
         # Change the diversity value
         diversity.value = value
         # Save it to the database
-        diversity.post().finally ->
+        @promise = diversity.post().finally ->
           # Reload progression after the promise has been resolved
           seasons.reload().then ->
             # Still on this round

@@ -174,21 +174,22 @@ module JquestPg
             desc "Update a mandature"
             put do
               authenticate!
-              mandature = Mandature.find params[:id]
+              mandature = Mandature.includes(:legislature).find params[:id]
               # The mandature must be assigned to that user's progression
               authorize mandature, :update?
-              # Create or update sources
-              params[:sources].map! do |source|
-                if Mandature.columns.map(&:name).include? source.field
-                  source.resource = mandature
-                  Source.update_or_create source
+              # Save everything inside the same transaction
+              mandature.transaction do
+                # Create or update sources for this mandature and this person
+                Source.batch_update_or_create params[:sources], mandature
+                Source.batch_update_or_create params[:person][:sources], mandature.person
+                # Update the mandature and the person
+                mandature.update_attributes permitted_params(mandature, params)
+                mandature.person.update_attributes permitted_params(mandature.person, params[:person])
+                # Could this mandature lead us to the next round?
+                if MandaturePolicy.new(current_user, mandature).round_up?
+                  # Go to the next round
+                  current_user_point.next_round
                 end
-              end
-              mandature.update_attributes permitted_params(mandature, params)
-              # Could this mandature lead us to the next round?
-              if MandaturePolicy.new(current_user, mandature).round_up?
-                # Go to the next round
-                current_user_point.next_round
               end
               # Return a mandature
               mandature

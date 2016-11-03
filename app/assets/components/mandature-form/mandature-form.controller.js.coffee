@@ -1,11 +1,10 @@
 angular.module 'jquest'
-  .controller 'MandatureFormCtrl', ($uibModal, $scope, $state, $q, SETTINGS, Seasons, Restangular)->
+  .controller 'MandatureFormCtrl', ($uibModal, $scope, $state, $q, SETTINGS, Seasons, Restangular, growl)->
     'ngInject'
     new class MandatureFormCtrl
       # Common attributes
       mandature: $scope.mandature
-      allowSkipping:
-        $scope.allowSkipping
+      allowSkipping: $scope.allowSkipping
       # A hash of object clones
       clones: {}
       # Available values for select
@@ -15,8 +14,19 @@ angular.module 'jquest'
       constructor: ->
         @createClone @mandature
         @createClone @mandature.person
-      submit: (resources)=>
-        $q.all([ @mandature.person.put(), @mandature.put() ]).finally $scope.finally
+      # Assertions to avoid submitting several times
+      isSubmitted: => @promise?
+      isLoading: => @isSubmitted() and @promise.$$state.status is 0
+      isLocked: => @isSubmitted() and @promise.$$state.status < 2
+      submit: =>
+        return if @isLocked()
+        # Save the mandature, what else?
+        @promise = @mandature.put().then $scope.then, @error('Saving failed, try again.')
+      # `msg` is an optional message to display in case or error
+      error: (msg = null)=>
+        (res)=>
+          # Display the provided error or the default message
+          growl.error msg or res.error
       invalid: =>
         # At less than 1 value or an unsourced one
         @changes(true) < 1 or @changes(false) isnt @changes(true)
@@ -37,8 +47,9 @@ angular.module 'jquest'
                 # Do skip this mandature
                 do @skip
       skip: =>
+        return if @isLocked()
         # Just put on the original mandature object
-        @getClone(@mandature).one('skip').put().then $scope.finally
+        @promise = @getClone(@mandature).one('skip').put().then $scope.then
       editSource: (field, resource)=>
         # Create a modal
         @editSourceModal = $uibModal.open
