@@ -20,7 +20,7 @@ angular.module 'jquest'
                 # Use the resource field
                 a.resource = _.find r.mandatures, id: a.resource_id
             # Return a function to continue before the promise is done
-            (fn)-> promise.then(fn)
+            (fn)-> promise.then(fn)          
           nocontent: ($state)->
             'ngInject'
             # Closure function that redirect to the 403 state
