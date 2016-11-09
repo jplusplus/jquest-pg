@@ -8,17 +8,22 @@ angular.module 'jquest'
         templateUrl: 'pg.html'
         resolve:
           $title: -> 'Your missions'
-          assignmentsFn: ($q, Restangular, seasonRestangular)->
+          assignmentsLoader: ($q, Restangular, seasonRestangular)->
             'ngInject'
-            # Two endpoints to combine
-            assignments = Restangular.all('assignments').getList(limit: 1000)
-            mandatures  = seasonRestangular.all('mandatures').all('assigned').getList(limit: 1000)
-            # Resolve the twho endpoint
-            promise = $q.all(assignments: assignments, mandatures: mandatures).then (r)->
-              # Map assignments to find the corresponding mandature
-              _.each r.assignments, (a)->
-                # Use the resource field
-                a.resource = _.find r.mandatures, id: a.resource_id
+            # Return a function that will create a promise on-demand
+            (fn = angular.noop)->
+              # Two endpoints to combine
+              assignments = Restangular.all('assignments').getList(limit: 1000)
+              mandatures  = seasonRestangular.all('mandatures').all('assigned').getList(limit: 1000)
+              # Resolve the twho endpoint
+              $q.all(assignments: assignments, mandatures: mandatures).then (r)->
+                # Map assignments to find the corresponding mandature
+                _.each r.assignments, (a)->
+                  # Use the resource field
+                  a.resource = _.find r.mandatures, id: a.resource_id
+          assignmentsFn: (assignmentsLoader)->
+            'ngInject'
+            promise = do assignmentsLoader
             # Return a function to continue before the promise is done
             (fn)-> promise.then(fn)
           nocontent: ($state)->

@@ -10,6 +10,6 @@ angular.module 'jquest'
         resolve:
           $title: ->
             'My representatives'
-          assignments: (assignmentsFn)->
+          assignments: (assignmentsLoader)->
             'ngInject'
-            assignmentsFn()
+            assignmentsLoader()
