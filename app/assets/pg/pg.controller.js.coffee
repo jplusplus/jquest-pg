@@ -46,13 +46,15 @@ angular.module 'jquest'
         @categories = _.chain(do @getLevels).map(@buildLevel).groupBy('category').value()
       constructor: ->
         # Init the mission screen now we the season has been already started
-        return do @init if seasons.alreadyStarted()
-        # Get activities for the current season
-        Restangular.all('activities').getList(limit: 1, season_id_eq: seasons.current().id).then (activities)=>
-          # Has no activity yet for this season
-          if activities.length is 0
-            # Redirect to the tutorial for this season
-            $state.go 'main.season.pg.intro'
-          else
-            # Initiatlize the mission screen
-            do @init
+        if seasons.alreadyStarted()
+          do @init
+        else
+          # Get activities for the current season
+          Restangular.all('activities').getList(limit: 1, season_id_eq: seasons.current().id).then (activities)=>
+            # Has no activity yet for this season
+            if activities.length is 0
+              # Redirect to the tutorial for this season
+              $state.go 'main.season.pg.intro'
+            else
+              # Initiatlize the mission screen
+              do @init

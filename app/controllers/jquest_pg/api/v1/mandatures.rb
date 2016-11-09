@@ -110,13 +110,18 @@ module JquestPg
             }
           end
 
+
+          params do
+            optional :new, type: Boolean, default: false
+          end
           resource :assigned do
+
             desc "Return list of mandatures assigned to the user"
             paginate
             get each_serializer: MandatureSerializer, include_sources: true do
               authenticate!
               # Collect mandature assigned to this user
-              paginate Mandature.assigned_to(current_user, current_user.member_of, true).
+              paginate Mandature.assigned_to(current_user, current_user.member_of, params[:new]).
                 # Join to related tables
                 eager_load(:person).
                 eager_load(:legislature).
@@ -132,7 +137,7 @@ module JquestPg
             get :pending, each_serializer: MandatureSerializer, include_sources: true do
               authenticate!
               # Collect mandature assigned to this user
-              paginate Mandature.assigned_to(current_user, current_user.member_of, true, :pending).
+              paginate Mandature.assigned_to(current_user, current_user.member_of, params[:new], :pending).
                 # Join to related tables
                 eager_load(:person).
                 eager_load(:legislature).
@@ -149,7 +154,7 @@ module JquestPg
             get :done, each_serializer: MandatureSerializer, include_sources: true  do
               authenticate!
               # Collect mandature assigned to this user
-              paginate Mandature.assigned_to(current_user, current_user.member_of, true, :done).
+              paginate Mandature.assigned_to(current_user, current_user.member_of, params[:new], :done).
                 # Join to related tables
                 eager_load(:person).
                 eager_load(:legislature).

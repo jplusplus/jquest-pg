@@ -41,25 +41,5 @@ module JquestPg
       # include the extension
       Assignment.send(:include, ValidateUserAssignments)
     end
-
-    initializer :create_assignements do |app|
-      module HasAssignments
-        extend ActiveSupport::Concern
-        included do
-          after_initialize :create_assignements
-        end
-
-        protected
-          def create_assignements
-            # Assign only if the user is member of this season (using its engine)
-            if not member_of.nil? and member_of.engine == JquestPg::Engine
-              # Set new assignments for this user
-              JquestPg::ApplicationController.new.new_assignments! self
-            end
-          end
-      end
-      # include the extension
-      User.send(:include, HasAssignments)
-    end
   end
 end

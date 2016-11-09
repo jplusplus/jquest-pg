@@ -33,7 +33,7 @@ module JquestPg
       # Find or create Point instance for this season
       point = user.points.find_or_create_by(season: season)
       # Ensure user has mandature assigned to her
-      Mandature.assigned_to(user, season, true, :pending)
+      # Mandature.assigned_to(user, season, true, :pending)
       # Determine the current taxonomy according to the round
       round_taxonomies = { 1 => 'genderize', 2 => 'details', 3 => 'diversity' }
       round_taxonomy = round_taxonomies[point.round]

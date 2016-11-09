@@ -13,9 +13,13 @@ angular.module 'jquest'
             'Level ' + seasons.current().progression.level
           mandatures: (seasonRestangular)->
             'ngInject'
-            seasonRestangular.one('mandatures').one('assigned').one('pending').getList()
+            seasonRestangular.all('mandatures').all('assigned').all('pending').getList(new: true)
           people: (mandatures, Restangular)->
             'ngInject'
             _.chain(mandatures).clone().map('person').map(Restangular.restangularizeElement).value()
+          seasons: (mandatures, seasons)->
+            'ngInject'
+            seasons.reload().then -> seasons
           hascontent: (mandatures, nocontent)->
+            'ngInject'
             do nocontent unless mandatures.length

@@ -139,27 +139,22 @@ module JquestPg
       per_legislatures = [(MAX_ASSIGNABLE.to_f / assignable_legislatures.length).ceil, 1].max
       # For each legislature...
       assignable_legislatures.each do |legislature|
-        # Pick enough mandature!
-        per_legislatures.times.each do
-          # Attempts available to find a mandature (no more than 10)
-          10.times.each do
-            # Rick a random mandature not already assigned
-            mandature = legislature.mandatures.where.not(id: assigned_mandatures).order("RANDOM()").first
-            # Ensure no one else is assigned to that mandature
-            if not mandature.nil? and not Assignment.exists? resource: mandature
-              assigned_mandatures << mandature
-              break
-            end
-          end
-        end
+        # Mandatures for this legislature
+        assigned_mandatures += legislature.mandatures.
+          # That are not assigned
+          unassigned.
+          # In random order
+          order("RANDOM()").
+          # Limited to the a fixed number for each legislature
+          limit(per_legislatures)
       end
-      # Ensure we haven't een too greedy
+      # Ensure we haven't been too greedy
       assigned_mandatures = assigned_mandatures.slice 0, MAX_ASSIGNABLE
       # Now our assigned mandatures list must be populated, it is time to save it
       # as assignments for the given user.
       assigned_mandatures.each do |mandature|
         # Create an assignment (may fail)
-        Assignment.create user: user, resource: mandature, season: season
+        Assignment.create user_id: user.id, resource: mandature, season_id: season.id
       end
       # Returns the mandatures
       assigned_mandatures
@@ -174,7 +169,7 @@ module JquestPg
       end
     end
 
-    def self.assigned_to(user, season=user.member_of, force=true, status=nil)
+    def self.assigned_to(user, season=user.member_of, force=false, status=nil)
       # All user assignments
       assignments = user.assignments
       # According to status
@@ -196,7 +191,11 @@ module JquestPg
       end
     end
 
-    def self.unassigned_to(user, season=user.member_of, force=true, status=nil)
+    def self.unassigned()
+      where("id NOT IN ( #{Assignment.ids_by(resource_type: 'JquestPg::Mandature').to_sql} )")
+    end
+
+    def self.unassigned_to(user, season=user.member_of, force=false, status=nil)
       # Ids of the mandatures assigned to that user
       mids = Mandature.assigned_to(user, season, force, status).map(&:id)
       # Mandatures not assigned to that user
