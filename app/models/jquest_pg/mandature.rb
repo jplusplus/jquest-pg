@@ -135,8 +135,10 @@ module JquestPg
       assignable_legislatures = Legislature.assignable_to user
       # Stop here if no mandatures is assignable
       return assigned_mandatures if assignable_legislatures.length == 0
+      # Avoid adding more thant 6 mandatures
+      max = [ MAX_ASSIGNABLE - user.assignments.pending.count, 0 ].max
       # Number of mandature picked from each legislatures depends of the number of legislature
-      per_legislatures = [(MAX_ASSIGNABLE.to_f / assignable_legislatures.length).ceil, 1].max
+      per_legislatures = [(max.to_f / assignable_legislatures.length).ceil, 1].max
       # For each legislature...
       assignable_legislatures.each do |legislature|
         # Mandatures for this legislature
@@ -149,7 +151,7 @@ module JquestPg
           limit(per_legislatures)
       end
       # Ensure we haven't been too greedy
-      assigned_mandatures = assigned_mandatures.slice 0, MAX_ASSIGNABLE
+      assigned_mandatures = assigned_mandatures.slice 0, max
       # Now our assigned mandatures list must be populated, it is time to save it
       # as assignments for the given user.
       assigned_mandatures.each do |mandature|
@@ -177,7 +179,7 @@ module JquestPg
       # Get all assignments status
       ids = assignments.where(resource_type: Mandature.name).map(&:resource_id)
       # The user may not have assigned mandature yet
-      if not ids.nil? and ids.length > 0
+      if not ids.nil? and ids.length >= Mandature::MAX_ASSIGNABLE
         # Collect mandatures assigned to that user
         where id: ids
       elsif force
