@@ -3,14 +3,11 @@ module JquestPg
 
     attr_reader :user, :model
 
-
     def permitted_attributes
       if @user.role? :teacher, :admin
         [ :fullname, :firstname, :lastname, :email, :education,
           :profession_category, :profession, :image, :twitter, :facebook,
           :gender, :birthdate, :birthplace, :phone ]
-      elsif progression[:round] == 1
-        [:gender]
       else
         # Get columns names
         names = JquestPg::Person.columns.map(&:name)
