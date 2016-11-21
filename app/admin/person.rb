@@ -1,5 +1,6 @@
 if defined?(ActiveAdmin)
   ActiveAdmin.register JquestPg::Person, :as => 'pg_person' do
+    extend VersionsControl
     menu label: 'People', parent: 'Political Gaps'
 
     index title: 'People' do

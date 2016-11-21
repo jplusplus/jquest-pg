@@ -1,5 +1,6 @@
 if defined?(ActiveAdmin)
   ActiveAdmin.register JquestPg::Mandature, :as => 'pg_mandature' do
+    extend VersionsControl
     menu label: 'Mandatures', parent: 'Political Gaps'
 
     filter :political_leaning
