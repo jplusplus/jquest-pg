@@ -12,6 +12,7 @@ angular.module 'jquest'
       Seasons.addHumanTaxonomy 'genderize', 'You assigned a gender to <strong>{{ resource.fullname }}</strong>.'
       Seasons.addHumanTaxonomy 'details', 'You updated information about <strong>{{ resource.fullname || resource.name }}</strong>.'
       Seasons.addHumanTaxonomy 'diversity', 'You compared <strong>{{ resource.resource_b.fullname }}</strong> with someone else.'
+      Seasons.addHumanTaxonomy 'extra', 'You earned extra points for helping the community.'
       # Set search function
       Menu.setSearchFn (q)->
         $state.go 'main.season.pg.data', person_fullname_or_legislature_name_cont: q
