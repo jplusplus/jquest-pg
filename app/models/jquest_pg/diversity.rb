@@ -14,6 +14,8 @@ module JquestPg
       return if uid.nil?
       # Find the user
       user = User.find_by id: uid
+      # We didn't find it
+      return if user.nil?
       # Find assignment for this user...
       assignment = begin
         resource_a.as_assignments.find_by(user: user) or
