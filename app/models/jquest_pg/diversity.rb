@@ -13,7 +13,7 @@ module JquestPg
       # This someone must exist!
       return if uid.nil?
       # Find the user
-      user = User.find uid
+      user = User.find_by id: uid
       # Find assignment for this user...
       assignment = begin
         resource_a.as_assignments.find_by(user: user) or
