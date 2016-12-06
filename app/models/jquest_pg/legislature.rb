@@ -69,9 +69,9 @@ module JquestPg
         result
     end
 
-    def self.assignable_to(user)
+    def self.assignable_to(user, level=nil)
       # Get user level
-      level = user.points.find_or_create_by(season: user.member_of).level
+      level ||= user.points.find_or_create_by(season: user.member_of).level
       # Gets legislature for her level of progression
       legislatures = all
       # Different assignements according the level

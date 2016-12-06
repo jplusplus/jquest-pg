@@ -141,8 +141,6 @@ module JquestPg
       return assigned_mandatures if assignable_legislatures.length == 0
       # Avoid adding more thant 6 mandatures
       max = [ MAX_ASSIGNABLE - user.assignments.pending.count, 0 ].max
-      # Number of mandature picked from each legislatures depends of the number of legislature
-      per_legislatures = [(max.to_f / assignable_legislatures.length).ceil, 1].max
       # For each legislature...
       assignable_legislatures.each do |legislature|
         # Mandatures for this legislature
@@ -152,10 +150,10 @@ module JquestPg
           # In random order
           order("RANDOM()").
           # Limited to the a fixed number for each legislature
-          limit(per_legislatures)
+          limit(max)
       end
       # Ensure we haven't been too greedy
-      assigned_mandatures = assigned_mandatures.slice 0, max
+      assigned_mandatures = assigned_mandatures.shuffle.slice 0, max
       # Now our assigned mandatures list must be populated, it is time to save it
       # as assignments for the given user.
       assigned_mandatures.each do |mandature|
