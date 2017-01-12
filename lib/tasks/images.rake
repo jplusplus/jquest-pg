@@ -33,7 +33,7 @@ namespace :jquest_pg do
       return nil
     end
     # Did the download succed
-    if res.is_a?(Net::HTTPSuccess) and res.header['content-type'].starts_with? 'image'
+    if res.is_a?(Net::HTTPSuccess) and (res.header['content-type'] || '').starts_with? 'image'
       # Create the object name
       filename = File.basename uri.path
       filename = "persons/#{person.id}/#{filename}"
