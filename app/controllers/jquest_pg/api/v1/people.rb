@@ -58,7 +58,7 @@ module JquestPg
                 # Change the gender
                 person.gender = params[:gender]
                 # Ensure a version is created even if the value is the same
-                person.touch_with_version unless person.gender_changed?
+                person.paper_trail.touch_with_version unless person.gender_changed?
                 person.save!
                 # Could this person lead us to the next round?
                 if PersonPolicy.new(current_user, person).round_up?
