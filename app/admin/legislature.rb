@@ -20,6 +20,7 @@ if defined?(ActiveAdmin)
     filter :name_local
     filter :territory
     filter :country
+    filter :languages
 
 
     form :as => :pg_legislature do |f|

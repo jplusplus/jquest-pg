@@ -3,9 +3,13 @@ if defined?(ActiveAdmin)
     extend VersionsControl
     menu label: 'Mandatures', parent: 'Political Gaps'
 
+    scope :all, default: true
+    scope :unassigned
+
     filter :political_leaning
     filter :area
     filter :group
+    filter :legislature
 
     batch_action :restore, confirm: "This restore the initial state of selected mandature(s)"  do |ids, inputs|
       JquestPg::Mandature.find(ids).each do |mandature|
