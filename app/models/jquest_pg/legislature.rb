@@ -86,7 +86,7 @@ module JquestPg
         legislatures = legislatures.where country: user.home_country
         # Offline comparaison to strictly limit the legislature to the year
         legislatures = legislatures.select do |legislature|
-          legislature.end_date.year >= Date.today.year
+          legislature.end_date.year >= 2005
         end
       # LEVEL 2, 3
       #   * legislature.difficulty_level is current level
