@@ -1,4 +1,4 @@
-class CreateJquestPgPeople < ActiveRecord::Migration
+class CreateJquestPgPeople < ActiveRecord::Migration[5.0]
   def change
     create_table :jquest_pg_people do |t|
       t.string :fullname

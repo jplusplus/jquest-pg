@@ -1,4 +1,4 @@
-class ChangeDiversitiesValues < ActiveRecord::Migration
+class ChangeDiversitiesValues < ActiveRecord::Migration[5.0]
   def up
     # Migrate data
     JquestPg::Diversity.where(value: -1).update_all(value: 0)

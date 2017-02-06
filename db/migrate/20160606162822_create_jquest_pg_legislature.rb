@@ -1,4 +1,4 @@
-class CreateJquestPgLegislature < ActiveRecord::Migration
+class CreateJquestPgLegislature < ActiveRecord::Migration[5.0]
   def change
     create_table :jquest_pg_legislatures do |t|
       t.string :name

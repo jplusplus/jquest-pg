@@ -1,4 +1,4 @@
-class AddAgeRangeToMandatures < ActiveRecord::Migration
+class AddAgeRangeToMandatures < ActiveRecord::Migration[5.0]
   def up
     # Add the new column
     add_column :jquest_pg_mandatures, :age_range, :string

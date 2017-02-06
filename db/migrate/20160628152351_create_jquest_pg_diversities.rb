@@ -1,4 +1,4 @@
-class CreateJquestPgDiversities < ActiveRecord::Migration
+class CreateJquestPgDiversities < ActiveRecord::Migration[5.0]
   def change
     create_table :jquest_pg_diversities do |t|
       # All action are relation to a user AND a season

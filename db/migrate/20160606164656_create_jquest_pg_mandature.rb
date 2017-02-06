@@ -1,4 +1,4 @@
-class CreateJquestPgMandature < ActiveRecord::Migration
+class CreateJquestPgMandature < ActiveRecord::Migration[5.0]
   def change
     create_table :jquest_pg_mandatures do |t|
       t.references :legislature, index: true, foreign_key: true, references: :jquest_pg_legislatures

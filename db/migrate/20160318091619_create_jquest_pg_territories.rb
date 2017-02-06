@@ -1,4 +1,4 @@
-class CreateJquestPgTerritories < ActiveRecord::Migration
+class CreateJquestPgTerritories < ActiveRecord::Migration[5.0]
   def change
     create_table :jquest_pg_territories do |t|
       t.string :name
