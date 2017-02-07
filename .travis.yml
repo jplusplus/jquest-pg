@@ -14,6 +14,6 @@ install:
   - bundle _1.13.6_ install --jobs=3 --retry=3 --gemfile=jquest/Gemfile
   - bundle _1.13.6_ install --jobs=3 --retry=3 --gemfile=jquest-pg/Gemfile
 script:
-  - cd jquest && bundle exec rspec ../jquest-pg/spec
+  - cd jquest && rspec ../jquest-pg/spec
 rvm:
   - 2.3.1
