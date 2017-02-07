@@ -157,6 +157,7 @@ module JquestPg
           order("RANDOM()").
           # Limited to the a fixed number for each legislature
           limit(max)
+        person_ids += assigned_mandatures.map(&:person_id)
       end
       # Ensure we haven't been too greedy
       assigned_mandatures = assigned_mandatures.shuffle.slice 0, max
