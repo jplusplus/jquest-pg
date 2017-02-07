@@ -1,0 +1,19 @@
+language: ruby
+env:
+  - RAILS_ENV=test
+before_install:
+  # Install host application to run test with
+  - cd ../..
+  - git clone --depth=50 --branch=master https://github.com/jplusplus/jquest.git jplusplus/jquest
+  # Enter the host application directory
+  - cd jplusplus/jquest
+  # It must use the current engine directory as base
+  - bundle config local.jquest_pg  ../jquest-pg
+  # Checksum arbitrary fail: https://github.com/bundler/bundler/issues/5332
+  - gem install -v 1.13.6 bundler --no-rdoc --no-ri
+  - bundle _1.13.6_ install --jobs=3 --quiet
+script:
+  - bundle exec rails db:drop db:create db:migrate
+  - bundle exec rspec ../jquest-pg/rspec
+rvm:
+  - 2.3.1
