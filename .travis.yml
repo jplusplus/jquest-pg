@@ -6,6 +6,7 @@ before_install:
   - cd .. && git clone --depth=50 --branch=master https://github.com/jplusplus/jquest.git jquest
   # It must use the current engine directory as base
   - bundle config local.jquest_pg  ./jquest-pg
+  - bundle config disable_local_branch_check true
   # Checksum arbitrary fail: https://github.com/bundler/bundler/issues/5332
   - gem install -v 1.13.6 bundler --no-rdoc --no-ri
   # Ensure we install package from host application directory
