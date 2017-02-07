@@ -3,7 +3,7 @@ env:
   - RAILS_ENV=test
 before_install:
   # Install host application to run test with
-  - cd ../ && git clone --depth=50 --branch=master https://github.com/jplusplus/jquest.git jplusplus/jquest
+  - cd ../ && git clone --depth=50 --branch=master https://github.com/jplusplus/jquest.git jquest
   # It must use the current engine directory as base
   - bundle config local.jquest_pg  ../jquest-pg
   # Checksum arbitrary fail: https://github.com/bundler/bundler/issues/5332
