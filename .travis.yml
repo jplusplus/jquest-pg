@@ -8,6 +8,10 @@ before_install:
   - bundle config local.jquest_pg  ../jquest-pg
   # Checksum arbitrary fail: https://github.com/bundler/bundler/issues/5332
   - gem install -v 1.13.6 bundler --no-rdoc --no-ri
+  - pwd
+  - ls
+  - cd ..
+  - ls
   # Ensure we install package from host application directory
   - cd ../jquest && bundle _1.13.6_ install --jobs=3 --retry=3
 bundler_args: --jobs=3
