@@ -13,10 +13,14 @@ module JquestPg
     def languages
       # Not languages defined
       if read_attribute(:languages).blank? and country.present?
-        ISO3166::Data.new(country).call['languages'] * ','
+        (find_country.languages || []) * ','
       else
         read_attribute(:languages)
       end
+    end
+
+    def find_country
+      ISO3166::Country.find_country_by_alpha2(country)
     end
 
     def format_params

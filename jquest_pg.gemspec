@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'active_model_serializers', '~> 0.10.0'
   s.add_dependency 'google_drive'
   s.add_dependency 'tty'
+  s.add_development_dependency 'factory_girl_rails', '~> 4.0'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rspec-rails', '~> 3.5'
 end
