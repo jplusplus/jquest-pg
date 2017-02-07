@@ -2,6 +2,10 @@ module JquestPg
   class Engine < ::Rails::Engine
     isolate_namespace JquestPg
 
+    config.generators do |g|
+      g.test_framework :rspec
+    end
+
     initializer :active_admin do |app|
       if defined?(ActiveAdmin)
         dir = root.join('app/admin/').to_s
