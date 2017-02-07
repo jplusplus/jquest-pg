@@ -143,12 +143,16 @@ module JquestPg
       return assigned_mandatures if assignable_legislatures.length == 0
       # Avoid adding more thant 6 mandatures
       max = [ MAX_ASSIGNABLE - user.assignments.pending.count, 0 ].max
+      # Id of the *person* already assigned to this user
+      person_ids = where(id: user.assignments.pluck(:resource_id)).pluck(:person_id)
       # For each legislature...
       assignable_legislatures.each do |legislature|
         # Mandatures for this legislature
         assigned_mandatures += legislature.mandatures.
           # That are not assigned
           unassigned.
+          # Not a person already assigned
+          where.not(person_id: person_ids).
           # In random order
           order("RANDOM()").
           # Limited to the a fixed number for each legislature
