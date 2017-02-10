@@ -2,9 +2,15 @@ namespace :jquest_pg do
 
   desc "Export all mandature"
   task :export => :environment do
-    output = ENV['output'] || 'all.csv'
-    File.open(output, 'w') do |file|
-      file.write JquestPg::Mandature.all.to_csv
+    # Choose output file name
+    output = ENV['output'] || "mandature-#{DateTime.now.to_s(:db)}.csv"
+    # Get the content of the CSV file
+    content = JquestPg::Mandature.all.to_csv
+    # Special output token
+    if output === 'STDOUT'
+      puts content
+    else
+      File.write output, content
     end
   end
 end
