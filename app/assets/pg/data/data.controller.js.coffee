@@ -1,5 +1,5 @@
 angular.module 'jquest'
-  .controller 'MainSeasonPgDataCtrl', (response, Paginator, Restangular, seasonRestangular, $state, $stateParams)->
+  .controller 'MainSeasonPgDataCtrl', (response, user, Paginator, Restangular, seasonRestangular, $state, $stateParams)->
     'ngInject'
     new class MainSeasonPgDataCtrl
       filter: =>
@@ -7,7 +7,10 @@ angular.module 'jquest'
         $state.go 'main.season.pg.data', @filters
       constructor: ->
         # Disable download when more than 5000 elements
-        @canDownload = @hasMandatures and @total <= 5000
+        @canDownload = @hasMandatures and (@total <= 5000 or user.role is 'admin')
+        # Build CSV Download URL
+      csv: =>
+        response.data.getRequestedUrl().replace(/mandatures/, 'mandatures.csv') + '&limit=' + @total
       # Total number of element for this query
       total: response.headers('Total') || response.headers('X-Total')
       # Get initials filter from the state params
@@ -18,8 +21,6 @@ angular.module 'jquest'
       hasMandatures: response.data.length
       # True if there is any filter
       isFiltered: !!_.chain($stateParams).values().compact().value().length
-      # Build CSV Download URL
-      csv: response.data.getRequestedUrl().replace(/mandatures/, 'mandatures.csv') + '&limit=' + 2e4
       # List of all countries
       countries: Restangular.all('countries').withHttpConfig(cache: yes, ignoreLoadingBar: yes).getList(limit: 300).$object
       # List of all legislatures

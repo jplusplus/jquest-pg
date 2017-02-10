@@ -19,6 +19,9 @@ angular.module 'jquest'
         resolve:
           $title: ->
             'Collected Data'
+          user: (Auth)->
+            'ngInject'
+            Auth.currentUser()
           response: (seasons, seasonRestangular, $stateParams)->
             'ngInject'
             # Add full reponse to the result to extract header info

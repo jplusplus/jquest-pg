@@ -58,7 +58,7 @@
           </p>
           <div class="pg__data__download">
             <a class="btn btn-link btn-outline"
-               ng-href="{{ data.csv }}"
+               ng-href="{{:: data.csv()}}"
                ng-if="data.canDownload"
                uib-tooltip="{{ data.isFiltered ? 'Filtered mandatures' : 'All mandatures' }}"
                tooltip-placement="bottom">

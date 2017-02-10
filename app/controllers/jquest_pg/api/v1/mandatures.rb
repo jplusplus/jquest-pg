@@ -62,8 +62,12 @@ module JquestPg
             optional :legislature_territory_cont, type: String
             optional :person_fullname_or_legislature_name_cont, type: String
           end
-          paginate max_per_page: 5000
+          paginate
           get do
+            # Only admin can have more than 5000 element by page
+            if not current_user or not current_user.role? :admin
+              params.limit = [5000, params.limit].min
+            end
             # Paginate result
             paginate policy_scope(Mandature).
               # We allow filtering
