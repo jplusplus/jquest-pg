@@ -21,7 +21,9 @@ if defined?(ActiveAdmin)
     filter :territory
     filter :country
     filter :languages
-
+    filter :as_assignable, label: "Assignable to", as: :select, collection: ->{
+      User.members_of(JquestPg)
+    }
 
     form :as => :pg_legislature do |f|
       f.semantic_errors

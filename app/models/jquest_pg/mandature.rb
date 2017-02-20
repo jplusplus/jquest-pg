@@ -16,6 +16,15 @@ module JquestPg
     validates :person, presence: true
     validates :legislature, presence: true
 
+    scope :as_assignable, ->(uid) {
+      user = User.find(uid)
+      where legislature_id: Legislature.assignable_to(user).map(&:id)
+    }
+
+    def self.ransackable_scopes(auth_object = nil)
+      [:as_assignable]
+    end
+
     def self.csv_attributes
       %w{id legislature person political_leaning role group area chamber}
     end

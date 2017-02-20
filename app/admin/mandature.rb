@@ -10,6 +10,9 @@ if defined?(ActiveAdmin)
     filter :area
     filter :group
     filter :legislature
+    filter :as_assignable, label: "Assignable to", as: :select, collection: ->{
+      User.members_of(JquestPg)
+    }
 
     batch_action :restore, confirm: "This restore the initial state of selected mandature(s)"  do |ids, inputs|
       JquestPg::Mandature.find(ids).each do |mandature|

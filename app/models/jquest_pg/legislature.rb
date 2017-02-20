@@ -6,6 +6,16 @@ module JquestPg
     has_many :mandatures, :dependent => :delete_all
     has_many :persons, through: :mandatures
 
+    scope :as_assignable, ->(uid) {
+      user = User.find(uid)
+      # Transform the list of assignable legislature to a relation
+      where id: assignable_to(user).map(&:id)
+    }
+
+    def self.ransackable_scopes(auth_object = nil)
+      [:as_assignable]
+    end
+
     def self.csv_attributes
       %w{id name territory country start_date end_date number_of_members languages}
     end
