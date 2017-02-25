@@ -1,13 +1,8 @@
 <% content_for :page_title, "Political Gaps - jQuest" %>
 
-<% content_for :stylesheet_includes do %>
-  <%= stylesheet_link_tag 'app', media: 'all' %>
-  <%= stylesheet_link_tag 'jquest_pg/application', media: 'all' %>
-<% end %>
-
 <% content_for :javascript_includes do %>
-  <%= javascript_include_tag "app" %>
-  <%= javascript_include_tag "jquest_pg/application" %>
+  <%= javascript_pack_tag 'index' %>
+  <%= javascript_pack_tag 'jquest_pg/index' %>
 <% end %>
 
 <div ui-view></div>
