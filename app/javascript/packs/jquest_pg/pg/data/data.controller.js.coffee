@@ -1,5 +1,4 @@
-angular.module 'jquest'
-  .controller 'MainSeasonPgDataCtrl', (response, user, Paginator, Restangular, seasonRestangular, $state, $stateParams)->
+module.exports = (response, user, Paginator, Restangular, seasonRestangular, $state, $stateParams)->
     'ngInject'
     new class MainSeasonPgDataCtrl
       filter: =>

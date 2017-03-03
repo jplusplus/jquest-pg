@@ -1,6 +1,5 @@
-angular.module 'jquest'
-  .config ($stateProvider) ->
+module.exports = ($stateProvider)->
     'ngInject'
     $stateProvider
       .state 'main.season.pg.204',
-        templateUrl: '204/204.html'
+        template: require './204.html'

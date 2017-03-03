@@ -1,5 +1,4 @@
-angular.module 'jquest'
-  .controller 'MandatureFormCtrl', ($uibModal, $scope, $state, $q, SETTINGS, Seasons, Restangular, growl)->
+module.exports = ($uibModal, $scope, $state, $q, SETTINGS, Seasons, Restangular, growl)->
     'ngInject'
     new class MandatureFormCtrl
       # Common attributes
@@ -34,7 +33,7 @@ angular.module 'jquest'
         if @allowSkipping
           # Create a modal
           @confirmSkipModal = $uibModal.open
-            templateUrl: 'mandature-form/skip/skip.html'
+            template: require './skip/skip.html'
             # Inherit froom the current scope
             scope: $scope.$new()
             controller: ($scope, $uibModalInstance)=>
@@ -53,7 +52,7 @@ angular.module 'jquest'
       editSource: (field, resource)=>
         # Create a modal
         @editSourceModal = $uibModal.open
-          templateUrl: 'mandature-form/source/source.html'
+          template: require './source/source.html'
           # Inherit froom the current scope
           scope: $scope.$new()
           controller: ($scope, $uibModalInstance)=>

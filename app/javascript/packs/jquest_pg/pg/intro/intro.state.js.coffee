@@ -1,11 +1,10 @@
-angular.module 'jquest'
-  .config ($stateProvider)->
+module.exports = ($stateProvider)->
     'ngInject'
     $stateProvider
       .state 'main.season.pg.intro',
         controller: 'MainSeasonPgIntroCtrl'
         controllerAs: 'intro'
-        templateUrl: 'intro/intro.html'
+        template: require './intro.html'
         url: 'intro'
         resolve:
           $title: -> 'Introduction'

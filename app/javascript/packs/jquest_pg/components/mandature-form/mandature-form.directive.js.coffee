@@ -1,6 +1,5 @@
-angular.module 'jquest'
-  .directive 'mandatureForm', ->
-    templateUrl: 'mandature-form/mandature-form.html'
+module.exports = ->
+    template: require './mandature-form.html'
     scope:
       mandature: "="
       allowSkipping: "="
