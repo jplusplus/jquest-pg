@@ -44,6 +44,7 @@ import pgConstant from './pg/pg.constant.js.coffee';
 import pgRun from './pg/pg.run.js.coffee';
 import pg204State from './pg/204/204.state.js.coffee';
 
+import './index.scss';
 
 angular
   .module('jquest')

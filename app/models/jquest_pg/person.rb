@@ -13,7 +13,7 @@ module JquestPg
     alias_method :pg_mandatures, :mandatures
 
     def self.csv_attributes
-      %w{fullname email education profession_category profession
+      %w{id fullname email education profession_category profession
         image twitter facebook gender birthdate birthplace phone
         diversity_count diversity_positive}
     end
