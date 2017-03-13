@@ -51,12 +51,12 @@
                           <div class="pg__categories__item__level__assignments__person ">
                             <span ng-if="!level.done()">
                               <div class="pg__person-cover" uib-tooltip="{{ assignment.resource.person.fullname }}" tooltip-append-to-body="true">
-                                <img ng-src="{{ assignment.resource.person.image }}" alt="" src="" />
+                                <img ng-src="{{ assignment.resource.person.image }}" alt=""  />
                               </div>
                             </span>
                             <a ui-sref="main.season.pg.representatives.edit(assignment.resource)" ng-if="level.done()">
                               <div class="pg__person-cover" uib-tooltip="{{ assignment.resource.person.fullname }}" tooltip-append-to-body="true">
-                                <img ng-src="{{ assignment.resource.person.image }}" alt="" src="" />
+                                <img ng-src="{{ assignment.resource.person.image }}" alt=""  />
                               </div>
                             </a>
                             <div class="pg__categories__item__level__assignments__person__progress">
