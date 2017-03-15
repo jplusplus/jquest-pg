@@ -1,5 +1,10 @@
 <% content_for :page_title, "Political Gaps - jQuest" %>
 
+<% content_for :stylesheet_includes do %>
+  <%= stylesheet_pack_tag 'index' %>
+  <%= stylesheet_pack_tag 'jquest_pg/index' %>
+<% end %>
+
 <% content_for :javascript_includes do %>
   <%= javascript_pack_tag 'index' %>
   <%= javascript_pack_tag 'jquest_pg/index' %>
