@@ -14,14 +14,14 @@ angular.module 'jquest'
       },
       {
         body: "On average, Nobel Prize winners in physics are 14 years younger than members of the French Senate.",
-        source: "Source for <a href=\"http://www.senat.fr/senatoriales2011/listes/composition_par_age_avant_renouvellement_senat.pdf\">the French Senate</a> (2011) and for <a href=\"http://www.almaz.com/nobel/papers/age/\n\">the physics Nobel Prize winners</a>.",
+        source: "Source: <a href=\"http://www.senat.fr/senatoriales2011/listes/composition_par_age_avant_renouvellement_senat.pdf\">the French Senate</a> (2011) and <a href=\"http://www.almaz.com/nobel/papers/age/\n\">the physics Nobel Prize winners</a>.",
         caption: "The physics Nobel Prize winner in 2005, aged 64.",
         image: "//static.jquestapp.com/images/intro/Theodor_W_Haensch.jpg",
         type: "text"
       },
       {
         body: "In Germany, you'll see more women in the criminal police than in Parliament.",
-        source: "Source for <a href=\"http://www.bka.de/nn_205958/DE/DasBKA/FaktenundZahlen/faktenUndZahlen__node.html?__nnn=true\n\">the German Bundeskriminalamt</a> (2016) and for <a href=\"http://www.ipu.org/wmn-e/classif.htm\">the German Bundestag</a> (2013).",
+        source: "Source: <a href=\"http://www.bka.de/nn_205958/DE/DasBKA/FaktenundZahlen/faktenUndZahlen__node.html?__nnn=true\n\">the German Bundeskriminalamt</a> (2016) and <a href=\"http://www.ipu.org/wmn-e/classif.htm\">the German Bundestag</a> (2013).",
         caption: "",
         image: "//static.jquestapp.com/images/intro/415423_1_Polizistin.jpg",
         type: "text"
